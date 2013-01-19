@@ -58,7 +58,7 @@
     overflow: hidden;
     width: 9999px;
     height: 2.2em;
-    background: #efefef;
+    background: #efefef url(img/header_bg.gif) repeat-x top;
 
 }
 
@@ -104,7 +104,7 @@
     overflow: hidden;
     display: none;
     width: 7px;
-    height: 2.2px;
+    height: 2.2em;
     margin-left: 2px;
     vertical-align: top;
 }
