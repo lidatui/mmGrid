@@ -60,6 +60,11 @@
                 $elParent.children().eq(elIndex-1).after(this.$mmGrid);
             }
 
+            var opts = this.opts;
+            $mmGrid.width(opts.width);
+            if(!opts.fitRows){
+                $mmGrid.height(opts.height);
+            }
         }
 
         , _intiHead: function(){
@@ -95,7 +100,12 @@
     };
 
     $.fn.mmGrid.defaults = {
-
+        width: 'auto'
+        , height: '280px'
+        , loadingText: '正在载入...'
+        , noDataText: '没有数据'
+        , fitCols: false
+        , fitRows: false
     };
 
     $.fn.mmGrid.Constructor = MMGrid;
