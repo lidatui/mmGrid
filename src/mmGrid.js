@@ -126,7 +126,12 @@
                     if(!col.hidden) bbHtml.push('checked="checked"');
                     if(col.lockDisplay) bbHtml.push(' disabled="disabled"');
                     bbHtml.push('/><span>');
-                    bbHtml.push(col.title);
+                    if(col.title){
+                        bbHtml.push(col.title);
+                    }else{
+                        bbHtml.push('未命名');
+                    }
+
                     bbHtml.push('</span></label>');
                 }
 
