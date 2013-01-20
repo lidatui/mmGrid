@@ -29,9 +29,9 @@
                         '<a class="mmg-btnBackboardUp"></a>',
                     '</div>',
                     '<div class="mmg-bodyWrapper">',
-                        '<a class="mmg-btnBackboardDn"></a>',
                         '<div class="mmg-noData">'+ this.opts.noDataText +'</div>',
                     '</div>',
+                    '<a class="mmg-btnBackboardDn"></a>',
                     '<div class="mmg-mask mmg-transparent"></div>',
                     '<div class="mmg-loading">',
                         '<div class="mmg-loadingImg"></div>',
@@ -109,7 +109,9 @@
             var $mmGrid = this.$mmGrid;
             var $headWrapper = this.$headWrapper;
             var $backboard = this.$backboard;
-
+            $mmGrid.find('a.mmg-btnBackboardDn').css({
+                'top': $headWrapper.outerHeight(true)
+            });
 
         }
 
@@ -129,9 +131,10 @@
             });
 
             //向下按钮
-            var $btnBackboardDn = $bodyWrapper.find('a.mmg-btnBackboardDn').on('click', function(){
+            var $btnBackboardDn = $mmGrid.find('a.mmg-btnBackboardDn').on('click', function(){
                 $backboard.height($mmGrid.height() - $headWrapper.outerHeight(true));
                 $backboard.slideDown();
+                $btnBackboardDn.slideUp('fast');
             }).slideUp('fast');
             $body.on('mouseenter', function(){
                 $btnBackboardDn.slideUp('fast');
@@ -147,7 +150,7 @@
             //向上按钮
             $mmGrid.find('a.mmg-btnBackboardUp').on('click', function(e){
                 $backboard.slideUp().queue(function(next){
-                    $btnBackboardDn.slideUp('fast');
+
                     next();
                 });
             });
