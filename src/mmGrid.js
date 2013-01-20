@@ -174,7 +174,7 @@
             }
 
             //滚动条事件
-            $bodyWrapper.on('scroll', function(e){
+            $bodyWrapper.on('scroll', function(){
                 $head.css('left',- $(this).scrollLeft());
             });
 
@@ -207,7 +207,7 @@
             });
 
             //隐藏列
-            $backboard.on('click', ':checkbox', function(e){
+            $backboard.on('click', ':checkbox', function(){
                 var index = $backboard.find('label').index($(this).parent());
                 if(this.checked){
                     opts.cols[index].hidden = false;
@@ -428,9 +428,9 @@
         }
         if(typeof arguments[0] === 'string'){
             var data = $(this).data('mmGrid');
-            var func =  data[arguments[0]];
-            if(func){
-                return func.apply(data,arguments.slice(1));
+            var fn =  data[arguments[0]];
+            if(fn){
+                return fn.apply(data,arguments.slice(1));
             }
         }
     };
