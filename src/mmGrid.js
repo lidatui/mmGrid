@@ -10,7 +10,7 @@
         this._initHead();
         this._initOptions();
         this._initEvents();
-        this._populate(options.items);
+        this.load(options.items);
     };
 
     MMGrid.prototype = {
@@ -102,6 +102,19 @@
             var $bodyWrapper = this.$bodyWrapper;
             $bodyWrapper.height($mmGrid.height() - $headWrapper.outerHeight(true));
 
+
+            //初始化排序状态
+            if(opts.sortName){
+                var $ths = $head.find('th');
+                for(var colIndex=0; colIndex< opts.cols.length; colIndex++){
+                    var col = opts.cols[colIndex];
+                    if(col.name === opts.sortName){
+                        var $th= $ths.eq(colIndex);
+                        $.data($th.find('.mmg-title')[0],'sortStatus',opts.sortStatus);
+                        $th.find('.mmg-sort').addClass('mmg-'+opts.sortStatus);
+                    }
+                }
+            }
         }
 
         , _initOptions: function(){
@@ -218,8 +231,31 @@
                 }
             });
 
+            //排序事件
             $head.on('click', '.mmg-title', function(){
+                var $this = $(this);
+                var $titles =  $head.find('.mmg-title');
+                //当前列不允许排序
+                if(!opts.cols[$titles.index($this)].sortable){
+                    return;
+                }
+                //取得当前列下一个排序状态
+                var sortStatus = $.data(this, 'sortStatus') === 'asc' ? 'desc' : 'asc';
+                //清除排序状态
+                $.each($titles, function(){
+                    $.removeData(this,'sortStatus');
+                });
+                $head.find('.mmg-sort').removeClass('mmg-asc').removeClass('mmg-desc');
+                //设置当前列排序状态
+                $.data(this, 'sortStatus', sortStatus);
+                $this.siblings('.mmg-sort').addClass('mmg-'+sortStatus);
 
+                if(opts.remoteSort){
+                    that.load()
+                }else{
+                    that._nativeSorter($titles.index($this), sortStatus);
+                    that._setStyle();
+                }
             }).on('mousedown', '.mmg-colResize', function(e){
                 //调整列宽
                 var $resize = $(this);
@@ -403,6 +439,116 @@
             $mmGrid.find('.mmg-message').hide();
         }
 
+        , _nativeSorter: function(colIndex, sortStatus){
+            var col = this.opts.cols[colIndex];
+            this.$body.find('tr > td:nth-child('+(colIndex+1)+')')
+                .sortElements(function(a, b){
+                    var av = $.text($(a));
+                    var bv = $.text($(b));
+                    //排序前转换
+                    if(col.type === 'number'){
+                        av = parseFloat(av);
+                        bv = parseFloat(bv);
+                    }else{
+                        //各个浏览器localeCompare的结果不一致
+                        return sortStatus === 'desc' ? -av.localeCompare(bv)  : av.localeCompare(bv);
+                    }
+                    return av > bv ? (sortStatus === 'desc' ? -1 : 1) : (sortStatus === 'desc' ? 1 : -1);
+                }, function(){
+                    return this.parentNode;
+                });
+        }
+
+        , _refreshSortStatus: function(){
+            var $ths = this.$head.find('th');
+            var sortColIndex = -1;
+            var sortStatus = '';
+            $ths.find('.mmg-title').each(function(index, item){
+                var status = $.data(item, 'sortStatus');
+                if(status){
+                    sortColIndex = index;
+                    sortStatus = status;
+                }
+            });
+            var sortStatus = sortStatus === 'desc' ? 'asc' : 'desc';
+            if(sortColIndex >=0){
+                $ths.eq(sortColIndex).find('.mmg-title').data('sortStatus',sortStatus).click();
+            }
+        }
+
+        , _loadAjax: function(args){
+            var that = this;
+            var opts = this.opts;
+            var params = {};
+            //opt的params可以使函数，例如收集过滤的参数
+            if($.isFunction(opts.params)){
+                params = $.extend(params, opts.params());
+            }else if($.isPlainObject(opts.params)){
+                params = $.extend(params, opts.params);
+            }
+
+            if(opts.remoteSort){
+                var sortName = '';
+                var sortStatus = '';
+                var $titles = this.$ths.find('.title');
+                for(var colIndex=0; colIndex<$titles.length; colIndex++){
+                    var status = $.data($titles[colIndex], 'sortStatus');
+                    if(status){
+                        sortName = opts.cols[colIndex].name;
+                        sortStatus = status;
+                    }
+                }
+                if(sortName){
+                    params.sort = sortName+'.'+sortStatus;
+                }
+            }
+
+            //合并load的参数
+            params = $.extend(params, args);
+            $.ajax({
+                type: opts.method,
+                url: opts.url,
+                data: params,
+                dataType: 'json',
+                cache: false
+            }).done(function(data){
+                //获得root对象
+                var items = data;
+                if($.isArray(data[opts.root])){
+                    items = data[opts.root];
+                }
+                that._populate(items);
+                if(!opts.remoteSort){
+                    this._refreshSortStatus();
+                }
+                if(opts.onSuccess){
+                    opts.onSuccess(data);
+                }
+            }).fail(function(data){
+                if(opts.onError){
+                    opts.onError(data);
+                }
+            });
+
+        }
+
+
+        , load: function(args){
+            var opts = this.opts;
+            this._hideMessage();
+            this._showLoading();
+            if($.isArray(args)){
+                //加载本地数据
+                this._populate(args);
+                this._refreshSortStatus();
+                if(opts.onSuccess){
+                    opts.onSuccess(args);
+                }
+            }else if(opts.url){
+                this._loadAjax(args);
+            }
+        }
+
         , size: function(){
             var $trs = this.$body.find('tr');
             if($trs.length === 1){
@@ -439,14 +585,55 @@
         width: 'auto'
         , height: '280px'
         , cols: []
+        , url: false
+        , params: {}
+        , method: 'POST'
+        , root: 'items'
         , items: []
+        , autoLoad: true
+        , remoteSort: false
+        , sortName: ''
+        , sortStatus: 'asc'
         , loadingText: '正在载入...'
         , noDataText: '没有数据'
         , fitCols: false
         , fitRows: false
+        , multiSelect: false
+        , checkCol: false
         , nowrap: false
+        , onSuccess: function(data){}
+        , onError: function(data){}
+        , onSelected: function(item, rowIndex, colIndex){}
     };
 
     $.fn.mmGrid.Constructor = MMGrid;
 
+
+    // see: http://james.padolsey.com/javascript/sorting-elements-with-jquery/
+    $.fn.sortElements = (function(){
+        var sort = [].sort;
+        return function(comparator, getSortable) {
+            getSortable = getSortable || function(){return this;};
+            var placements = this.map(function(){
+                var sortElement = getSortable.call(this),
+                    parentNode = sortElement.parentNode,
+                    nextSibling = parentNode.insertBefore(
+                        document.createTextNode(''),
+                        sortElement.nextSibling
+                    );
+                return function() {
+                    if (parentNode === this) {
+                        throw new Error(
+                            "You can't sort elements if any one is a descendant of another."
+                        );
+                    }
+                    parentNode.insertBefore(this, nextSibling);
+                    parentNode.removeChild(nextSibling);
+                };
+            });
+            return sort.call(this, comparator).each(function(i){
+                placements[i].call(getSortable.call(this));
+            });
+        };
+    })();
 }(window.jQuery);
