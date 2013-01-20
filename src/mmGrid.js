@@ -287,6 +287,21 @@
                 });
             });
 
+            //选中事件
+            var $body = this.$body;
+            $body.on('click','td',function(e){
+                var $this = $(this);
+                var action = opts.onSelected(e, $.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
+                if(action === false){
+                    return;
+                }
+                if(!$this.parent().hasClass('selected')){
+                    that.select($this.parent().index());
+                }else{
+                    that.deselect($this.parent().index());
+                }
+            });
+
         }
         , _populate: function(items){
             var opts = this.opts;
@@ -548,7 +563,76 @@
                 this._loadAjax(args);
             }
         }
+            //选中
+        , select: function(args){
+            var opts = this.opts;
+            var $body = this.$body;
 
+            if(typeof args === 'number'){
+                var $tr = $body.find('tr').eq(args);
+                if(!opts.multiSelect){
+                    $body.find('tr.selected').removeClass('selected');
+                    if(opts.checkCol){
+                        $body.find('tr > td:nth-child(1)').find(':checkbox').prop('checked','');
+                    }
+                }
+                if(!$tr.hasClass('selected')){
+                    $tr.addClass('selected');
+                    if(opts.checkCol){
+                        $tr.find('td:first :checkbox').prop('checked','checked');
+                    }
+                }
+            }else if(typeof args === 'function'){
+                $.each($body.find('tr'), function(index, tr){
+                    if(args($.data(this, 'item'))){
+                        var $this = $(this);
+                        if(!$this.hasClass('selected')){
+                            $this.addClass('selected');
+                            if(opts.checkCol){
+                                $tr.find('td:first :checkbox').prop('checked','checked');
+                            }
+                        }
+                    }
+                });
+            }else if(typeof args === 'string' && args === 'all'){
+                $body.find('tr.selected').removeClass('selected');
+                $body.find('tr').addClass('selected');
+                $body.find('tr > td:nth-child(1)').find(':checkbox').prop('checked','checked');
+            }
+        }
+            //取消选中
+        , deselect: function(args){
+            var opts = this.opts;
+            var $body = this.$body;
+            if(typeof args === 'number'){
+                $body.find('tr').eq(args).removeClass('selected');
+                if(opts.checkCol){
+                    $body.find('tr').eq(args).find('td:first :checkbox').prop('checked','');
+                }
+            }else if(typeof args === 'function'){
+                $.each($body.find('tr'), function(index, tr){
+                    if(args($.data(this, 'item'))){
+                        $(this).removeClass('selected');
+                        if(opts.checkCol){
+                            $(this).find('td:first :checkbox').prop('checked','');
+                        }
+                    }
+                });
+            }else if(typeof args === 'string' && args === 'all'){
+                $body.find('tr.selected').removeClass('selected');
+                if(opts.checkCol){
+                    $body.find('tr > td:nth-child(1)').find(':checkbox').prop('checked','');
+                }
+            }
+        }
+        , selected: function(){
+            var $body = this.$body;
+            var selected = [];
+            $.each($body.find('tr.selected'), function(index ,item){
+                selected.push($.data(this,'item'));
+            });
+            return selected;
+        }
         , size: function(){
             var $trs = this.$body.find('tr');
             if($trs.length === 1){
