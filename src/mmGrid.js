@@ -28,10 +28,9 @@
                     '<div class="mmg-backboard">',
                         '<a class="mmg-btnBackboardUp"></a>',
                     '</div>',
-                    '<div class="mmg-bodyWrapper">',
-                        '<div class="mmg-noData">'+ this.opts.noDataText +'</div>',
-                    '</div>',
+                    '<div class="mmg-bodyWrapper"></div>',
                     '<a class="mmg-btnBackboardDn"></a>',
+                    '<div class="mmg-noData">'+ this.opts.noDataText +'</div>',
                     '<div class="mmg-mask mmg-transparent"></div>',
                     '<div class="mmg-loading">',
                         '<div class="mmg-loadingImg"></div>',
@@ -134,8 +133,6 @@
 
                     bbHtml.push('</span></label>');
                 }
-
-
                 $backboard.append($(bbHtml.join('')));
             }
         }
@@ -150,6 +147,32 @@
             var $body = this.$body;
             var $backboard = this.$backboard;
 
+            //调整浏览器
+            if(opts.width === 'auto' || opts.height === 'auto' || (typeof opts.width === 'string' && opts.width.indexOf('%') === opts.width.length-1) ||
+                typeof opts.height === 'string' && opts.height.indexOf('%') === opts.height.length-1){
+                $(window).on('resize', function(){
+
+                    //调整noData
+                    var $noData = $mmGrid.find('.mmg-noData');
+                    if($noData.is(':visible')){
+                        $noData.css({
+                            'left': ($mmGrid.width() - $noData.width()) / 2,
+                            'top': ($mmGrid.height() + $headWrapper.height() - $noData.height()) / 2
+                        });
+                    }
+                    //调整loading
+                    var $mask = $mmGrid.find('.mmg-mask');
+                    if($mask.is(':visible')){
+                        $mask.width($mmGrid.width()).height($mmGrid.height());
+                        var $loadingWrapper = $mmGrid.find('.mmg-loading');
+                        $loadingWrapper.css({
+                            'left': ($mmGrid.width() - $loadingWrapper.width()) / 2,
+                            'top': ($mmGrid.height() - $loadingWrapper.height()) / 2
+                        })
+                    }
+                });
+            }
+
             //滚动条事件
             $bodyWrapper.on('scroll', function(e){
                 $head.css('left',- $(this).scrollLeft());
@@ -160,6 +183,7 @@
                 $backboard.height($mmGrid.height() - $headWrapper.outerHeight(true));
                 $backboard.slideDown();
                 $btnBackboardDn.slideUp('fast');
+                that._hideNoData();
             });
             $body.on('mouseenter', function(){
                 $btnBackboardDn.slideUp('fast');
@@ -175,7 +199,9 @@
             //向上按钮
             $mmGrid.find('a.mmg-btnBackboardUp').on('click', function(){
                 $backboard.slideUp().queue(function(next){
-
+                    if(!that.size()){
+                        that._showNoData();
+                    }
                     next();
                 });
             });
@@ -230,6 +256,7 @@
             var opts = this.opts;
             var $body = this.$body;
 
+            this._hideNoData();
             if(items && items.length !== 0 && opts.cols){
                 var tbodyHtmls = [];
                 tbodyHtmls.push('<tbody>');
@@ -269,9 +296,12 @@
                 }
             }else{
                 $body.empty().html('<tbody><td style="border: 0px;background: none;">&nbsp;</td></tbody>');
+                this._showNoData();
             }
             this._setStyle();
             this._setColsWidth();
+
+            this._hideLoading();
         }
 
         /* 生成列类 */
@@ -336,6 +366,46 @@
             $body.width($head.width());
             $bodyWrapper.width('100%');
             $bodyWrapper.append($body);
+        }
+        , _showLoading: function(){
+            var $mmGrid = this.$mmGrid;
+            $mmGrid.find('.mmg-mask').show();
+
+            var $loading = $mmGrid.find('.mmg-loading');
+            $loading.css({
+                'left': ($mmGrid.width() - $loading.width()) / 2,
+                'top': ($mmGrid.height() - $loading.height()) / 2
+            }).show();
+        }
+        , _hideLoading: function(){
+            var $mmGrid = this.$mmGrid;
+            $mmGrid.find('.mmg-mask').hide();
+            $mmGrid.find('.mmg-loading').hide();
+        }
+        , _showNoData: function(){
+            var $mmGrid = this.$mmGrid;
+            var $headWrapper = this.$headWrapper;
+            var $noData = $mmGrid.find('.mmg-noData');
+            $noData.css({
+                'left': ($mmGrid.width() - $noData.width()) / 2,
+                'top': ($mmGrid.height() + $headWrapper.height()  - $noData.height()) / 2
+            }).show();
+        }
+        , _hideNoData: function(){
+            var $mmGrid = this.$mmGrid;
+            $mmGrid.find('.mmg-noData').hide();
+        }
+
+        , size: function(){
+            var $trs = this.$body.find('tr');
+            if($trs.length === 1){
+                var item = $.data($trs[0],'item');
+                if(item){
+                    return 1;
+                }
+                return 0;
+            }
+            return $trs.length;
         }
     };
 

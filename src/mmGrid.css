@@ -19,7 +19,10 @@
     left: 0;
     top: 0;
     display: none;
+    width: 100%;
+    height: 100%;
     background: #ddd;
+
 
 }
 
@@ -41,9 +44,12 @@
 .mmGrid .mmg-loading{
     position: absolute;
     display: none;
+    text-align: center;
+
 }
 
 .mmGrid .mmg-loading .mmg-loadingImg{
+    margin: 5px auto;
     width: 32px;
     height: 32px;
     background: url(img/loading.gif) no-repeat center center;
@@ -234,7 +240,7 @@
 }
 
 /* 无数据 */
-.mmGrid .mmg-bodyWrapper .mmg-noData{
+.mmGrid .mmg-noData{
     position: absolute;
     display: none;
     text-align: center;
