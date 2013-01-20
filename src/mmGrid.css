@@ -136,10 +136,14 @@
 }
 
 /* 背板 */
-.mmGrid .backboard{
+.mmGrid .mmg-backboard{
     position: relative;
     display: none;
-    background: #efefef;
+    background-image: url(img/furley_bg.png);
+    background-image: -webkit-image-set(
+        url(img/furley_bg.png) 1x,
+        url(img/furley_bg_@2X.png) 2x
+    );
     -webkit-box-shadow: inset 0 0 2px 1px #d9d9d9;
     -moz-box-shadow: inset 0 0 2px 1px #d9d9d9;
     -o-box-shadow: inset 0 0 2px 1px #d9d9d9;

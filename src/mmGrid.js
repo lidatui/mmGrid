@@ -102,11 +102,41 @@
         }
 
         , _initOptions: function(){
-
+            var $mmGrid = this.$mmGrid;
+            var $headWrapper = this.$headWrapper;
+            var $backboard = this.$backboard;
         }
 
         , _initEvents: function(){
-
+            var opts = this.opts;
+            var $mmGrid = this.$mmGrid;
+            var $headWrapper = this.$headWrapper;
+            var $bodyWrapper = this.$bodyWrapper;
+            var $body = this.$body;
+            var $backboard = this.$backboard;
+            //向下按钮
+            var $btnBackboardDn = $bodyWrapper.find('a.mmg-btnBackboardDn').on('click', function(){
+                $backboard.height($mmGrid.height() - $headWrapper.outerHeight(true));
+                $backboard.slideDown();
+            }).slideUp('fast');
+            $body.on('mouseenter', function(){
+                $btnBackboardDn.slideUp('fast');
+            });
+            $mmGrid.on('mouseleave', function(){
+                $btnBackboardDn.slideUp('fast');
+            });
+            $headWrapper.on('mouseenter',function(){
+                if($backboard.is(':hidden')){
+                    $btnBackboardDn.slideDown('fast');
+                }
+            });
+            //向上按钮
+            $mmGrid.find('a.mmg-btnBackboardUp').on('click', function(e){
+                $backboard.slideUp().queue(function(next){
+                    $btnBackboardDn.slideUp('fast');
+                    next();
+                });
+            });
         }
         , _populate: function(items){
             var opts = this.opts;
