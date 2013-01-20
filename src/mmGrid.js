@@ -94,6 +94,11 @@
                 $head.html(theadHtmls.join(''));
             }
 
+            var $mmGrid = this.$mmGrid;
+            var $headWrapper = this.$headWrapper;
+            var $bodyWrapper = this.$bodyWrapper;
+            $bodyWrapper.height($mmGrid.height() - $headWrapper.outerHeight(true));
+
         }
 
         , _initOptions: function(){
@@ -147,11 +152,75 @@
             }else{
                 $body.empty().html('<tbody><td style="border: 0px;background: none;">&nbsp;</td></tbody>');
             }
+            this._setStyle();
+            this._setColsWidth();
         }
 
         /* 生成列类 */
         , _genColClass: function(colIndex){
             return 'mmg'+ this._id +'-col'+colIndex;
+        }
+
+        , _setStyle: function(){
+            var $head = this.$head;
+            var $ths = $head.find('th');
+            var $body = this.$body;
+
+            //head
+            $ths.eq(0).addClass('first');
+            $ths.eq(-1).addClass('last');
+            //body
+            $body.find('tr,td').removeClass('even')
+                .removeClass('colSelected').removeClass('colSelectedEven');
+
+            $body.find('tr:odd').addClass('even');
+
+            var sortIndex = $head.find('.mmg-title').index($head.find('.mmg-title').filter(function(){
+                return $.data(this,'sortStatus') === 'asc' || $(this).data('sortStatus') === 'desc';
+            }));
+
+            $body.find('tr > td:nth-child('+(sortIndex+1)+')').addClass('colSelected')
+                .filter(':odd').addClass('colSelectedEven');
+
+        }
+        , _setColsWidth: function(){
+            var opts = this.opts;
+            var $style = this.$style;
+            var $head = this.$head;
+            var $ths = $head.find('th');
+            var $bodyWrapper = this.$bodyWrapper;
+            var $body = this.$body;
+
+            $bodyWrapper.width(9999);
+            $body.width('auto');
+            var styleText = [];
+            for(var colIndex=0; colIndex<$ths.length; colIndex++){
+                var $th = $ths.eq(colIndex);
+                styleText.push('.mmGrid .'+this._genColClass(colIndex) + ' {');
+                var width = opts.cols[colIndex].width;//$th.width();
+                if($th.width() > width){
+                    width = $th.width();
+                }
+                styleText.push('width: '+ width +'px;');
+                styleText.push('max-width: '+ width +'px;');
+                if(opts.cols[colIndex].align){
+                    styleText.push('text-align: '+opts.cols[colIndex].align+';');
+                }
+                if(opts.cols[colIndex].hidden){
+                    styleText.push('display: none; ');
+                }
+                styleText.push(' }');
+            }
+
+            $body.detach();
+            try{
+                $style.text(styleText.join(''));
+            }catch(error){
+                $style[0].styleSheet.cssText = styleText.join('');//IE fix
+            }
+            $body.width($head.width());
+            $bodyWrapper.width('100%');
+            $bodyWrapper.append($body);
         }
     };
 
@@ -183,6 +252,7 @@
         , noDataText: '没有数据'
         , fitCols: false
         , fitRows: false
+        , nowrap: false
     };
 
     $.fn.mmGrid.Constructor = MMGrid;

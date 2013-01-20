@@ -94,20 +94,28 @@ textarea {
    ========================================================================== */
 
 body{
-    background-color: #f2f2f2;
-    background-size:20px 20px,20px 20px,6px 6px,6px 6px;
-    background-position:-2px -2px, -2px -2px,0 0, 3px 3px;
-    background-image: -webkit-linear-gradient(white 2px, transparent 2px),
-    -webkit-linear-gradient(0, white 2px, transparent 2px),
-    -webkit-linear-gradient(45deg, #e6e6e6 25%, transparent 25%, transparent 75%, #e6e6e6 75%, #e6e6e6),
-    -webkit-linear-gradient(45deg, #e6e6e6 25%, transparent 25%, transparent 75%, #e6e6e6 75%, #e6e6e6);
-
+    background-image: url(../img/pw_maze_white.png);
+    background-image: -webkit-image-set(
+        url(../img/pw_maze_white.png) 1x,
+        url(../img/pw_maze_white_@2X.png) 2x
+    );
     font-family: 'Helvetica Neue',helvetica, arial, sans-serif;
     font-size: 12px;
     color: #333;
 }
 
 
+.btnPrice {
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin: 0px auto;
+    background: url(../img/botton_g1.gif) no-repeat;
+}
+
+.btnPrice:hover {
+    background: url(../img/botton_g2.gif) no-repeat;
+}
 
 
 
