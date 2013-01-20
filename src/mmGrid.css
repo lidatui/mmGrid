@@ -93,7 +93,8 @@
 .mmGrid .mmg-headWrapper .mmg-head th .mmg-titleWrapper .mmg-colResize{
     position: absolute;
     top: 0;
-    right: 0;
+    right: -6px;
+    _right: -4px;
     width: 4px;
     height: 100%;
     cursor: col-resize;
