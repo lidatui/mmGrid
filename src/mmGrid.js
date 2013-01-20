@@ -30,7 +30,7 @@
                     '</div>',
                     '<div class="mmg-bodyWrapper"></div>',
                     '<a class="mmg-btnBackboardDn"></a>',
-                    '<div class="mmg-noData">'+ this.opts.noDataText +'</div>',
+                    '<div class="mmg-message">'+ this.opts.noDataText +'</div>',
                     '<div class="mmg-mask mmg-transparent"></div>',
                     '<div class="mmg-loading">',
                         '<div class="mmg-loadingImg"></div>',
@@ -152,12 +152,12 @@
                 typeof opts.height === 'string' && opts.height.indexOf('%') === opts.height.length-1){
                 $(window).on('resize', function(){
 
-                    //调整noData
-                    var $noData = $mmGrid.find('.mmg-noData');
-                    if($noData.is(':visible')){
-                        $noData.css({
-                            'left': ($mmGrid.width() - $noData.width()) / 2,
-                            'top': ($mmGrid.height() + $headWrapper.height() - $noData.height()) / 2
+                    //调整message
+                    var $message = $mmGrid.find('.mmg-message');
+                    if($message.is(':visible')){
+                        $message.css({
+                            'left': ($mmGrid.width() - $message.width()) / 2,
+                            'top': ($mmGrid.height() + $headWrapper.height() - $message.height()) / 2
                         });
                     }
                     //调整loading
@@ -383,17 +383,24 @@
             $mmGrid.find('.mmg-loading').hide();
         }
         , _showNoData: function(){
-            var $mmGrid = this.$mmGrid;
-            var $headWrapper = this.$headWrapper;
-            var $noData = $mmGrid.find('.mmg-noData');
-            $noData.css({
-                'left': ($mmGrid.width() - $noData.width()) / 2,
-                'top': ($mmGrid.height() + $headWrapper.height()  - $noData.height()) / 2
-            }).show();
+            this._showMessage(this.opts.noDataText);
         }
         , _hideNoData: function(){
+            this._hideMessage();
+        }
+
+        , _showMessage: function(msg){
             var $mmGrid = this.$mmGrid;
-            $mmGrid.find('.mmg-noData').hide();
+            var $headWrapper = this.$headWrapper;
+            var $message = $mmGrid.find('.mmg-message');
+            $message.css({
+                'left': ($mmGrid.width() - $message.width()) / 2,
+                'top': ($mmGrid.height() + $headWrapper.height()  - $message.height()) / 2
+            }).text(msg).show();
+        }
+        , _hideMessage: function(){
+            var $mmGrid = this.$mmGrid;
+            $mmGrid.find('.mmg-message').hide();
         }
 
         , size: function(){

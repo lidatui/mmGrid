@@ -239,8 +239,8 @@
     -ms-text-overflow: ellipsis;
 }
 
-/* 无数据 */
-.mmGrid .mmg-noData{
+/* 消息 */
+.mmGrid .mmg-message{
     position: absolute;
     display: none;
     text-align: center;
