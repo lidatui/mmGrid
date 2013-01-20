@@ -80,6 +80,10 @@
     border-right: 1px solid #ddd;
 }
 
+.mmGrid .mmg-headWrapper .mmg-head th input{
+    height: 2.2em;
+}
+
 .mmGrid .mmg-headWrapper .mmg-head th .mmg-titleWrapper{
     position: relative;
     height: 2.2em;

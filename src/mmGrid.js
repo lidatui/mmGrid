@@ -65,6 +65,14 @@
                 $mmGrid.height(opts.height);
             }
 
+
+            if(opts.checkCol){
+                var chkHtml = opts.multiSelect ? '<input type="checkbox" class="checkAll" >' : '<input type="checkbox" disabled="disabled" class="checkAll">';
+                opts.cols.unshift({title:chkHtml,width: 20, align: 'center' ,lockWidth: true, renderer:function(){
+                    return '<input type="checkbox" class="check">';
+                }});
+            }
+
         }
 
         , _initHead: function(){
@@ -302,6 +310,17 @@
                 }
             });
 
+            //checkbox列
+            if(opts.checkCol){
+                $head.find('th:first :checkbox').on('click', function(){
+                    if(this.checked){
+                        that.select('all');
+                    }else{
+                        that.deselect('all');
+                    }
+
+                });
+            }
         }
         , _populate: function(items){
             var opts = this.opts;
