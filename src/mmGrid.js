@@ -417,6 +417,12 @@
             $body.width($head.width());
             $bodyWrapper.width('100%');
             $bodyWrapper.append($body);
+
+            //调整滚动条
+            $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
+            if($bodyWrapper.scrollLeft() === 0){
+                $head.css('left', 0);
+            }
         }
         , _showLoading: function(){
             var $mmGrid = this.$mmGrid;
