@@ -65,7 +65,7 @@
 
 /* 标题 */
 .mmGrid .mmg-headWrapper .mmg-head{
-
+    position: relative;
 }
 
 .mmGrid .mmg-headWrapper .mmg-head th{

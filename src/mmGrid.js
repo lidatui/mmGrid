@@ -94,6 +94,10 @@
                 $head.html(theadHtmls.join(''));
             }
 
+            $.each($head.find('th'),function(index){
+                $.data(this,'col-width',opts.cols[index].width);
+            });
+
             var $mmGrid = this.$mmGrid;
             var $headWrapper = this.$headWrapper;
             var $bodyWrapper = this.$bodyWrapper;
@@ -105,15 +109,25 @@
             var $mmGrid = this.$mmGrid;
             var $headWrapper = this.$headWrapper;
             var $backboard = this.$backboard;
+
+
         }
 
         , _initEvents: function(){
+            var that = this;
             var opts = this.opts;
             var $mmGrid = this.$mmGrid;
             var $headWrapper = this.$headWrapper;
+            var $head = this.$head;
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
             var $backboard = this.$backboard;
+
+            //滚动条事件
+            $bodyWrapper.on('scroll', function(e){
+                $head.css('left',- $(this).scrollLeft());
+            });
+
             //向下按钮
             var $btnBackboardDn = $bodyWrapper.find('a.mmg-btnBackboardDn').on('click', function(){
                 $backboard.height($mmGrid.height() - $headWrapper.outerHeight(true));
@@ -137,6 +151,40 @@
                     next();
                 });
             });
+
+            $head.on('click', '.mmg-title', function(){
+
+            }).on('mousedown', '.mmg-colResize', function(e){
+                //调整列宽
+                var $resize = $(this);
+                var start = e.pageX;
+                var $colResizePointer = $headWrapper.find('.mmg-colResizePointer')
+                    .css('left', e.pageX - $headWrapper.offset().left).show();
+                //取消文字选择
+                document.body.onselectstart = function(){
+                    return false;
+                }
+                $headWrapper.css('-moz-user-select','none');
+
+                $headWrapper.on('mousemove', function(e){
+                    $colResizePointer.css('left', e.pageX - $headWrapper.offset().left);
+                }).on('mouseup', function(e){
+                    //改变宽度
+                    var $th = $resize.parent().parent();
+                    var width = $th.width() + e.pageX - start;
+                    $.data($th[0], 'col-width', width);
+                    that._setColsWidth();
+                    $headWrapper.mouseleave();
+                }).on('mouseleave',function(e){
+                    $headWrapper.off('mouseup').off('mouseleave').off('mousemove');
+                        $colResizePointer.hide();
+                    document.body.onselectstart = function(){
+                        return true;//开启文字选择
+                    }
+                    $headWrapper.css('-moz-user-select','text');
+                });
+            });
+
         }
         , _populate: function(items){
             var opts = this.opts;
@@ -227,10 +275,7 @@
             for(var colIndex=0; colIndex<$ths.length; colIndex++){
                 var $th = $ths.eq(colIndex);
                 styleText.push('.mmGrid .'+this._genColClass(colIndex) + ' {');
-                var width = opts.cols[colIndex].width;//$th.width();
-                if($th.width() > width){
-                    width = $th.width();
-                }
+                var width = $.data($th[0],'col-width');
                 styleText.push('width: '+ width +'px;');
                 styleText.push('max-width: '+ width +'px;');
                 if(opts.cols[colIndex].align){
