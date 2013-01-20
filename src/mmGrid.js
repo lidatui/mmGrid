@@ -106,13 +106,33 @@
         }
 
         , _initOptions: function(){
+            var opts = this.opts;
             var $mmGrid = this.$mmGrid;
             var $headWrapper = this.$headWrapper;
             var $backboard = this.$backboard;
             $mmGrid.find('a.mmg-btnBackboardDn').css({
                 'top': $headWrapper.outerHeight(true)
-            });
+            }).slideUp('fast');
 
+            if(opts.cols){
+                var bbHtml = ['<h1>显示列</h1>'];
+                for(var colIndex=0; colIndex<opts.cols.length; colIndex++){
+                    bbHtml.push('<label ');
+                    if(opts.checkCol && colIndex===0){
+                        bbHtml.push('style="display:none;" ');
+                    }
+                    var col = opts.cols[colIndex];
+                    bbHtml.push('><input type="checkbox"  ');
+                    if(!col.hidden) bbHtml.push('checked="checked"');
+                    if(col.lockDisplay) bbHtml.push(' disabled="disabled"');
+                    bbHtml.push('/><span>');
+                    bbHtml.push(col.title);
+                    bbHtml.push('</span></label>');
+                }
+
+
+                $backboard.append($(bbHtml.join('')));
+            }
         }
 
         , _initEvents: function(){
@@ -135,7 +155,7 @@
                 $backboard.height($mmGrid.height() - $headWrapper.outerHeight(true));
                 $backboard.slideDown();
                 $btnBackboardDn.slideUp('fast');
-            }).slideUp('fast');
+            });
             $body.on('mouseenter', function(){
                 $btnBackboardDn.slideUp('fast');
             });
@@ -148,11 +168,23 @@
                 }
             });
             //向上按钮
-            $mmGrid.find('a.mmg-btnBackboardUp').on('click', function(e){
+            $mmGrid.find('a.mmg-btnBackboardUp').on('click', function(){
                 $backboard.slideUp().queue(function(next){
 
                     next();
                 });
+            });
+
+            //隐藏列
+            $backboard.on('click', ':checkbox', function(e){
+                var index = $backboard.find('label').index($(this).parent());
+                if(this.checked){
+                    opts.cols[index].hidden = false;
+                    that._setColsWidth();
+                }else{
+                    opts.cols[index].hidden = true;
+                    that._setColsWidth();
+                }
             });
 
             $head.on('click', '.mmg-title', function(){
@@ -164,9 +196,9 @@
                 var $colResizePointer = $headWrapper.find('.mmg-colResizePointer')
                     .css('left', e.pageX - $headWrapper.offset().left).show();
                 //取消文字选择
-                document.body.onselectstart = function(){
+                document.body.onselectstart = function () {
                     return false;
-                }
+                };
                 $headWrapper.css('-moz-user-select','none');
 
                 $headWrapper.on('mousemove', function(e){
@@ -178,12 +210,12 @@
                     $.data($th[0], 'col-width', width);
                     that._setColsWidth();
                     $headWrapper.mouseleave();
-                }).on('mouseleave',function(e){
+                }).on('mouseleave',function(){
                     $headWrapper.off('mouseup').off('mouseleave').off('mousemove');
                         $colResizePointer.hide();
                     document.body.onselectstart = function(){
                         return true;//开启文字选择
-                    }
+                    };
                     $headWrapper.css('-moz-user-select','text');
                 });
             });
@@ -223,7 +255,7 @@
                         tbodyHtmls.push('</span></td>');
                     };
                     tbodyHtmls.push('</tr>');
-                };
+                }
                 tbodyHtmls.push('</tbody>');
                 $body.empty().html(tbodyHtmls.join(''));
                 var $trs = $body.find('tr');
