@@ -2,11 +2,12 @@
 .mmGrid{
     position: relative;
     overflow: hidden;
+    background: #fff;
     border: 1px solid #ccc;
 }
 
 .mmGrid table{
-    border-collapse: collapse;
+    border-collapse: separate;
     border-spacing: 0;
     text-align: left;
     table-layout: fixed;
@@ -170,8 +171,8 @@
 
 .mmGrid .mmg-bodyWrapper .mmg-body td{
     padding: 0 5px;
-    border: 1px solid #e4e4e4;
-    border-left: 0;
+    border-right: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
     line-height: 2em;
 }
 
