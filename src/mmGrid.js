@@ -30,7 +30,7 @@
                 '<div class="mmGrid">',
                     '<style></style>',
                     '<div class="mmg-headWrapper">',
-                        '<table class="mmg-head"></table>',
+                        '<table class="mmg-head" cellspacing="0"></table>',
                         '<div class="mmg-colResizePointer"></div>',
                     '</div>',
                     '<div class="mmg-backboard">',
@@ -47,6 +47,9 @@
 
                 '</div>'
             ];
+
+            //fix in IE7,IE6
+            $el.prop('cellspacing',0);
 
             //cached object
             var $mmGrid = $(mmGrid.join(''));
