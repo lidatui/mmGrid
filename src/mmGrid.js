@@ -11,10 +11,10 @@
         this._initOptions();
         this._initEvents();
         if(options.autoLoad){
-            if(options.items){
-                this.load(options.items);
-            }else{
+            if(options.url){
                 this.load();
+            }else{
+                this.load(options.items);
             }
 
         }
@@ -541,7 +541,7 @@
             if(opts.remoteSort){
                 var sortName = '';
                 var sortStatus = '';
-                var $titles = this.$ths.find('.title');
+                var $titles = this.$head.find('.mmg-title');
                 for(var colIndex=0; colIndex<$titles.length; colIndex++){
                     var status = $.data($titles[colIndex], 'sortStatus');
                     if(status){
@@ -570,7 +570,7 @@
                 }
                 that._populate(items);
                 if(!opts.remoteSort){
-                    this._refreshSortStatus();
+                    that._refreshSortStatus();
                 }
                 if(opts.onSuccess){
                     opts.onSuccess(data);
