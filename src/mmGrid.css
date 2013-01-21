@@ -101,6 +101,10 @@
 }
 
 .mmGrid .mmg-headWrapper .mmg-head th .mmg-titleWrapper .mmg-title{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    height: 2.2em;
     color: #333;
     font-weight: bold;
     line-height: 2.2em;

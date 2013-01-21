@@ -10,7 +10,15 @@
         this._initHead();
         this._initOptions();
         this._initEvents();
-        this.load(options.items);
+        if(options.autoLoad){
+            if(options.items){
+                this.load(options.items);
+            }else{
+                this.load();
+            }
+
+        }
+
     };
 
     MMGrid.prototype = {
