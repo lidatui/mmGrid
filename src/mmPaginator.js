@@ -87,7 +87,7 @@
             $.each(list, function(index, item){
                 var $li = $('<li><a></a></li>');
                 if(item === '...'){
-                    $li.find('a').text('...');
+                    $li.addClass('active').find('a').text('...');
                 }else if(item === pageNo+1){
                     $li.addClass('active').find('a').text(item);
                 }else{

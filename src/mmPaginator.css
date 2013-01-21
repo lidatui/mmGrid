@@ -37,7 +37,7 @@
 
 .mmPageinator .pageNoList li.active{
     background: none;
-    padding: 1px 0 0 0;
+    padding-top: 1px;
     border: 0;
 }
 
