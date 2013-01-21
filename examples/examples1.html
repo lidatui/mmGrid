@@ -93,7 +93,10 @@
 
 
                 $('#paginator').mmPaginator();
-                $('#paginator').mmPaginator('load', 0, 1000);
+                $('#paginator').mmPaginator('load', {
+                    pageNo: 15
+                    , totalCount: 1000
+                });
             });
         </script>
     </body>
