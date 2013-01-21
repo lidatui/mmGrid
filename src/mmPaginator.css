@@ -35,7 +35,28 @@
 
 }
 
+.mmPageinator .pageNoList li.active{
+    background: none;
+    padding: 1px 0 0 0;
+    border: 0;
+}
+
+.mmPageinator .pageNoList li.disable a{
+    color: #333;
+    cursor: default;
+}
+
+.mmPageinator .pageNoList li.disable{
+    background: #efefef;
+}
+
+.mmPageinator .pageNoList li.disable a{
+    color: #333;
+    cursor: default;
+}
+
 .mmPageinator .pageNoList li a{
+    color: #b00;
     text-align: center;
     cursor: pointer;
 }

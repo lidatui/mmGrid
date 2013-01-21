@@ -82,21 +82,16 @@
 
                 $('#mmg').mmGrid({
                     cols: cols
-                    , url: 'data/stockQuote.json'
+                    , url: 'data/stockQuotePage.json'
                     , method: 'get'
                     , remoteSort:true
                     , sortName: 'SECUCODE'
                     , sortStatus: 'asc'
                     , multiSelect: true
                     , checkCol: true
+                    , paginator: $('#paginator').mmPaginator()
                 });
 
-
-                $('#paginator').mmPaginator();
-                $('#paginator').mmPaginator('load', {
-                    pageNo: 15
-                    , totalCount: 1000
-                });
             });
         </script>
     </body>

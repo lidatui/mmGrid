@@ -59,7 +59,7 @@
             //
             var $prev = $('<li><a>«</a></li>');
             if(pageNo<=0){
-                $prev.addClass('disabled');
+                $prev.addClass('disable');
             }else{
                 $prev.find('a').on('click', function(){
                     $el.data('pageNo', pageNo-1);
@@ -101,7 +101,7 @@
             //
             var $next = $('<li><a title="下一页">»</a></li>');
             if(pageNo+1>=totalPage){
-                $next.addClass('disabled');
+                $next.addClass('disable');
             }else{
                 $next.find('a').on('click', function(){
                     $el.data('pageNo', pageNo+1);
@@ -149,11 +149,29 @@
             });
         }
 
-        , submit: function(){
+        , params: function(){
             var opts = this.opts;
             var $el = this.$el;
             var $pageSizeList = this.$pageSizeList;
-            opts.onSubmit($el.data('pageNo'), $pageSizeList.val());
+
+            var params = {};
+            params[opts.pageNoName] = $el.data('pageNo');
+            params[opts.pageSizeName] = $pageSizeList.val();
+            return params;
+        }
+
+        , submit: function(){
+            var $el = this.$el;
+            var $pageSizeList = this.$pageSizeList;
+            this.onSubmit($el.data('pageNo'), $pageSizeList.val());
+        }
+
+        , addSubmitListener: function(callback){
+            this.onSubmit = callback;
+        }
+
+        , removeSubmitListener: function(){
+            this.onSubmit = undefined;
         }
     };
 
@@ -185,7 +203,6 @@
         , pageSizeLabel: '每页{0}条'
         , totalCountLabel: '共{0}条记录'
         , pageSizeList: [15, 30, 50]
-        , onSubmit: function(pageNo, pageSize){}
     };
 
     $.fn.mmPaginator.Constructor = MMPaginator;
