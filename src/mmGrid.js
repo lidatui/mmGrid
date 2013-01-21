@@ -696,7 +696,8 @@
             var data = $(this).data('mmGrid');
             var fn =  data[arguments[0]];
             if(fn){
-                return fn.apply(data,arguments.slice(1));
+                var args = Array.prototype.slice.call(arguments);
+                return fn.apply(data,args.slice(1));
             }
         }
     };

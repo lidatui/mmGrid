@@ -15,17 +15,20 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="../src/mmGrid.css">
+        <link rel="stylesheet" href="../src/mmPaginator.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body style="padding: 40px;">
         <div>
             <table id="mmg"></table>
+            <div id="paginator" style="text-align: right;"></div>
         </div>
 
         <script src="js/vendor/jquery-1.8.3.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
         <script src="../src/mmGrid.js"></script>
+        <script src="../src/mmPaginator.js"></script>
         <script>
             $(document).ready(function(){
 
@@ -87,6 +90,10 @@
                     , multiSelect: true
                     , checkCol: true
                 });
+
+
+                $('#paginator').mmPaginator();
+                $('#paginator').mmPaginator('load', 0, 1000);
             });
         </script>
     </body>
