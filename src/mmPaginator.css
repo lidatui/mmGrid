@@ -1,9 +1,9 @@
-.mmPageinator {
+.mmPaginator {
     margin: 5px 0;
     white-space: nowrap;
 }
 
-.mmPageinator .totalCountLabel{
+.mmPaginator .totalCountLabel{
     display: inline-block;
     *display: inline;
     *zoom: 1;
@@ -13,7 +13,7 @@
     vertical-align: top;
 }
 
-.mmPageinator .pageNoList{
+.mmPaginator .pageNoList{
     display: inline-block;
     *display: inline;
     *zoom: 1;
@@ -22,7 +22,7 @@
     list-style: none;
 }
 
-.mmPageinator .pageNoList li{
+.mmPaginator .pageNoList li{
     display: inline-block;
     *display: inline;
     *zoom: 1;
@@ -35,73 +35,73 @@
 
 }
 
-.mmPageinator .pageNoList li.active{
+.mmPaginator .pageNoList li.active{
     background: none;
     padding-top: 1px;
     border: 0;
 }
 
-.mmPageinator .pageNoList li.disable a{
+.mmPaginator .pageNoList li.disable a{
     color: #333;
     cursor: default;
 }
 
-.mmPageinator .pageNoList li.disable{
+.mmPaginator .pageNoList li.disable{
     background: #efefef;
 }
 
-.mmPageinator .pageNoList li.disable a{
+.mmPaginator .pageNoList li.disable a{
     color: #333;
     cursor: default;
 }
 
-.mmPageinator .pageNoList li a{
+.mmPaginator .pageNoList li a{
     color: #b00;
     text-align: center;
     cursor: pointer;
 }
 
-.mmPageinator .pageNoList li a.head{
+.mmPaginator .pageNoList li a.head{
 
 }
 
-.mmPageinator .pageNoList li a.headDisable{
+.mmPaginator .pageNoList li a.headDisable{
 
 }
 
-.mmPageinator .pageNoList li a.prev{
+.mmPaginator .pageNoList li a.prev{
 
 }
 
-.mmPageinator .pageNoList li a.prevDisable{
+.mmPaginator .pageNoList li a.prevDisable{
 
 }
 
-.mmPageinator .pageNoList li a.next{
+.mmPaginator .pageNoList li a.next{
 
 }
 
-.mmPageinator .pageNoList li a.nextDisable{
+.mmPaginator .pageNoList li a.nextDisable{
 
 }
 
-.mmPageinator .pageNoList li a.tail{
+.mmPaginator .pageNoList li a.tail{
 
 }
 
-.mmPageinator .pageNoList li a.tailDisable{
+.mmPaginator .pageNoList li a.tailDisable{
 
 }
 
-.mmPageinator .pageNoList li a.current{
+.mmPaginator .pageNoList li a.current{
 
 }
 
-.mmPageinator .pageNoList li a.skip{
+.mmPaginator .pageNoList li a.skip{
 
 }
 
-.mmPageinator .pageSize{
+.mmPaginator .pageSize{
     display: inline-block;
     *display: inline;
     *zoom: 1;
@@ -109,7 +109,7 @@
     vertical-align: top;
 }
 
-.mmPageinator .pageSize select{
+.mmPaginator .pageSize select{
     border: 1px solid #ccc;
     padding: 1px;
     width: auto;

@@ -16,7 +16,7 @@
             var $el = this.$el;
             var opts = this.opts;
 
-            $el.addClass("mmPageinator");
+            $el.addClass("mmPaginator");
             var pgHtmls = [
                 '<div class="totalCountLabel"></div>',
                 '<ul class="pageNoList"></ul>',
