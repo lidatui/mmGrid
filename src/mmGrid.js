@@ -332,6 +332,14 @@
 
                 });
             }
+
+            //注册分页事件
+            if(opts.paginator && opts.paginator.mmPaginator){
+                var $pg = opts.paginator;
+                $pg.mmPaginator('addSubmitListener', function(){
+                    that._loadAjax();  //只有远程分页
+                })
+            }
         }
         , _populate: function(items){
             var opts = this.opts;
@@ -554,6 +562,13 @@
                 }
             }
 
+            //分页参数合并
+            if(opts.paginator && opts.paginator.mmPaginator){
+                var $pg = opts.paginator;
+                var pgParams = $pg.mmPaginator('params');
+                $.extend(params, pgParams);
+            }
+
             //合并load的参数
             params = $.extend(params, args);
             $.ajax({
@@ -574,6 +589,12 @@
                 }
                 if(opts.onSuccess){
                     opts.onSuccess(data);
+                }
+
+                //分页控件加载
+                if(opts.paginator && opts.paginator.mmPaginator){
+                    var $pg = opts.paginator;
+                    $pg.mmPaginator('load',data);
                 }
             }).fail(function(data){
                 if(opts.onError){
@@ -696,7 +717,8 @@
             var data = $(this).data('mmGrid');
             var fn =  data[arguments[0]];
             if(fn){
-                return fn.apply(data,arguments.slice(1));
+                var args = Array.prototype.slice.call(arguments);
+                return fn.apply(data,args.slice(1));
             }
         }
     };
@@ -724,6 +746,7 @@
         , onSuccess: function(data){}
         , onError: function(data){}
         , onSelected: function(item, rowIndex, colIndex){}
+        , paginator : undefined //分页器
     };
 
     $.fn.mmGrid.Constructor = MMGrid;

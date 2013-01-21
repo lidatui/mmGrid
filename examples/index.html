@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../src/mmGrid.css">
+    <link rel="stylesheet" href="../src/mmPaginator.css">
     <style>
         .mmGrid {
             font-family: 'Helvetica Neue', helvetica, arial, sans-serif;
@@ -154,6 +155,19 @@
                 <div class="span6">
                     <h4>6.2 checkCol:true,multiSelect:false</h4>
                     <table id="table17"></table>
+                </div>
+            </div>
+            <h3>7 分页示例</h3>
+            <div style="text-indent: 2em;">
+                这里的分页示例借助了分页器，开发者可以根据自己的需求选择使用其他分页器。
+            </div>
+            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+                <div class="span12">
+                    <h4>7.1 默认样式</h4>
+                    <table id="table18"></table>
+                    <div style="text-align:right;">
+                        <div id="paginator18"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -373,6 +387,7 @@
 <script src="js/plugins.js"></script>
 <script src="js/vendor/json2.js"></script>
 <script src="../src/mmGrid.js"></script>
+<script src="../src/mmPaginator.js"></script>
 <script>
 $(document).ready(function () {
     $('#nav a').click(function (e) {
@@ -661,6 +676,15 @@ $(document).ready(function () {
                 return false;//返回false取消执行选中或取消选中的操作
             }
         }
+    });
+
+    //分页
+    $('#table18').mmGrid({
+        cols: cols,
+        url: 'data/stockQuotePage.json',
+        method: 'get',
+        root: 'items',
+        paginator : $('#paginator18').mmPaginator()
     });
 
 });
