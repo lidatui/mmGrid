@@ -13,6 +13,11 @@
     table-layout: fixed;
 }
 
+.mmGrid input[type="radio"],
+.mmGrid input[type="checkbox"]{
+    margin: 0;
+}
+
 /* 遮罩 */
 .mmGrid .mmg-mask{
     position: absolute;
