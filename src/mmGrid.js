@@ -381,8 +381,10 @@
 
             //IE6不支持hover
             if (browser.isIE6){
-                $body.on('hover','tr', function (e) {
-                    $(this).toggleClass('hover', e.type === 'mouseenter');
+                $body.on('mouseenter','tr', function () {
+                    $(this).toggleClass('hover');
+                }).on('mouseleave','tr', function () {
+                    $(this).toggleClass('hover');
                 });
             };
 
