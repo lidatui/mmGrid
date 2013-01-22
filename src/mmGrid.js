@@ -21,6 +21,25 @@
 
     };
 
+    //see: http://tanalin.com/en/articles/ie-version-js/
+    var browser = function(){
+        var isIE=!!window.ActiveXObject;
+        var isIE10 = isIE && !!window.atob;
+        var isIE9 = isIE && document.addEventListener && !window.atob;
+        var isIE8 = isIE && document.querySelector && !document.addEventListener;
+        var isIE7 = isIE && window.XMLHttpRequest && !document.querySelector;
+        var isIE6 = isIE && !window.XMLHttpRequest;
+
+        return {
+            isIE: isIE
+            , isIE6: isIE6
+            , isIE7: isIE7
+            , isIE8: isIE8
+            , isIE9: isIE9
+            , isIE10: isIE10
+        };
+    }();
+
     MMGrid.prototype = {
         _initLayout: function($el){
             var $elParent = $el.parent();
@@ -47,9 +66,11 @@
 
                 '</div>'
             ];
-
             //fix in IE7,IE6
-            $el.prop('cellspacing',0);
+            if(browser.isIE7 || browser.isIE6){
+                $el.prop('cellspacing',0);
+            }
+
 
             //cached object
             var $mmGrid = $(mmGrid.join(''));
@@ -71,8 +92,18 @@
             }
 
             var opts = this.opts;
-            $mmGrid.width(opts.width);
-            if(!opts.fitRows){
+            // fix in ie6
+            if(browser.isIE6 && (!opts.width || opts.width === 'auto')){
+                $mmGrid.width('100%');
+                $mmGrid.width($mmGrid.width() - ($mmGrid.outerWidth(true) - $mmGrid.width()));
+            }else{
+                $mmGrid.width(opts.width);
+            }
+
+            if(browser.isIE6 && (!opts.height || opts.height === 'auto')){
+                $mmGrid.height('100%');
+                $mmGrid.height($mmGrid.height() - ($mmGrid.outerHeight(true) - $mmGrid.height()));
+            }else{
                 $mmGrid.height(opts.height);
             }
 
@@ -183,6 +214,21 @@
             if(opts.width === 'auto' || opts.height === 'auto' || (typeof opts.width === 'string' && opts.width.indexOf('%') === opts.width.length-1) ||
                 typeof opts.height === 'string' && opts.height.indexOf('%') === opts.height.length-1){
                 $(window).on('resize', function(){
+                    // fix in ie6
+                    if(browser.isIE6 && (!opts.width || opts.width === 'auto')){
+                        $mmGrid.width('100%');
+                        $mmGrid.width($mmGrid.width() - ($mmGrid.outerWidth(true) - $mmGrid.width()));
+                    }else{
+                        $mmGrid.width(opts.width);
+                    }
+
+                    if(browser.isIE6 && (!opts.height || opts.height === 'auto')){
+                        $mmGrid.height('100%');
+                        $mmGrid.height($mmGrid.height() - ($mmGrid.outerHeight(true) - $mmGrid.height()));
+                    }else{
+                        $mmGrid.height(opts.height);
+                    }
+
 
                     //调整message
                     var $message = $mmGrid.find('.mmg-message');
@@ -332,6 +378,13 @@
 
                 });
             }
+
+            //IE6不支持hover
+            if (browser.isIE6){
+                $body.on('hover','tr', function (e) {
+                    $(this).toggleClass('hover', e.type === 'mouseenter');
+                });
+            };
 
             //注册分页事件
             if(opts.paginator && opts.paginator.mmPaginator){
