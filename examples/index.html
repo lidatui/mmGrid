@@ -16,12 +16,18 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../src/mmGrid.css">
     <link rel="stylesheet" href="../src/mmPaginator.css">
+    <!--[if lt IE 9]>
+        <script src="js/vendor/html5shiv.js"></script>
+    <![endif]-->
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     <style>
+        body{
+            font-family: 'Helvetica Neue', helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+            color: #333;
+        }
         .mmGrid,
         .mmPaginator{
-            font-family: 'Helvetica Neue', helvetica, arial, sans-serif;
             font-size: 12px;
-            color: #333;
         }
         .btnPrice {
             display: block;
@@ -42,7 +48,7 @@
 </head>
 <body>
 <a href="https://github.com/miemiedev/mmGrid"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
-<div class="container">
+<main class="container">
     <h1>mmGrid</h1>
     <p style="border-top: 1px solid #ddd;padding-top: 20px;">
         这是一个简单、易用、快速、跨浏览器兼容的javascript表格控件，应用于基于web的富客户端程序中。
@@ -378,13 +384,11 @@
 
         </div>
     </div>
-    <div style="text-align: center;padding-top: 15px;padding-bottom: 20px">
-        <a href="https://twitter.com/miemiebw" class="twitter-follow-button" data-show-count="false">Follow @miemiebw</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </div>
-</div>
+    <footer style="text-align: center;padding-top: 15px;padding-bottom: 20px">
+    </footer>
+</main>
 
-<script src="js/vendor/jquery-1.8.3.min.js"></script>
+<script src="js/vendor/jquery-1.9.0.min.js"></script>
 <script src="js/plugins.js"></script>
 <script src="js/vendor/json2.js"></script>
 <script src="../src/mmGrid.js"></script>
