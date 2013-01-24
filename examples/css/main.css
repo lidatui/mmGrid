@@ -99,7 +99,7 @@ body{
         url(../img/pw_maze_white.png) 1x,
         url(../img/pw_maze_white_@2X.png) 2x
     );
-    font-family: 'Helvetica Neue',helvetica, arial, sans-serif;
+    font-family: 'Helvetica Neue',helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     font-size: 12px;
     color: #333;
 }
