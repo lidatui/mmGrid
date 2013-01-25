@@ -10,6 +10,8 @@
         this._initHead();
         this._initOptions();
         this._initEvents();
+        this._setColsWidth();
+
         if(options.autoLoad){
             if(options.url){
                 this.load();
@@ -443,7 +445,6 @@
                 this._showNoData();
             }
             this._setStyle();
-            this._setColsWidth();
 
             this._hideLoading();
         }
