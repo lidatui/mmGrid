@@ -534,8 +534,13 @@
             var $mmGrid = this.$mmGrid;
             var $head = this.$head;
             var scrollWidth = $bodyWrapper.width() - $bodyWrapper[0].clientWidth;
+
+            if(scrollWidth && browser.isIE){
+                scrollWidth = scrollWidth + 1;
+            }
+
             var fitWidth =  $mmGrid.width() - $head.width() - scrollWidth;
-            if(fitWidth < -17){  //一般win是-17，多于这个数就不缩了
+            if(fitWidth < -20){
                 return;
             }
 
@@ -565,7 +570,7 @@
 
             var remainWidth =  fitWidth -  increaseWidth * thsArr.length;
             var maxColWidth = $.data(thsArr[maxColWidthIndex][0], 'col-width');
-            $.data(thsArr[maxColWidthIndex][0], 'col-width', maxColWidth -1 + remainWidth);
+            $.data(thsArr[maxColWidthIndex][0], 'col-width', maxColWidth + remainWidth);
             this._setColsWidth();
         }
 
