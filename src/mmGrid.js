@@ -12,9 +12,6 @@
         this._initOptions();
         this._initEvents();
         this._setColsWidth();
-        if(this.opts.fitColWidth){
-            this._fitColWidth();
-        }
 
         if(options.autoLoad){
             if(options.url){
