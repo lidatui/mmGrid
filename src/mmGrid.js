@@ -5,12 +5,16 @@
 !function($){
     var MMGrid = function (element, options) {
         this._id = (((1 + Math.random()) * 0x10000) | 0).toString(16);
+        this._loadCount = 0;
         this.opts = options;
         this._initLayout($(element));
         this._initHead();
         this._initOptions();
         this._initEvents();
         this._setColsWidth();
+        if(this.opts.fitColWidth){
+            this._fitColWidth();
+        }
 
         if(options.autoLoad){
             if(options.url){
@@ -404,6 +408,7 @@
 
             this._hideNoData();
             if(items && items.length !== 0 && opts.cols){
+
                 var tbodyHtmls = [];
                 tbodyHtmls.push('<tbody>');
                 for(var rowIndex=0; rowIndex < items.length; rowIndex++){
@@ -445,6 +450,11 @@
                 this._showNoData();
             }
             this._setStyle();
+
+            if(opts.fitColWidth && this._loadCount <= 1){
+                this._fitColWidth();
+            }
+
 
             this._hideLoading();
         }
@@ -518,6 +528,48 @@
                 $head.css('left', 0);
             }
         }
+        , _fitColWidth: function(){
+            var opts = this.opts;
+            var $bodyWrapper = this.$bodyWrapper;
+            var $mmGrid = this.$mmGrid;
+            var $head = this.$head;
+            var scrollWidth = $bodyWrapper.width() - $bodyWrapper[0].clientWidth;
+            var fitWidth =  $mmGrid.width() - $head.width() - scrollWidth;
+            if(fitWidth <= 0){
+                return;
+            }
+
+            var thsArr = [];
+            var $ths = $head.find('th');
+            for(var i=0; i< opts.cols.length; i++){
+                var col = opts.cols[i];
+                var $th = $ths.eq(i);
+                if(!col.lockWidth && $th.is(':visible')){
+                    thsArr.push($th);
+                }
+
+            }
+
+            var increaseWidth =  Math.floor(fitWidth / thsArr.length);
+            var maxColWidthIndex = 0;
+            for(var i=0; i< thsArr.length; i++){
+                var $th = thsArr[i];
+                var colWidth = $.data($th[0], 'col-width') + increaseWidth;
+                $.data($th[0], 'col-width', colWidth);
+
+                var maxColWidth = $.data(thsArr[maxColWidthIndex][0], 'col-width');
+                if(maxColWidth < colWidth){
+                    maxColWidthIndex = i;
+                }
+            }
+
+            var remainWidth =  fitWidth -  increaseWidth * thsArr.length;
+            var maxColWidth = $.data(thsArr[maxColWidthIndex][0], 'col-width');
+            $.data(thsArr[maxColWidthIndex][0], 'col-width', maxColWidth + remainWidth);
+            this._setColsWidth();
+        }
+
+
         , _showLoading: function(){
             var $mmGrid = this.$mmGrid;
             $mmGrid.find('.mmg-mask').show();
@@ -665,6 +717,8 @@
             var opts = this.opts;
             this._hideMessage();
             this._showLoading();
+            this._loadCount = this._loadCount + 1 ;
+
             if($.isArray(args)){
                 //加载本地数据
                 this._populate(args);
@@ -796,6 +850,7 @@
         , noDataText: '没有数据'
         , multiSelect: false
         , checkCol: false
+        , fitColWidth: false
         , nowrap: false
         , onSuccess: function(data){}
         , onError: function(data){}
