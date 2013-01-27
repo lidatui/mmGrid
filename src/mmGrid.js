@@ -1,5 +1,5 @@
 /**
- * User: meimeibw
+ * Author: meimeidev
  */
 
 !function($){
@@ -794,8 +794,6 @@
         , sortStatus: 'asc'
         , loadingText: '正在载入...'
         , noDataText: '没有数据'
-        , fitCols: false
-        , fitRows: false
         , multiSelect: false
         , checkCol: false
         , nowrap: false
