@@ -12,6 +12,9 @@
         this._initOptions();
         this._initEvents();
         this._setColsWidth();
+        if(this.opts.fitColWidth){
+            this._fitColWidth();
+        }
 
         if(options.autoLoad){
             if(options.url){
@@ -532,7 +535,7 @@
             var $head = this.$head;
             var scrollWidth = $bodyWrapper.width() - $bodyWrapper[0].clientWidth;
             var fitWidth =  $mmGrid.width() - $head.width() - scrollWidth;
-            if(fitWidth <= 0){
+            if(fitWidth < -17){  //一般win是-17，多于这个数就不缩了
                 return;
             }
 

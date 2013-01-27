@@ -134,7 +134,23 @@
                     <table id="table9"></table>
                 </div>
             </div>
-            <h3>5 multiSelect示例</h3>
+
+            <h3>5 fitColWidth示例</h3>
+            <div style="text-indent: 2em;">
+                当表选项<code>fitColWidth</code>设置为<code>true</code>时，表格在第一次数据加载时计算列宽，将其充满整个表格。锁定列宽的列不参与计算。如果所有显示的列宽总和大于表格宽度这个参数将不起作用。
+            </div>
+            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+                <div class="span6">
+                    <h4>5.1 fitColWidth:true</h4>
+                    <table id="table10"></table>
+                </div>
+                <div class="span6">
+                    <h4>5.2 fitColWidth:false</h4>
+                    <table id="table11"></table>
+                </div>
+            </div>
+
+            <h3>6 multiSelect示例</h3>
             <div style="text-indent: 2em;">
                 表选项<code>multiSelect</code>设置表格是否可多选。可通过表操作<code>$('#table').mmGrid('selected')</code>获取选择的行对象。
                 当光标单击单元格时触发<code>onSelected</code>事件，该事件可在表选项设置。当该事件返回<code>false</code>取消执行选中或取消选中的操作。
@@ -142,35 +158,36 @@
             </div>
             <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
                 <div class="span6">
-                    <h4>5.1 multiSelect:true</h4>
+                    <h4>6.1 multiSelect:true</h4>
                     <table id="table14"></table>
                 </div>
                 <div class="span6">
-                    <h4>5.2 multiSelect:false</h4>
+                    <h4>6.2 multiSelect:false</h4>
                     <table id="table15"></table>
                 </div>
             </div>
-            <h3>6 checkCol示例</h3>
+            <h3>7 checkCol示例</h3>
             <div style="text-indent: 2em;">
                 表选项<code>checkCol</code>可以在表格前插入checkbox列。<code>checkCol</code>选项可以和<code>multiSelect</code>搭配使用，可以更形象的表现选择列。
             </div>
             <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
                 <div class="span6">
-                    <h4>6.1 checkCol:true,multiSelect:true</h4>
+                    <h4>7.1 checkCol:true,multiSelect:true</h4>
                     <table id="table16"></table>
                 </div>
                 <div class="span6">
-                    <h4>6.2 checkCol:true,multiSelect:false</h4>
+                    <h4>7.2 checkCol:true,multiSelect:false</h4>
                     <table id="table17"></table>
                 </div>
             </div>
-            <h3>7 分页示例</h3>
+
+            <h3>8 分页示例</h3>
             <div style="text-indent: 2em;">
                 这里的分页示例借助了分页器，开发者可以根据自己的需求选择使用其他分页器。
             </div>
             <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
                 <div class="span12">
-                    <h4>7.1 默认样式</h4>
+                    <h4>8.1 默认样式</h4>
                     <table id="table18"></table>
                     <div style="text-align:right;">
                         <div id="paginator18"></div>
@@ -233,6 +250,11 @@
                 <td>multiSelect</td>
                 <td><em>false</em>, true</td>
                 <td>数据使用本地对象数组。</td>
+            </tr>
+            <tr>
+                <td>fitColWidth</td>
+                <td><em>false</em>, true</td>
+                <td>true:表格第一次加载数据时列伸展，自动充满表格。</td>
             </tr>
             <tr>
                 <td>checkCol</td>
@@ -630,6 +652,33 @@ $(document).ready(function () {
     });
     $('#table9').mmGrid({
         cols: cols8,
+        items: items
+    });
+
+    //fitColWidth
+    var cols10 = [
+        {title:'行情', name:'', width: 30, align: 'center',lockWidth:true, renderer: function(val,item,items,rowIndex){
+            return '<div class="btnPrice"></div>';
+        }},
+        { title:'股票代码', name:'SECUCODE' , width: 80, align:'center' },
+        { title:'股票名称', name:'SECUABBR' , width: 80, align:'center'},
+        { title:'今收盘', name:'CLOSINGPRICE' , width: 60, align:'right', renderer: fixed2},
+        { title:'涨跌幅', name:'DAYCHANGERATE' , width: 60, align:'right',renderer: function(val){
+            if(val > 0){
+                return '<span style="color: #b00">' + val.toFixed(2) +'%' + '</span>';
+            }else if(val < 0){
+                return '<span style="color: #0b0">' + val.toFixed(2) +'%' + '</span>';
+            }
+            return val.toFixed(2)+'%';
+        }}
+    ];
+    $('#table10').mmGrid({
+        cols: cols10,
+        items: items,
+        fitColWidth: true
+    });
+    $('#table11').mmGrid({
+        cols: cols10,
         items: items
     });
 
