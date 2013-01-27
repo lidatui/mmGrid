@@ -233,6 +233,14 @@
     background: #efefef;
 }
 
+.mmGrid .mmg-bodyWrapper .mmg-body td.colSelected{
+    background: #f4f4f4;
+}
+
+.mmGrid .mmg-bodyWrapper .mmg-body td.colSelectedEven{
+    background: #efefef;
+}
+
 .mmGrid .mmg-bodyWrapper .mmg-body tr.hover td{
     background: #dfe8f6;
 }
