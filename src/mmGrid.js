@@ -565,7 +565,7 @@
 
             var remainWidth =  fitWidth -  increaseWidth * thsArr.length;
             var maxColWidth = $.data(thsArr[maxColWidthIndex][0], 'col-width');
-            $.data(thsArr[maxColWidthIndex][0], 'col-width', maxColWidth + remainWidth);
+            $.data(thsArr[maxColWidthIndex][0], 'col-width', maxColWidth -1 + remainWidth);
             this._setColsWidth();
         }
 
