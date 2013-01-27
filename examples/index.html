@@ -276,19 +276,19 @@
             </tr>
             <tr>
                 <td>onSuccess</td>
-                <td><em>function(mmGrid, data){}</em>, function</td>
+                <td><em>function(data){}</em>, function</td>
                 <td>数据加载成功后执行。</td>
             </tr>
             <tr>
                 <td>onError</td>
-                <td><em>function(mmGrid, data){}</em>, function</td>
+                <td><em>function(data){}</em>, function</td>
                 <td>数据加载失败后执行。</td>
             </tr>
             <tr>
                 <td>onSelected</td>
-                <td><em>function(e, item, rowIndex, colIndex){}</em>, function</td>
+                <td><em>function(item, rowIndex, colIndex){}</em>, function</td>
                 <td>
-                    表格中的数据被选择时执行。e：事件对象；item：当前数据行对应的对象；rowIndex：行索引；colIndex：列索引。
+                    表格中的数据被选择时执行。item：当前数据行对应的对象；rowIndex：行索引；colIndex：列索引。
                     如果该函数返回false则不会触发选中和取消选中的操作。
                 </td>
             </tr>
@@ -349,7 +349,7 @@
                 <td>renderer</td>
                 <td>function(val,item,items,rowIndex){ return val;}</td>
                 <td>显示规则。参数: val 值, item 对象, items 对象数组, rowIndex 行索引;
-                    返回值: 可以是文本，html文本。
+                    返回值: 可以是纯文本或html。
                 </td>
             </tr>
         </table>
@@ -640,7 +640,7 @@ $(document).ready(function () {
         multiSelect: true,
         cols: cols,
         items: items,
-        onSelected: function(e, item, rowIndex, colIndex){
+        onSelected: function(item, rowIndex, colIndex){
             if(colIndex === 0){
                 alert(JSON.stringify(item));
                 return false;//返回false取消执行选中或取消选中的操作
@@ -650,7 +650,7 @@ $(document).ready(function () {
     $('#table15').mmGrid({
         cols: cols,
         items: items,
-        onSelected: function(e, item, rowIndex, colIndex){
+        onSelected: function(item, rowIndex, colIndex){
             if(colIndex === 0){
                 alert(JSON.stringify(item));
                 return false;//返回false取消执行选中或取消选中的操作
@@ -664,7 +664,7 @@ $(document).ready(function () {
         checkCol: true,
         cols: cols,
         items: items,
-        onSelected: function(e, item, rowIndex, colIndex){
+        onSelected: function(item, rowIndex, colIndex){
             if(colIndex === 1){
                 alert(JSON.stringify(item));
                 return false;//返回false取消执行选中或取消选中的操作
@@ -675,7 +675,7 @@ $(document).ready(function () {
         checkCol: true,
         cols: cols,
         items: items,
-        onSelected: function(e, item, rowIndex, colIndex){
+        onSelected: function(item, rowIndex, colIndex){
             if(colIndex === 1){
                 alert(JSON.stringify(item));
                 return false;//返回false取消执行选中或取消选中的操作

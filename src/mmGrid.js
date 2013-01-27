@@ -356,9 +356,9 @@
 
             //选中事件
             var $body = this.$body;
-            $body.on('click','td',function(e){
+            $body.on('click','td',function(){
                 var $this = $(this);
-                var action = opts.onSelected(e, $.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
+                var action = opts.onSelected($.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
                 if(action === false){
                     return;
                 }
