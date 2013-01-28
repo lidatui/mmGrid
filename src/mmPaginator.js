@@ -201,7 +201,7 @@
         , pageNoName: 'pageNo'
         , pageSizeName: 'pageSize'
         , pageSizeLabel: '每页{0}条'
-        , totalCountLabel: '共{0}条记录'
+        , totalCountLabel: '共<span>{0}</span>条记录'
         , pageSizeList: [15, 30, 50]
     };
 

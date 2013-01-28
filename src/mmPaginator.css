@@ -9,8 +9,12 @@
     *zoom: 1;
     margin: 0 5px 0 0;
     padding: 1px 0 0 0;
-    line-height: 1.4em;
+    line-height: 1.5em;
     vertical-align: top;
+}
+.mmPaginator .totalCountLabel span{
+    color: #b00;
+    font-weight: bold;
 }
 
 .mmPaginator .pageNoList{
@@ -26,11 +30,11 @@
     display: inline-block;
     *display: inline;
     *zoom: 1;
-    margin: 0 1px;
-    padding: 0 5px;
+    margin: 0 2px;
+    padding: 0 6px;
     background: #fff;
     border: 1px solid #ccc;
-    line-height: 1.4em;
+    line-height: 1.5em;
     vertical-align: top;
 
 }
@@ -105,7 +109,7 @@
     display: inline-block;
     *display: inline;
     *zoom: 1;
-    line-height: 1.4em;
+    line-height: 1.5em;
     vertical-align: top;
 }
 
@@ -115,6 +119,8 @@
     width: auto;
     height: auto;
     margin: 0;
+    line-height: 1.5em;
+    font-size: 1em;
 }
 
 
