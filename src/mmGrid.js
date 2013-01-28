@@ -844,7 +844,7 @@
         , cols: []
         , url: false
         , params: {}
-        , method: 'POST'
+        , method: 'GET'
         , root: 'items'
         , items: []
         , autoLoad: true
