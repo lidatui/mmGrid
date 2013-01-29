@@ -872,6 +872,30 @@
             this._setStyle();
         }
 
+        , update: function(item, index){
+            var opts = this.opts;
+            var $tbody = this.$body.find('tbody');
+            if(!$.isPlainObject(item)){
+                return ;
+            }
+
+            var items = this.items();
+
+            var $tr = $tbody.find('tr').eq(index);
+            var checked = $tr.find('td:first :checkbox').is(':checked');
+
+            var $trNew = $(this._rowHtml(item, items, index));
+            $tr.empty().append($trNew.find('td'));
+            if(opts.checkCol){
+                $tr.find('td:first :checkbox').prop('checked',checked);
+            }
+
+
+            $tr.data('item', item);
+            this._setStyle();
+        }
+
+        //删除行，参数可以为索引数组
         , remove: function(index){
             var $tbody = this.$body.find('tbody');
 

@@ -28,6 +28,7 @@
                 <button id="btnAddArr" class="button" >添加列表到第二行</button>
                 <button id="btnRemove" class="button" >删除第二行</button>
                 <button id="btnRemoveSelected" class="button" >删除选择的行</button>
+                <button id="btnUpdate" class="button" >更新第2行</button>
             </div>
             <table id="mmg"></table>
             <div id="paginator" style="text-align: right;">
@@ -130,6 +131,17 @@
                 $('#btnRemoveSelected').on('click', function(){
                     var selectedIndexes = $('#mmg').mmGrid('selectedIndex');
                     $('#mmg').mmGrid('remove', selectedIndexes);
+                });
+
+                $('#btnUpdate').on('click', function(){
+                    var allItems = $('#mmg').mmGrid('items');
+                    if(allItems.length > 1){
+                        var updateItem = allItems[1];
+                        updateItem.SECUCODE = '999999';
+                        updateItem.SECUABBR = '更新股票';
+                        $('#mmg').mmGrid('update', updateItem, 1);
+                    }
+
                 });
 
             });
