@@ -394,13 +394,13 @@
             </tr>
             <tr>
                 <td>select</td>
-                <td>int, function(item){ return true; }, 'all'</td>
-                <td>选中参数条件的行。int: 选中索引行; function: 过滤函数, item参数为行数据; 'all': 选中所有行。</td>
+                <td>int, function(item, index){ return true; }, 'all'</td>
+                <td>选中参数条件的行。int: 选中索引行; function: 过滤函数, item参数为行数据, index参数为行索引; 'all': 选中所有行。</td>
             </tr>
             <tr>
                 <td>deselect</td>
-                <td>int, function(item){ return true; }, 'all'</td>
-                <td>取消选中参数条件的行。int: 取消选择索引行; function: 过滤函数, item参数为行数据; 'all': 取消选中所有行。</td>
+                <td>int, function(item, index){ return true; }, 'all'</td>
+                <td>取消选中参数条件的行。int: 取消选择索引行; function: 过滤函数, item参数为行数据, index参数为行索引; 'all': 取消选中所有行。</td>
             </tr>
         </table>
 

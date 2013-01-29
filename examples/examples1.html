@@ -23,8 +23,16 @@
     </head>
     <body style="padding: 40px;">
         <main>
+            <div style="margin-bottom: 5px;">
+                <button id="btnAdd" class="button">添加到第三行</button>
+                <button id="btnAddArr" class="button" >添加列表到第二行</button>
+                <button id="btnRemove" class="button" >删除第二行</button>
+                <button id="btnRemoveSelected" class="button" >删除选择的行</button>
+            </div>
             <table id="mmg"></table>
-            <div id="paginator" style="text-align: right;"></div>
+            <div id="paginator" style="text-align: right;">
+
+            </div>
         </main>
 
         <script src="js/vendor/jquery-1.9.0.min.js"></script>
@@ -45,11 +53,11 @@
                     return val.toFixed(2);
                 }
                 var cols = [
-                    {title:'行情', name:'', width: 30, align: 'center', renderer: function(val,item,items,rowIndex){
+                    {title:'行情', name:'', width: 30, align: 'center',lockWidth:true,  renderer: function(val,item,items,rowIndex){
                         return '<div class="btnPrice"></div>';
                     }},
-                    { title:'股票代码', name:'SECUCODE' ,width:100, sortable: true, align:'center' },
-                    { title:'股票名称', name:'SECUABBR' ,width:100, sortable: true, align:'center'},
+                    { title:'股票代码', name:'SECUCODE' ,width:100, sortable: true, align:'center' ,lockDisplay: true },
+                    { title:'股票名称', name:'SECUABBR' ,width:100, sortable: true, align:'center' ,lockDisplay: true},
                     { title:'今收盘', name:'CLOSINGPRICE' ,width:60, align:'right', sortable: true, type: 'number', renderer: fixed2},
                     { title:'涨跌幅', name:'DAYCHANGERATE' ,width:60, align:'right', sortable: true, type: 'number',renderer: function(val){
                         if(val > 0){
@@ -85,15 +93,43 @@
 
                 $('#mmg').mmGrid({
                     cols: cols
-                    , url: 'data/stockQuotePage.json'
-                    , method: 'get'
-                    , remoteSort:true
+                    , items: items
                     , sortName: 'SECUCODE'
                     , sortStatus: 'asc'
                     , multiSelect: true
                     , checkCol: true
                     , fitColWidth: true
                     , paginator: $('#paginator').mmPaginator()
+                });
+
+
+
+                var item1 = {AMPLITUDE:2.069,PREVCLOSINGPRICE:2.9,TURNOVERDEALS:0,HIGHESTPRICE:2.95,TURNOVERVOL:2511165,TRADINGDAY:1345478400000,TOTALSHARE:2000000000,SECUCODE:"100000",EPS:0.0266,LOWESTPRICE:2.89,OPENINGPRICE:2.9,SECUABBR:"新加股票",ALISTEDSHARE:2000000000,ID:3131903,WCOSTAVG:3.5362,NETCASHFLOWOPERPS:-0.4041,SECUNAME:"东风汽车股份有限公司",CLOSINGPRICE:2.9,DAYCHANGERATE:0,TURNOVERVAL:7316381,BVPS:3.0533,DAYCHANGE:0,PE:12.4963,TURNOVERRATE:0.1256,ADJUSTCLOSINGPRICE:10.0741,PB:0.9581};
+                var item2 = {AMPLITUDE:0.7389,PREVCLOSINGPRICE:12.18,TURNOVERDEALS:0,HIGHESTPRICE:12.22,TURNOVERVOL:1332194,TRADINGDAY:1345478400000,TOTALSHARE:1926958448,SECUCODE:"100001",EPS:0.1909,LOWESTPRICE:12.13,OPENINGPRICE:12.19,SECUABBR:"新加股票2",ALISTEDSHARE:1093476397,ID:3131171,WCOSTAVG:12.8369,NETCASHFLOWOPERPS:-0.04,SECUNAME:"上海国际机场股份有限公司",CLOSINGPRICE:12.14,DAYCHANGERATE:-0.3284,TURNOVERVAL:16207539,BVPS:8.16,DAYCHANGE:-0.04,PE:15.5997,TURNOVERRATE:0.1218,ADJUSTCLOSINGPRICE:33.1878,PB:1.523};
+
+                $('#btnAdd').on('click', function(){
+                    $('#mmg').mmGrid('deselect', 'all');
+                    $('#mmg').mmGrid('add', item1, 2);
+                    $('#mmg').mmGrid('select', 2);
+                });
+
+                $('#btnAddArr').on('click', function(){
+                    $('#mmg').mmGrid('deselect', 'all');
+                    $('#mmg').mmGrid('add', [item1,item2], 1);
+                    $('#mmg').mmGrid('select',function(item, index){
+                        if(index === 1 || index === 2){
+                            return true;
+                        }
+                    });
+                });
+
+                $('#btnRemove').on('click', function(){
+                    $('#mmg').mmGrid('remove', 1);
+                });
+
+                $('#btnRemoveSelected').on('click', function(){
+                    var selectedIndexes = $('#mmg').mmGrid('selectedIndex');
+                    $('#mmg').mmGrid('remove', selectedIndexes);
                 });
 
             });

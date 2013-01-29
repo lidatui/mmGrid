@@ -397,6 +397,38 @@
                 })
             }
         }
+
+        , _rowHtml: function(item, items, rowIndex){
+            var opts = this.opts;
+
+            if($.isPlainObject(item)){
+                var trHtml = [];
+                trHtml.push('<tr>"');
+                for(var colIndex=0; colIndex < opts.cols.length; colIndex++){
+                    var col = opts.cols[colIndex];
+                    trHtml.push('<td class="');
+                    trHtml.push(this._genColClass(colIndex));
+                    if(opts.nowrap){
+                        trHtml.push(' nowrap');
+                    }
+                    trHtml.push('"><span class="');
+                    if(opts.nowrap){
+                        trHtml.push('nowrap');
+                    }
+                    trHtml.push('">');
+                    if(col.renderer){
+                        trHtml.push(col.renderer(item[col.name],item,items,rowIndex));
+                    }else{
+                        trHtml.push(item[col.name]);
+                    }
+
+                    trHtml.push('</span></td>');
+                };
+                trHtml.push('</tr>');
+                return trHtml.join('');
+            }
+        }
+
         , _populate: function(items){
             var opts = this.opts;
             var $body = this.$body;
@@ -408,31 +440,7 @@
                 tbodyHtmls.push('<tbody>');
                 for(var rowIndex=0; rowIndex < items.length; rowIndex++){
                     var item = items[rowIndex];
-
-                    tbodyHtmls.push('<tr data-rowIndex="');
-                    tbodyHtmls.push(rowIndex);
-                    tbodyHtmls.push('">');
-                    for(var colIndex=0; colIndex < opts.cols.length; colIndex++){
-                        var col = opts.cols[colIndex];
-                        tbodyHtmls.push('<td class="');
-                        tbodyHtmls.push(this._genColClass(colIndex));
-                        if(opts.nowrap){
-                            tbodyHtmls.push(' nowrap');
-                        }
-                        tbodyHtmls.push('"><span class="');
-                        if(opts.nowrap){
-                            tbodyHtmls.push('nowrap');
-                        }
-                        tbodyHtmls.push('">');
-                        if(col.renderer){
-                            tbodyHtmls.push(col.renderer(item[col.name],item,items,rowIndex));
-                        }else{
-                            tbodyHtmls.push(item[col.name]);
-                        }
-
-                        tbodyHtmls.push('</span></td>');
-                    };
-                    tbodyHtmls.push('</tr>');
+                    tbodyHtmls.push(this._rowHtml(item, items, rowIndex));
                 }
                 tbodyHtmls.push('</tbody>');
                 $body.empty().html(tbodyHtmls.join(''));
@@ -748,18 +756,18 @@
                     }
                 }
             }else if(typeof args === 'function'){
-                $.each($body.find('tr'), function(index, tr){
-                    if(args($.data(this, 'item'))){
+                $.each($body.find('tr'), function(index){
+                    if(args($.data(this, 'item'), index)){
                         var $this = $(this);
                         if(!$this.hasClass('selected')){
                             $this.addClass('selected');
                             if(opts.checkCol){
-                                $tr.find('td:first :checkbox').prop('checked','checked');
+                                $this.find('td:first :checkbox').prop('checked','checked');
                             }
                         }
                     }
                 });
-            }else if(typeof args === 'string' && args === 'all'){
+            }else if(args === undefined || (typeof args === 'string' && args === 'all')){
                 $body.find('tr.selected').removeClass('selected');
                 $body.find('tr').addClass('selected');
                 $body.find('tr > td:nth-child(1)').find(':checkbox').prop('checked','checked');
@@ -775,15 +783,15 @@
                     $body.find('tr').eq(args).find('td:first :checkbox').prop('checked','');
                 }
             }else if(typeof args === 'function'){
-                $.each($body.find('tr'), function(index, tr){
-                    if(args($.data(this, 'item'))){
+                $.each($body.find('tr'), function(index){
+                    if(args($.data(this, 'item'), index)){
                         $(this).removeClass('selected');
                         if(opts.checkCol){
                             $(this).find('td:first :checkbox').prop('checked','');
                         }
                     }
                 });
-            }else if(typeof args === 'string' && args === 'all'){
+            }else if(args === undefined || (typeof args === 'string' && args === 'all')){
                 $body.find('tr.selected').removeClass('selected');
                 if(opts.checkCol){
                     $body.find('tr > td:nth-child(1)').find(':checkbox').prop('checked','');
@@ -798,16 +806,88 @@
             });
             return selected;
         }
+
+        , selectedIndex: function(){
+            var $body = this.$body;
+            var $trs = this.$body.find('tr')
+            var selected = [];
+            $.each($body.find('tr.selected'), function(index){
+                selected.push($trs.index(this));
+            });
+            return selected;
+        }
+
+        , items: function(){
+            var $body = this.$body;
+            var items = [];
+            $.each($body.find('tr'), function(){
+                items.push($.data(this,'item'));
+            });
+            return items;
+        }
+
         , size: function(){
-            var $trs = this.$body.find('tr');
-            if($trs.length === 1){
-                var item = $.data($trs[0],'item');
-                if(item){
-                    return 1;
+            var items = this.items();
+            return items.length;
+        }
+
+        //添加数据，第一个参数可以为数组
+        , add: function(item, index){
+            var $tbody = this.$body.find('tbody');
+
+            if($.isArray(item)){
+                for(var i=item.length-1; i >= 0; i--){
+                    this.add(item[i], index);
                 }
-                return 0;
+                return ;
             }
-            return $trs.length;
+
+            if(!$.isPlainObject(item)){
+                return ;
+            }
+
+            var items = this.items();
+
+            var $tr;
+
+            if(index === undefined || index < 0){
+                $tr = $(this._rowHtml(item, items, items.length));
+                $tbody.append($tr);
+            }else{
+                $tr = $(this._rowHtml(item, items, index));
+                if(index === 0){
+                    $tbody.prepend($tr);
+                }else{
+                    var $before = $tbody.find('tr').eq(index-1);
+                    //找不到就插到最后
+                    if($before.length === 0){
+                        $tbody.append($tr);
+                    }else{
+                        $before.after($($tr));
+                    }
+
+                }
+            }
+            $tr.data('item', item);
+            this._setStyle();
+        }
+
+        , remove: function(index){
+            var $tbody = this.$body.find('tbody');
+
+            if($.isArray(index)){
+                for(var i=index.length-1; i >= 0; i--){
+                    this.remove(index[i]);
+                }
+                return ;
+            }
+
+            if(index === undefined){
+                $tbody.find('tr').remove();
+            }else{
+                $tbody.find('tr').eq(index).remove();
+            }
+            this._setStyle();
         }
     };
 
