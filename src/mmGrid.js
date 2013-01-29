@@ -22,7 +22,6 @@
             }else{
                 this.load(options.items);
             }
-
         }
 
     };
@@ -113,14 +112,12 @@
                 $mmGrid.height(opts.height);
             }
 
-
             if(opts.checkCol){
                 var chkHtml = opts.multiSelect ? '<input type="checkbox" class="checkAll" >' : '<input type="checkbox" disabled="disabled" class="checkAll">';
                 opts.cols.unshift({title:chkHtml,width: 20, align: 'center' ,lockWidth: true, renderer:function(){
                     return '<input type="checkbox" class="check">';
                 }});
             }
-
         }
 
         , _initHead: function(){
@@ -235,7 +232,6 @@
                         $mmGrid.height(opts.height);
                     }
 
-
                     //调整message
                     var $message = $mmGrid.find('.mmg-message');
                     if($message.is(':visible')){
@@ -321,7 +317,7 @@
                 $.data(this, 'sortStatus', sortStatus);
                 $this.siblings('.mmg-sort').addClass('mmg-'+sortStatus);
 
-                if(opts.remoteSort){
+                if(opts.url && opts.remoteSort){
                     that.load()
                 }else{
                     that._nativeSorter($titles.index($this), sortStatus);
@@ -381,7 +377,6 @@
                     }else{
                         that.deselect('all');
                     }
-
                 });
             }
 
@@ -454,7 +449,6 @@
             if(opts.fitColWidth && this._loadCount <= 1){
                 this._fitColWidth();
             }
-
 
             this._hideLoading();
         }
@@ -552,7 +546,6 @@
                 if(!col.lockWidth && $th.is(':visible')){
                     thsArr.push($th);
                 }
-
             }
 
             var increaseWidth =  Math.floor(fitWidth / thsArr.length);
@@ -689,7 +682,7 @@
                 url: opts.url,
                 data: params,
                 dataType: 'json',
-                cache: false
+                cache: opts.cache
             }).done(function(data){
                 //获得root对象
                 var items = data;
@@ -844,7 +837,8 @@
         , cols: []
         , url: false
         , params: {}
-        , method: 'GET'
+        , method: 'POST'
+        , cache: false
         , root: 'items'
         , items: []
         , autoLoad: true
