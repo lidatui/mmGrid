@@ -871,7 +871,7 @@
             $tr.data('item', item);
             this._setStyle();
         }
-
+        //更新行内容，两个参数都必填
         , update: function(item, index){
             var opts = this.opts;
             var $tbody = this.$body.find('tbody');
