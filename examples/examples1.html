@@ -28,7 +28,7 @@
                 <button id="btnAddArr" class="button" >添加列表到第二行</button>
                 <button id="btnRemove" class="button" >删除第二行</button>
                 <button id="btnRemoveSelected" class="button" >删除选择的行</button>
-                <button id="btnUpdate" class="button" >更新第2行</button>
+                <button id="btnUpdate" class="button" >更新第二行</button>
             </div>
             <table id="mmg"></table>
             <div id="paginator" style="text-align: right;">
@@ -38,7 +38,6 @@
 
         <script src="js/vendor/jquery-1.9.0.min.js"></script>
         <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
         <script src="../src/mmGrid.js"></script>
         <script src="../src/mmPaginator.js"></script>
         <script>
@@ -93,7 +92,9 @@
 
 
                 $('#mmg').mmGrid({
-                    cols: cols
+                    height: 400
+
+                    , cols: cols
                     , url: 'data/stockQuotePage.json'
                     , method: 'get'
                     , remoteSort:true
@@ -137,7 +138,7 @@
                 });
 
                 $('#btnUpdate').on('click', function(){
-                    var updateItem = $('#mmg').mmGrid('item',100);
+                    var updateItem = $('#mmg').mmGrid('item',1);
                     if(updateItem){
                         updateItem.SECUCODE = '999999';
                         updateItem.SECUABBR = '更新股票';
