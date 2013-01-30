@@ -173,6 +173,7 @@
     -o-box-shadow: inset 0 0 2px 1px #d9d9d9;
     -ms-box-shadow: inset 0 0 2px 1px #d9d9d9;
     box-shadow: inset 0 0 2px 1px #d9d9d9;
+    text-align: left;
 }
 .mmGrid .mmg-backboard h1{
     margin: 0 10px 5px 10px;
