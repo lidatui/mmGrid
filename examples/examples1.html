@@ -137,9 +137,8 @@
                 });
 
                 $('#btnUpdate').on('click', function(){
-                    var allItems = $('#mmg').mmGrid('items');
-                    if(allItems.length > 1){
-                        var updateItem = allItems[1];
+                    var updateItem = $('#mmg').mmGrid('item',100);
+                    if(updateItem){
                         updateItem.SECUCODE = '999999';
                         updateItem.SECUABBR = '更新股票';
                         $('#mmg').mmGrid('update', updateItem, 1);

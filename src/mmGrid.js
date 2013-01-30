@@ -826,6 +826,16 @@
             return items;
         }
 
+        , item: function(index){
+            var $body = this.$body;
+            if(index !== undefined && index >= 0){
+                var $tr = $body.find('tr').eq(index);
+                if($tr.length !== 0){
+                    return $.data($tr[0],'item');
+                }
+            }
+        }
+
         , count: function(){
             var items = this.items();
             return items.length;
