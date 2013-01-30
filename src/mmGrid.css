@@ -70,7 +70,11 @@
     overflow: hidden;
     width: 9999px;
     height: 2.2em;
-    background: #efefef url(img/header_bg.gif) repeat-x top;
+    background: #eaeaea;
+    background: -webkit-gradient(linear, top, bottom, color-stop(0%, #f9f9f9), color-stop(100%, #eaeaea));
+    background: -webkit-linear-gradient(top, #f9f9f9, #eaeaea);
+    background: linear-gradient(#f9f9f9, #eaeaea);
+    border-top: 2px solid #b00;
 
 }
 
@@ -215,7 +219,7 @@
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body tr.even{
-    background: #f4f4f4;
+    background: #f9f9f9;
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body td{
@@ -225,32 +229,25 @@
     line-height: 2em;
 }
 
-.mmGrid .mmg-bodyWrapper .mmg-body td.selected{
-    background: #f4f4f4;
-}
-
-.mmGrid .mmg-bodyWrapper .mmg-body td.selectedEven{
-    background: #efefef;
-}
 
 .mmGrid .mmg-bodyWrapper .mmg-body td.colSelected{
-    background: #f4f4f4;
+    background: #f7f7f7;
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body td.colSelectedEven{
-    background: #efefef;
+    background: #f0f0f0;
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body tr.hover td{
-    background: #dfe8f6;
+    background: #e1eff8;
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body tr:hover td{
-    background: #dfe8f6;
+    background: #e1eff8;
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body tr.selected td{
-    background: #ffedac;
+    background: #fffccc;
 }
 
 .mmGrid .nowrap{
