@@ -121,14 +121,14 @@ header {
 }
 
 header .tableWrapper{
-    margin: 80px auto 0 auto;
+    margin: 40px auto 0 auto;
     width: 860px;
 
 }
 
 header .title{
     color: #a00;
-    padding-top: 50px;
+    padding-top: 40px;
     font-size: 32px;
     font-weight: bold;
 }
