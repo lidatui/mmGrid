@@ -123,7 +123,6 @@ body{
 
 .button {
     color: #b00;
-
     -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
     -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
     box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -136,10 +135,10 @@ body{
     border-radius:4px;
     border:1px solid #dcdcdc;
     display:inline-block;
-    *display:block;
+    *display:inline;
     *zoom: 1;
     font-weight:bold;
-    padding:5px 8px;
+    padding:4px 8px;
     text-decoration:none;
     text-shadow:1px 1px 0px #ffffff;
     margin-right: 5px;

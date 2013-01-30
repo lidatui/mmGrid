@@ -94,7 +94,10 @@
 
                 $('#mmg').mmGrid({
                     cols: cols
-                    , items: items
+                    , url: 'data/stockQuotePage.json'
+                    , method: 'get'
+                    , remoteSort:true
+                    //, items: items
                     , sortName: 'SECUCODE'
                     , sortStatus: 'asc'
                     , multiSelect: true

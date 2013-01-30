@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../src/mmGrid.css">
     <link rel="stylesheet" href="../src/mmPaginator.css">
     <!--[if lt IE 9]>
-        <script src="js/vendor/html5shiv.js"></script>
+    <script src="js/vendor/html5shiv.js"></script>
     <![endif]-->
     <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     <style>
@@ -49,365 +49,400 @@
 <body>
 <a href="https://github.com/miemiedev/mmGrid"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
 <main class="container">
-    <h1>mmGrid</h1>
-    <p style="border-top: 1px solid #ddd;padding-top: 20px;">
-        这是一个简单、易用、快速、跨浏览器兼容的javascript表格控件，应用于基于web的富客户端程序中。
-    </p>
-    <ul class="nav nav-tabs" id="nav">
-        <li class="active"><a href="#example">示例</a></li>
-        <li><a href="#doc">文档</a></li>
-    </ul>
+<h1>mmGrid</h1>
+<p style="border-top: 1px solid #ddd;padding-top: 20px;">
+    这是一个简单、易用、快速、跨浏览器兼容的javascript表格控件，应用于基于web的富客户端程序中。
+</p>
+<ul class="nav nav-tabs" id="nav">
+    <li class="active"><a href="#example">示例</a></li>
+    <li><a href="#doc">文档</a></li>
+</ul>
 
-    <div class="tab-content">
-        <div class="tab-pane active" id="example">
-            <h3>1 基本示例</h3>
-            <div class="row-fluid" style="border-bottom: 1px solid #ddd;padding-bottom: 15px;">
-                <div class="span6">
-                    <h4>1.1 客户端数据示例</h4>
-                    <table id="table1"></table>
-                    <div class="well well-small" style="margin-top: 20px;">
-                        以客户端数据为数据源。参数<code>items</code>，类型可以是对象或数组。如果数据源为对象，则使用<code>root</code>选项标记对象内的数组字段为数据源。
-                    </div>
-                </div>
-                <div class="span6">
-                    <h4>1.2 Ajax数据示例</h4>
-                    <table id="table2"></table>
-                    <div class="well well-small" style="margin-top: 20px;">
-                        Ajax数据为数据源。参数<code>url</code>为请求地址，返回数据为json格式，可以是对象或数组。如果返回数据为对象，则使用<code>root</code>选项标记对象内的数组字段为数据源。
-                    </div>
-                </div>
-            </div>
-            <h3>2 排序示例</h3>
-            <div style="text-indent: 2em;">
-                排序参数为<code>sortName</code>和<code>sortStatus</code>。
-                如果初始化时设置排序列，则直接显示排序后数据。
-                排序方式分为客户端排序与Ajax服务器端排序，设置参数为<code>remoteSort</code>。
-                排序方式与数据源关系不大，但如果数据源为本地数据，设置<code>remoteSort</code>为<code>true</code>无效。
-                如果排序字段为数字类型需要将列选项添加<code>type:'number'</code>属性。
-            </div>
-            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
-                <div class="span6">
-                    <h4>2.1 客户端排序示例</h4>
-                    <table id="table3"></table>
-                </div>
-                <div class="span6">
-                    <h4>2.2 Ajax排序示例</h4>
-                    <table id="table4"></table>
-                    <em> * 由于服务器端无处理程序，此示例可查看xhr地址sort参数。</em>
-                </div>
-            </div>
-            <h3>3 列控制</h3>
-            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
-                <div class="span4">
-                    <h4>3.1 锁定列宽</h4>
-                    <table id="table5"></table>
-                    <div class="well well-small" style="margin-top: 20px;">
-                        锁定列宽选项为<code>lockWidth:true</code>。列宽被锁定后则不可调整，当表选项<code>fitCols</code>设为<code>true</code>列的宽度也不参与计算。
-                    </div>
-                </div>
-                <div class="span4">
-                    <h4>3.2 隐藏列</h4>
-                    <table id="table6"></table>
-                    <div class="well well-small" style="margin-top: 20px;">
-                        隐藏列选项为<code>hidden: true</code>。当光标移至标题时<strong>标题最右侧</strong>会显示<strong>向下按钮</strong>，单击此按钮则可打开选项板来调整隐藏和显示的列，调整完毕后单击选项板<strong>右下方</strong>的<strong>向上按钮</strong>来关闭选项板。
-                    </div>
-                </div>
-                <div class="span4">
-                    <h4>3.2 锁定列显示状态</h4>
-                    <table id="table7"></table>
-                    <div class="well well-small" style="margin-top: 20px;">
-                        锁定列显示状态选项为<code>lockDisplay: true</code>。锁定列显示状态后，在选项板中列选项会被值为灰色，此列则不可调整显示状态。
-                    </div>
-                </div>
-            </div>
-            <h3>4 nowrap示例</h3>
-            <div style="text-indent: 2em;">
-                表选项<code>nowrap</code>设置单元格内容超出单元格长度时是否折行显示。
-            </div>
-            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
-                <div class="span6">
-                    <h4>4.1 nowrap:true</h4>
-                    <table id="table8"></table>
-                </div>
-                <div class="span6">
-                    <h4>4.2 nowrap:false</h4>
-                    <table id="table9"></table>
-                </div>
-            </div>
-
-            <h3>5 fitColWidth示例</h3>
-            <div style="text-indent: 2em;">
-                当表选项<code>fitColWidth</code>设置为<code>true</code>时，表格在第一次数据加载时计算列宽，将其充满整个表格。锁定列宽的列不参与计算。如果所有显示的列宽总和大于表格宽度这个参数将不起作用。
-            </div>
-            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
-                <div class="span6">
-                    <h4>5.1 fitColWidth:true</h4>
-                    <table id="table10"></table>
-                </div>
-                <div class="span6">
-                    <h4>5.2 fitColWidth:false</h4>
-                    <table id="table11"></table>
-                </div>
-            </div>
-
-            <h3>6 multiSelect示例</h3>
-            <div style="text-indent: 2em;">
-                表选项<code>multiSelect</code>设置表格是否可多选。可通过表操作<code>$('#table').mmGrid('selected')</code>获取选择的行对象。
-                当光标单击单元格时触发<code>onSelected</code>事件，该事件可在表选项设置。当该事件返回<code>false</code>取消执行选中或取消选中的操作。
-                下例可单击行情图标列查看执行结果。
-            </div>
-            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
-                <div class="span6">
-                    <h4>6.1 multiSelect:true</h4>
-                    <table id="table14"></table>
-                </div>
-                <div class="span6">
-                    <h4>6.2 multiSelect:false</h4>
-                    <table id="table15"></table>
-                </div>
-            </div>
-            <h3>7 checkCol示例</h3>
-            <div style="text-indent: 2em;">
-                表选项<code>checkCol</code>可以在表格前插入checkbox列。<code>checkCol</code>选项可以和<code>multiSelect</code>搭配使用，可以更形象的表现选择列。
-            </div>
-            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
-                <div class="span6">
-                    <h4>7.1 checkCol:true,multiSelect:true</h4>
-                    <table id="table16"></table>
-                </div>
-                <div class="span6">
-                    <h4>7.2 checkCol:true,multiSelect:false</h4>
-                    <table id="table17"></table>
-                </div>
-            </div>
-
-            <h3>8 分页示例</h3>
-            <div style="text-indent: 2em;">
-                这里的分页示例借助了分页器，开发者可以根据自己的需求选择使用其他分页器。
-            </div>
-            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
-                <div class="span12">
-                    <h4>8.1 默认样式</h4>
-                    <table id="table18"></table>
-                    <div style="text-align:right;">
-                        <div id="paginator18"></div>
-                    </div>
-                </div>
+<div class="tab-content">
+<div class="tab-pane active" id="example">
+    <h3>1 基本示例</h3>
+    <div class="row-fluid" style="border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+        <div class="span6">
+            <h4>1.1 客户端数据示例</h4>
+            <table id="table1"></table>
+            <div class="well well-small" style="margin-top: 20px;">
+                以客户端数据为数据源。参数<code>items</code>，类型可以是对象或数组。如果数据源为对象，则使用<code>root</code>选项标记对象内的数组字段为数据源。
             </div>
         </div>
-        <div class="tab-pane" id="doc">
-        <h3>1.表选项</h3>
-        <table class="table table-bordered">
-            <tr>
-                <th>名称</th>
-                <th>可选值</th>
-                <th>描述</th>
-            </tr>
-            <tr>
-                <td>width</td>
-                <td><em>'auto'</em>, 500, '500px'</td>
-                <td>表格宽度。参数为'auto'和以'%'结尾,表格可在调整窗口尺寸时根据父元素调整尺寸。</td>
-            </tr>
-            <tr>
-                <td>height</td>
-                <td><em>'280px'</em>, 500, '500px'</td>
-                <td>表格高度。如果以'%'结尾,表格可在调整窗口尺寸时根据父元素调整尺寸。</td>
-            </tr>
-            <tr>
-                <td>url</td>
-                <td><em>false</em>, string</td>
-                <td>ajax请求数据的地址。</td>
-            </tr>
-            <tr>
-                <td>params</td>
-                <td><em>{}</em>, object, function(){ return {}; }</td>
-                <td>ajax请求的参数。可以是普通对象或函数。
-                    函数返回一个参数对象，每次调用ajax时调用。
-                </td>
-            </tr>
-            <tr>
-                <td>method</td>
-                <td><em>‘post’</em>, 'get'</td>
-                <td>ajax提交方式。</td>
-            </tr>
-            <tr>
-                <td>items</td>
-                <td><em>[]</em>, Array</td>
-                <td>数据使用本地对象数组。</td>
-            </tr>
-            <tr>
-                <td>root</td>
-                <td><em>''</em>, string</td>
-                <td>指定json对象的数组字段为数据。</td>
-            </tr>
-
-            <tr>
-                <td>nowrap</td>
-                <td><em>false</em>, true</td>
-                <td>表格显示的数据超出列宽时是否换行。</td>
-            </tr>
-            <tr>
-                <td>multiSelect</td>
-                <td><em>false</em>, true</td>
-                <td>数据使用本地对象数组。</td>
-            </tr>
-            <tr>
-                <td>fitColWidth</td>
-                <td><em>false</em>, true</td>
-                <td>true:表格第一次加载数据时列伸展，自动充满表格。</td>
-            </tr>
-            <tr>
-                <td>checkCol</td>
-                <td><em>false</em>, true</td>
-                <td>表格第一列显示为checkbox。</td>
-            </tr>
-            <tr>
-                <td>loadingText</td>
-                <td><em>‘正在载入...’</em>, string</td>
-                <td>数据载入时的提示文字。</td>
-            </tr>
-            <tr>
-                <td>noDataText</td>
-                <td><em>‘没有数据’</em>, string</td>
-                <td>没有数据时的提示文字。</td>
-            </tr>
-            <tr>
-                <td>cols</td>
-                <td><em>[]</em>, Array</td>
-                <td>数据模型。</td>
-            </tr>
-            <tr>
-                <td>sortName</td>
-                <td><em>''</em>, string</td>
-                <td>排序的字段名。</td>
-            </tr>
-            <tr>
-                <td>sortStatus</td>
-                <td><em>'asc'</em>, string</td>
-                <td>排序方向。</td>
-            </tr>
-            <tr>
-                <td>remoteSort</td>
-                <td><em>false</em>, true</td>
-                <td>是否使用服务器端排序。当值为true时，sortName和sortStatus会作为参数放入ajax请求中。</td>
-            </tr>
-            <tr>
-                <td>autoLoad</td>
-                <td><em>true</em>, false</td>
-                <td>是否表格准备好时加载数据。</td>
-            </tr>
-            <tr>
-                <td>onSuccess</td>
-                <td><em>function(data){}</em>, function</td>
-                <td>数据加载成功后执行。</td>
-            </tr>
-            <tr>
-                <td>onError</td>
-                <td><em>function(data){}</em>, function</td>
-                <td>数据加载失败后执行。</td>
-            </tr>
-            <tr>
-                <td>onSelected</td>
-                <td><em>function(item, rowIndex, colIndex){}</em>, function</td>
-                <td>
-                    表格中的数据被选择时执行。item：当前数据行对应的对象；rowIndex：行索引；colIndex：列索引。
-                    如果该函数返回false则不会触发选中和取消选中的操作。
-                </td>
-            </tr>
-        </table>
-        <h3>2.列选项</h3>
-        <table class="table table-bordered">
-            <tr>
-                <th>名称</th>
-                <th>可选值</th>
-                <th>描述</th>
-            </tr>
-            <tr>
-                <td>title</td>
-                <td>string</td>
-                <td>标题文字。</td>
-            </tr>
-            <tr>
-                <td>width</td>
-                <td>int</td>
-                <td>标题宽度像素值。</td>
-            </tr>
-            <tr>
-                <td>name</td>
-                <td>string</td>
-                <td>字段名。</td>
-            </tr>
-            <tr>
-                <td>type</td>
-                <td>'int','float'</td>
-                <td>字段类型。在本地排序时用于转换文字。</td>
-            </tr>
-            <tr>
-                <td>align</td>
-                <td><em>'left'</em>, 'center', 'right'</td>
-                <td>文字位置。</td>
-            </tr>
-            <tr>
-                <td>hidden</td>
-                <td><em>false</em>, true</td>
-                <td>是否隐藏列。</td>
-            </tr>
-            <tr>
-                <td>lockDipaly</td>
-                <td><em>false</em>, true</td>
-                <td>是否锁定列的显示状态。</td>
-            </tr>
-            <tr>
-                <td>lockWidth</td>
-                <td><em>false</em>, true</td>
-                <td>是否锁定列宽。被锁定的列不参与fitCols选项的计算。</td>
-            </tr>
-            <tr>
-                <td>sortable</td>
-                <td><em>false</em>, true</td>
-                <td>是否可排序。</td>
-            </tr>
-            <tr>
-                <td>renderer</td>
-                <td>function(val,item,items,rowIndex){ return val;}</td>
-                <td>显示规则。参数: val 值, item 对象, items 对象数组, rowIndex 行索引;
-                    返回值: 可以是纯文本或html。
-                </td>
-            </tr>
-        </table>
-        <h3>3.表操作</h3>
-        <table class="table table-bordered">
-            <tr>
-                <th>名称</th>
-                <th>参数</th>
-                <th>描述</th>
-            </tr>
-            <tr>
-                <td>load</td>
-                <td>{}, []</td>
-                <td>如果配置过ajax选项，则这里是ajax参数，如果传入对象数组，则为加载本地数据。</td>
-            </tr>
-            <tr>
-                <td>selected</td>
-                <td>无参数</td>
-                <td>返回选择行的对象数组。</td>
-            </tr>
-            <tr>
-                <td>select</td>
-                <td>int, function(item, index){ return true; }, 'all'</td>
-                <td>选中参数条件的行。int: 选中索引行; function: 过滤函数, item参数为行数据, index参数为行索引; 'all': 选中所有行。</td>
-            </tr>
-            <tr>
-                <td>deselect</td>
-                <td>int, function(item, index){ return true; }, 'all'</td>
-                <td>取消选中参数条件的行。int: 取消选择索引行; function: 过滤函数, item参数为行数据, index参数为行索引; 'all': 取消选中所有行。</td>
-            </tr>
-        </table>
-
+        <div class="span6">
+            <h4>1.2 AJAX数据示例</h4>
+            <table id="table2"></table>
+            <div class="well well-small" style="margin-top: 20px;">
+                AJAX数据为数据源。参数<code>url</code>为请求地址，返回数据为json格式，可以是对象或数组。如果返回数据为对象，则使用<code>root</code>选项标记对象内的数组字段为数据源。
+            </div>
         </div>
     </div>
-    <footer style="text-align: center;padding-top: 15px;padding-bottom: 20px">
-    </footer>
+    <h3>2 排序示例</h3>
+    <div style="text-indent: 2em;">
+        排序参数为<code>sortName</code>和<code>sortStatus</code>。
+        如果初始化时设置排序列，则直接显示排序后数据。
+        排序方式分为客户端排序与AJAX服务器端排序，设置参数为<code>remoteSort</code>。
+        排序方式与数据源关系不大，但如果数据源为本地数据，设置<code>remoteSort</code>为<code>true</code>无效。
+        如果排序字段为数字类型需要将列选项添加<code>type:'number'</code>属性。
+    </div>
+    <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+        <div class="span6">
+            <h4>2.1 客户端排序示例</h4>
+            <table id="table3"></table>
+        </div>
+        <div class="span6">
+            <h4>2.2 AJAX排序示例</h4>
+            <table id="table4"></table>
+            <em> * 由于服务器端无处理程序，此示例可查看xhr地址sort参数。</em>
+        </div>
+    </div>
+    <h3>3 列控制</h3>
+    <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+        <div class="span4">
+            <h4>3.1 锁定列宽</h4>
+            <table id="table5"></table>
+            <div class="well well-small" style="margin-top: 20px;">
+                锁定列宽选项为<code>lockWidth:true</code>。列宽被锁定后则不可调整，当表选项<code>fitCols</code>设为<code>true</code>列的宽度也不参与计算。
+            </div>
+        </div>
+        <div class="span4">
+            <h4>3.2 隐藏列</h4>
+            <table id="table6"></table>
+            <div class="well well-small" style="margin-top: 20px;">
+                隐藏列选项为<code>hidden: true</code>。当光标移至标题时<strong>标题最右侧</strong>会显示<strong>向下按钮</strong>，单击此按钮则可打开选项板来调整隐藏和显示的列，调整完毕后单击选项板<strong>右下方</strong>的<strong>向上按钮</strong>来关闭选项板。
+            </div>
+        </div>
+        <div class="span4">
+            <h4>3.2 锁定列显示状态</h4>
+            <table id="table7"></table>
+            <div class="well well-small" style="margin-top: 20px;">
+                锁定列显示状态选项为<code>lockDisplay: true</code>。锁定列显示状态后，在选项板中列选项会被值为灰色，此列则不可调整显示状态。
+            </div>
+        </div>
+    </div>
+    <h3>4 nowrap示例</h3>
+    <div style="text-indent: 2em;">
+        表选项<code>nowrap</code>设置单元格内容超出单元格长度时是否折行显示。
+    </div>
+    <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+        <div class="span6">
+            <h4>4.1 nowrap:true</h4>
+            <table id="table8"></table>
+        </div>
+        <div class="span6">
+            <h4>4.2 nowrap:false</h4>
+            <table id="table9"></table>
+        </div>
+    </div>
+
+    <h3>5 fitColWidth示例</h3>
+    <div style="text-indent: 2em;">
+        当表选项<code>fitColWidth</code>设置为<code>true</code>时，表格在第一次数据加载时计算列宽，将其充满整个表格。锁定列宽的列不参与计算。如果所有显示的列宽总和大于表格宽度这个参数将不起作用。
+    </div>
+    <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+        <div class="span6">
+            <h4>5.1 fitColWidth:true</h4>
+            <table id="table10"></table>
+        </div>
+        <div class="span6">
+            <h4>5.2 fitColWidth:false</h4>
+            <table id="table11"></table>
+        </div>
+    </div>
+
+    <h3>6 multiSelect示例</h3>
+    <div style="text-indent: 2em;">
+        表选项<code>multiSelect</code>设置表格是否可多选。可通过表操作<code>$('#table').mmGrid('selected')</code>获取选择的行对象。
+        当光标单击单元格时触发<code>onSelected</code>事件，该事件可在表选项设置。当该事件返回<code>false</code>取消执行选中或取消选中的操作。
+        下例可单击行情图标列查看执行结果。
+    </div>
+    <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+        <div class="span6">
+            <h4>6.1 multiSelect:true</h4>
+            <table id="table14"></table>
+        </div>
+        <div class="span6">
+            <h4>6.2 multiSelect:false</h4>
+            <table id="table15"></table>
+        </div>
+    </div>
+    <h3>7 checkCol示例</h3>
+    <div style="text-indent: 2em;">
+        表选项<code>checkCol</code>可以在表格前插入checkbox列。<code>checkCol</code>选项可以和<code>multiSelect</code>搭配使用，可以更形象的表现选择列。
+    </div>
+    <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+        <div class="span6">
+            <h4>7.1 checkCol:true,multiSelect:true</h4>
+            <table id="table16"></table>
+        </div>
+        <div class="span6">
+            <h4>7.2 checkCol:true,multiSelect:false</h4>
+            <table id="table17"></table>
+        </div>
+    </div>
+
+    <h3>8 分页示例</h3>
+    <div style="text-indent: 2em;">
+        这里的分页示例借助了分页器，开发者可以根据自己的需求选择使用其他分页器。
+    </div>
+    <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+        <div class="span12">
+            <h4>8.1 默认样式</h4>
+            <table id="table18"></table>
+            <div style="text-align:right;">
+                <div id="paginator18"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-pane" id="doc">
+<h3>1.表选项</h3>
+<table class="table table-bordered">
+    <tr>
+        <th>名称</th>
+        <th>可选值</th>
+        <th>描述</th>
+    </tr>
+    <tr>
+        <td>width</td>
+        <td><em>'auto'</em>, 500, '500px'</td>
+        <td>表格宽度。参数为'auto'和以'%'结尾,表格可在调整窗口尺寸时根据父元素调整尺寸。</td>
+    </tr>
+    <tr>
+        <td>height</td>
+        <td><em>'280px'</em>, 500, '500px'</td>
+        <td>表格高度。如果以'%'结尾,表格可在调整窗口尺寸时根据父元素调整尺寸。</td>
+    </tr>
+    <tr>
+        <td>url</td>
+        <td><em>false</em>, string</td>
+        <td>AJAX请求数据的地址。</td>
+    </tr>
+    <tr>
+        <td>params</td>
+        <td><em>{}</em>, object, function(){ return {}; }</td>
+        <td>AJAX请求的参数。可以是普通对象或函数。
+            函数返回一个参数对象，每次调用AJAX时调用。
+        </td>
+    </tr>
+    <tr>
+        <td>method</td>
+        <td><em>‘post’</em>, 'get'</td>
+        <td>AJAX提交方式。</td>
+    </tr>
+    <tr>
+        <td>ache</td>
+        <td><em>false</em>, true</td>
+        <td>AJAX缓存。</td>
+    </tr>
+    <tr>
+        <td>items</td>
+        <td><em>[]</em>, Array</td>
+        <td>数据使用本地对象数组。</td>
+    </tr>
+    <tr>
+        <td>root</td>
+        <td><em>''</em>, string</td>
+        <td>指定json对象的数组字段为数据。</td>
+    </tr>
+
+    <tr>
+        <td>nowrap</td>
+        <td><em>false</em>, true</td>
+        <td>表格显示的数据超出列宽时是否换行。</td>
+    </tr>
+    <tr>
+        <td>multiSelect</td>
+        <td><em>false</em>, true</td>
+        <td>数据使用本地对象数组。</td>
+    </tr>
+    <tr>
+        <td>fitColWidth</td>
+        <td><em>false</em>, true</td>
+        <td>true:表格第一次加载数据时列伸展，自动充满表格。</td>
+    </tr>
+    <tr>
+        <td>checkCol</td>
+        <td><em>false</em>, true</td>
+        <td>表格第一列显示为checkbox。</td>
+    </tr>
+    <tr>
+        <td>loadingText</td>
+        <td><em>‘正在载入...’</em>, string</td>
+        <td>数据载入时的提示文字。</td>
+    </tr>
+    <tr>
+        <td>noDataText</td>
+        <td><em>‘没有数据’</em>, string</td>
+        <td>没有数据时的提示文字。</td>
+    </tr>
+    <tr>
+        <td>cols</td>
+        <td><em>[]</em>, Array</td>
+        <td>数据模型。</td>
+    </tr>
+    <tr>
+        <td>sortName</td>
+        <td><em>''</em>, string</td>
+        <td>排序的字段名。</td>
+    </tr>
+    <tr>
+        <td>sortStatus</td>
+        <td><em>'asc'</em>, string</td>
+        <td>排序方向。</td>
+    </tr>
+    <tr>
+        <td>remoteSort</td>
+        <td><em>false</em>, true</td>
+        <td>是否使用服务器端排序。当值为true时，sortName和sortStatus会作为参数放入AJAX请求中。</td>
+    </tr>
+    <tr>
+        <td>autoLoad</td>
+        <td><em>true</em>, false</td>
+        <td>是否表格准备好时加载数据。</td>
+    </tr>
+    <tr>
+        <td>onSuccess</td>
+        <td><em>function(data){}</em>, function</td>
+        <td>数据加载成功后执行。</td>
+    </tr>
+    <tr>
+        <td>onError</td>
+        <td><em>function(data){}</em>, function</td>
+        <td>数据加载失败后执行。</td>
+    </tr>
+    <tr>
+        <td>onSelected</td>
+        <td><em>function(item, rowIndex, colIndex){}</em>, function</td>
+        <td>
+            表格中的数据被选择时执行。item：当前数据行对应的对象；rowIndex：行索引；colIndex：列索引。
+            如果该函数返回false则不会触发选中和取消选中的操作。
+        </td>
+    </tr>
+</table>
+<h3>2.列选项</h3>
+<table class="table table-bordered">
+    <tr>
+        <th>名称</th>
+        <th>可选值</th>
+        <th>描述</th>
+    </tr>
+    <tr>
+        <td>title</td>
+        <td>string</td>
+        <td>标题文字。</td>
+    </tr>
+    <tr>
+        <td>width</td>
+        <td>int</td>
+        <td>标题宽度像素值。</td>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>string</td>
+        <td>字段名。</td>
+    </tr>
+    <tr>
+        <td>type</td>
+        <td>'int','float'</td>
+        <td>字段类型。在本地排序时用于转换文字。</td>
+    </tr>
+    <tr>
+        <td>align</td>
+        <td><em>'left'</em>, 'center', 'right'</td>
+        <td>文字位置。</td>
+    </tr>
+    <tr>
+        <td>hidden</td>
+        <td><em>false</em>, true</td>
+        <td>是否隐藏列。</td>
+    </tr>
+    <tr>
+        <td>lockDipaly</td>
+        <td><em>false</em>, true</td>
+        <td>是否锁定列的显示状态。</td>
+    </tr>
+    <tr>
+        <td>lockWidth</td>
+        <td><em>false</em>, true</td>
+        <td>是否锁定列宽。被锁定的列不参与fitCols选项的计算。</td>
+    </tr>
+    <tr>
+        <td>sortable</td>
+        <td><em>false</em>, true</td>
+        <td>是否可排序。</td>
+    </tr>
+    <tr>
+        <td>renderer</td>
+        <td>function(val,item,items,rowIndex){ return val;}</td>
+        <td>显示规则。参数: val 值, item 对象, items 对象数组, rowIndex 行索引;
+            返回值: 可以是纯文本或html。
+        </td>
+    </tr>
+</table>
+<h3>3.表操作</h3>
+<table class="table table-bordered">
+    <tr>
+        <th>名称</th>
+        <th>参数</th>
+        <th>描述</th>
+    </tr>
+    <tr>
+        <td>load</td>
+        <td>{} | []</td>
+        <td>如果配置过AJAX选项，则这里是AJAX参数，如果传入对象数组，则为加载本地数据。</td>
+    </tr>
+    <tr>
+        <td>selected</td>
+        <td>无参数</td>
+        <td>返回选择行的对象数组。</td>
+    </tr>
+    <tr>
+        <td>selectedIndex</td>
+        <td>无参数</td>
+        <td>返回选择行的索引数组。</td>
+    </tr>
+    <tr>
+        <td>select</td>
+        <td>int | function(item, index){ return true; } | 'all'</td>
+        <td>选中参数条件的行。int: 选中索引行; function: 过滤函数, item参数为行数据, index参数为行索引; 'all': 选中所有行。</td>
+    </tr>
+    <tr>
+        <td>deselect</td>
+        <td>int | function(item, index){ return true; } | 'all'</td>
+        <td>取消选中参数条件的行。int: 取消选择索引行; function: 过滤函数, item参数为行数据, index参数为行索引; 'all': 取消选中所有行。</td>
+    </tr>
+    <tr>
+        <td>items</td>
+        <td>无参数</td>
+        <td>返回选择行的索引数组。</td>
+    </tr>
+    <tr>
+        <td>count</td>
+        <td>无参数</td>
+        <td>返回行数。</td>
+    </tr>
+    <tr>
+        <td>add</td>
+        <td>item,index</td>
+        <td>添加数据到索引行，index为可选。如item为对象数组则一次添加多行。</td>
+    </tr>
+    <tr>
+        <td>update</td>
+        <td>item,index</td>
+        <td>更新数据到索引行，index为必选。一次只能更新一行。</td>
+    </tr>
+    <tr>
+        <td>remove</td>
+        <td>index</td>
+        <td>移除索引行。如index为索引数组则一次移除多行。如果index为undefined则移除所有行。</td>
+    </tr>
+</table>
+
+</div>
+</div>
+<footer style="text-align: center;padding-top: 15px;padding-bottom: 20px">
+</footer>
 </main>
 
 <script src="js/vendor/jquery-1.9.0.min.js"></script>
@@ -476,7 +511,7 @@ $(document).ready(function () {
         cols: cols,
         items: items
     });
-    //Ajax示例
+    //AJAX示例
     $('#table2').mmGrid({
         cols: cols,
         url: 'data/stockQuote.json',

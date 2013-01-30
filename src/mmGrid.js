@@ -279,7 +279,7 @@
             //向上按钮
             $mmGrid.find('a.mmg-btnBackboardUp').on('click', function(){
                 $backboard.slideUp().queue(function(next){
-                    if(!that.size()){
+                    if(!that.count()){
                         that._showNoData();
                     }
                     next();
@@ -403,7 +403,7 @@
 
             if($.isPlainObject(item)){
                 var trHtml = [];
-                trHtml.push('<tr>"');
+                trHtml.push('<tr>');
                 for(var colIndex=0; colIndex < opts.cols.length; colIndex++){
                     var col = opts.cols[colIndex];
                     trHtml.push('<td class="');
@@ -826,7 +826,7 @@
             return items;
         }
 
-        , size: function(){
+        , count: function(){
             var items = this.items();
             return items.length;
         }
@@ -883,9 +883,7 @@
 
             var $tr = $tbody.find('tr').eq(index);
             var checked = $tr.find('td:first :checkbox').is(':checked');
-
-            var $trNew = $(this._rowHtml(item, items, index));
-            $tr.empty().append($trNew.find('td'));
+            $tr.html(this._rowHtml(item, items, index).slice(4,-5));
             if(opts.checkCol){
                 $tr.find('td:first :checkbox').prop('checked',checked);
             }
