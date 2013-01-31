@@ -105,33 +105,37 @@ body{
     font-family: 'Helvetica Neue',helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     font-size: 12px;
     color: #333;
-    background: #f5f5f5;
+    background: #f4f4f4;
 }
 
 nav {
     height: 40px;
-    background: #a00;
 }
 
 header {
+    background: #333 url(../img/low_contrast_linen.png);
     height: 575px;
-    background: #fff;
-    border-bottom: 1px solid #dadada;
     text-align: center;
+    box-shadow: 0 0 30px #000 inset;
+
+}
+
+header .title{
+    color: #fff;
+    padding-top: 40px;
+    font-size: 32px;
+    font-weight: bold;
+    text-shadow:2px 2px 20px #000, 2px 2px 20px #000;
 }
 
 header .tableWrapper{
     margin: 40px auto 0 auto;
     width: 860px;
+    box-shadow: 0 0  30px #000;
 
 }
 
-header .title{
-    color: #a00;
-    padding-top: 40px;
-    font-size: 32px;
-    font-weight: bold;
-}
+
 
 
 .btnPrice {

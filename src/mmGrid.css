@@ -69,12 +69,13 @@
     position: relative;
     overflow: hidden;
     width: 9999px;
-    height: 2.2em;
-    background: #eaeaea;
+    background: #eee;
     background: -webkit-gradient(linear, top, bottom, color-stop(0%, #f9f9f9), color-stop(100%, #eaeaea));
     background: -webkit-linear-gradient(top, #f9f9f9, #eaeaea);
     background: linear-gradient(#f9f9f9, #eaeaea);
+    box-shadow:0 1px 2px #bbb;
     border-top: 2px solid #b00;
+    z-index: 1;
 
 }
 
@@ -90,12 +91,12 @@
 }
 
 .mmGrid .mmg-headWrapper .mmg-head th input{
-    height: 2.2em;
+    height: 2em;
 }
 
 .mmGrid .mmg-headWrapper .mmg-head th .mmg-titleWrapper{
     position: relative;
-    height: 2.2em;
+    height: 2.1em;
     white-space: nowrap;
 }
 
@@ -113,10 +114,10 @@
     display: inline-block;
     *display: inline;
     *zoom: 1;
-    height: 2.2em;
+    height: 2.1em;
     color: #333;
     font-weight: bold;
-    line-height: 2.2em;
+    line-height: 2.1em;
     vertical-align: top;
 }
 
@@ -129,7 +130,7 @@
     overflow: hidden;
     display: none;
     width: 7px;
-    height: 2.2em;
+    height: 2.1em;
     margin-left: 2px;
     vertical-align: top;
 }
@@ -220,7 +221,7 @@
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body tr.even{
-    background: #f9f9f9;
+    background: #fbfbfb;
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body td{
@@ -232,11 +233,11 @@
 
 
 .mmGrid .mmg-bodyWrapper .mmg-body td.colSelected{
-    background: #f7f7f7;
+    background: #f9f9f9;
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body td.colSelectedEven{
-    background: #f0f0f0;
+    background: #f6f6f6;
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body tr.hover td{
