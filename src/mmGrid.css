@@ -79,9 +79,9 @@
     background: linear-gradient(to bottom,  #f9f9f9 0%,#eaeaea 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#eaeaea',GradientType=0 ); /* IE6-8 */
 
-    -moz-box-shadow: 0 1px 2px #bbb;
-    -webkit-box-shadow: 0 1px 2px #bbb;
-    box-shadow: 0 1px 2px #bbb;
+    -moz-box-shadow: 0 0px 2px #bbb;
+    -webkit-box-shadow: 0 0px 2px #bbb;
+    box-shadow: 0 0px 2px #bbb;
     border-top: 2px solid #b00;
     z-index: 1;
 
@@ -96,6 +96,7 @@
     position: relative;
     padding: 0 5px;
     border-right: 1px solid #ddd;
+    border-bottom: 1px solid #d2d2d2;
 }
 
 .mmGrid .mmg-headWrapper .mmg-head th input{
