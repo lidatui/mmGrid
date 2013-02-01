@@ -231,7 +231,7 @@
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body tr.even{
-    background: #fbfbfb;
+    background: #f9f9f9;
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body td{
@@ -243,11 +243,11 @@
 
 
 .mmGrid .mmg-bodyWrapper .mmg-body td.colSelected{
-    background: #f9f9f9;
+    background: #f7f7f7;
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body td.colSelectedEven{
-    background: #f6f6f6;
+    background: #f5f5f5;
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body tr.hover td{
