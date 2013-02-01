@@ -4,6 +4,7 @@
     overflow: hidden;
     background: #fff;
     border: 1px solid #ccc;
+    text-align: left;
 }
 
 .mmGrid table{
@@ -258,7 +259,7 @@
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body tr.selected td{
-    background: #fffccc;
+    background: #fff5cc;
 }
 
 .mmGrid .nowrap{
