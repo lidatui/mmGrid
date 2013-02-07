@@ -106,7 +106,7 @@
 
 .mmGrid .mmg-headWrapper .mmg-head th .mmg-titleWrapper{
     position: relative;
-    height: 2.1em;
+    height: 2em;
     white-space: nowrap;
 }
 
@@ -124,10 +124,10 @@
     display: inline-block;
     *display: inline;
     *zoom: 1;
-    height: 2.1em;
+    height: 2em;
     color: #333;
     font-weight: bold;
-    line-height: 2.1em;
+    line-height: 2;
     vertical-align: top;
 }
 
@@ -140,7 +140,7 @@
     overflow: hidden;
     display: none;
     width: 7px;
-    height: 2.1em;
+    height: 2em;
     margin-left: 2px;
     vertical-align: top;
 }
@@ -201,7 +201,7 @@
     *zoom: 1;
     width: 95px;
     font-size: 1em;
-    line-height: 2.2em;
+    line-height: 2.2;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -238,7 +238,7 @@
     padding: 0 5px;
     border-right: 1px solid #e4e4e4;
     border-bottom: 1px solid #e4e4e4;
-    line-height: 2em;
+    line-height: 2;
 }
 
 
