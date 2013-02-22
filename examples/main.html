@@ -8,39 +8,195 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title></title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/unsemantic-grid-responsive.css">
         <link rel="stylesheet" href="../src/mmGrid.css">
         <link rel="stylesheet" href="../src/mmPaginator.css">
+
+        <style>
+            .mmGrid,
+            .mmPaginator{
+                font-size: 12px;
+            }
+            .btnPrice {
+                display: block;
+                width: 16px;
+                height: 16px;
+                margin: 0px auto;
+                background: url(img/botton_g1.gif) no-repeat;
+            }
+
+            .btnPrice:hover {
+                background: url(img/botton_g2.gif) no-repeat;
+            }
+
+
+        </style>
         <!--[if lt IE 9]>
         <script src="js/vendor/html5shiv.js"></script>
         <![endif]-->
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
-        <nav>
-        </nav>
-        <header>
-            <div class="title">一个名叫mmGrid的表格控件</div>
-            <div class="tableWrapper">
-                <table id="mmg"></table>
-            </div>
+        <header class="grid-container">
+            <h1 >mmGrid</h1>
+            <hr>
         </header>
-        <main>
+        <main class="grid-container">
+            <h2 >一、介绍</h2>
 
+            <p >
+                这是一个基于jQuery的表格部件。它提供了几个基本的功能，可以用于面积有限却要显示较多数据的页面。
+                如果你不需要太复杂的功能，也不想在工程里加入太多文件，那你可以尝试一下它。顺便说一句，它也支持IE6这样的老古董。
+            </p>
+            <hr>
+            <h2>二、基本示例</h2>
+            <p>
+                mmGrid支持两种数据加载方式：本地对象数据和远程AJAX数据。
+            </p>
+
+            <div class="grid-50">
+                <h3 >例 1：使用本地对象加载数据</h3>
+                <table id="table2-1"></table>
+                <p class="well">
+                    以客户端数据为数据源。参数<em>items</em>，类型可以是对象或数组。如果数据源为对象，则使用<em>root</em>选项标记对象内的数组字段为数据源。
+                </p>
+            </div>
+            <div class="grid-50">
+                <h3 >例 2：使用AJAX加载数据</h3>
+                <table id="table2-2"></table>
+                <p class="well">
+                    AJAX数据为数据源。参数<em>url</em>为请求地址，返回数据为json格式，可以是对象或数组。如果返回数据为对象，则使用<em>root</em>选项标记对象内的数组字段为数据源。
+                </p>
+            </div>
+            <div class="clear"></div>
+            <hr >
+            <h2>三、排序示例</h2>
+            <p>
+                排序参数为<em>sortName</em>和<em>sortStatus</em>。 如果初始化时设置排序列，则直接显示排序后数据。
+                排序方式分为客户端排序与AJAX服务器端排序，设置参数为<em>remoteSort</em>。
+                排序方式与数据源关系不大，但如果数据源为本地数据，设置<em>remoteSort</em>为<em>true</em>无效。
+                如果排序字段为数字类型需要将列选项添加<em>type:'number'</em>属性。
+            </p>
+            <div class="grid-50">
+                <h3 >例 1：使用本地对象加载数据</h3>
+                <table id="table3-1"></table>
+            </div>
+            <div class="grid-50">
+                <h3 >例 2：使用AJAX加载数据</h3>
+                <table id="table3-2"></table>
+                * 由于服务器端无处理程序，此示例可查看请求url的<em>sort</em>参数。
+            </div>
+            <div class="clear"></div>
+            <hr >
+            <h2>四、列状态</h2>
+            <div class="grid-33">
+                <h3 >例 1：锁定列宽</h3>
+                <table id="table4-1"></table>
+                <p class="well">
+                    锁定列宽选项为<em>lockWidth:true</em>。列宽被锁定后则不可调整，当表选项<em>fitCols</em>设为<em>true</em>列的宽度也不参与计算。
+                </p>
+            </div>
+            <div class="grid-33">
+                <h3 >例 2：隐藏列</h3>
+                <table id="table4-2"></table>
+                <p class="well">
+                    隐藏列选项为<em>hidden: true</em>。当光标移至标题时<strong>标题最右侧</strong>会显示<strong>向下按钮</strong>，单击此按钮则可打开选项板来调整隐藏和显示的列，调整完毕后单击选项板<strong>右下方</strong>的<strong>向上按钮</strong>来关闭选项板。
+                </p>
+            </div>
+            <div class="grid-33">
+                <h3 >例 3：锁定列显示状态</h3>
+                <table id="table4-3"></table>
+                <p class="well">
+                    锁定列显示状态选项为<em>lockDisplay: true</em>。锁定列显示状态后，在选项板中列选项会被值为灰色，此列则不可调整显示状态。
+                </p>
+            </div>
+            <div class="clear"></div>
+            <hr >
+            <h2>五、内容折行</h2>
+            <p>
+                表选项<em>nowrap</em>设置单元格内容超出单元格长度时是否折行显示。
+            </p>
+            <div class="grid-50">
+                <h3 >例 1：内容不折行</h3>
+                <table id="table5-1"></table>
+            </div>
+            <div class="grid-50">
+                <h3 >例 2：内容折行</h3>
+                <table id="table5-2"></table>
+            </div>
+            <div class="clear"></div>
+            <hr >
+            <h2>六、自适应列宽</h2>
+            <p>
+                当表选项<em>fitColWidth</em>设置为<em>true</em>时，表格在第一次数据加载时计算列宽，将其充满整个表格。锁定列宽的列不参与计算。如果所有显示的列宽总和大于表格宽度这个参数将不起作用。
+            </p>
+            <div class="grid-50">
+                <h3 >例 1：自动调整列宽充满表格</h3>
+                <table id="table6-1"></table>
+            </div>
+            <div class="grid-50">
+                <h3 >例 2：默认列宽</h3>
+                <table id="table6-2"></table>
+            </div>
+            <div class="clear"></div>
+            <hr >
+            <h2>七、选择行</h2>
+            <p>
+                表选项<em>multiSelect</em>设置表格是否可多选，默认为单选。可通过表操作<em>$('#table').mmGrid('selected')</em>获取选择的行对象。
+                当光标单击单元格时触发<em>onSelected</em>事件，该事件可在表选项设置。当该事件返回<em>false</em>取消执行选中或取消选中的操作。
+            </p>
+            <div class="grid-50">
+                <h3 >例 1：行多选</h3>
+                <table id="table7-1"></table>
+            </div>
+            <div class="grid-50">
+                <h3 >例 2：行单选</h3>
+                <table id="table7-2"></table>
+            </div>
+            <div class="clear"></div>
+            <hr >
+            <h2>八、选框列</h2>
+            <p>
+                表选项<code>checkCol</code>可以在表格前插入选框列。<code>checkCol</code>选项可以和<code>multiSelect</code>搭配使用。
+            </p>
+            <div class="grid-50">
+                <h3 >例 1：行多选</h3>
+                <table id="table8-1"></table>
+            </div>
+            <div class="grid-50">
+                <h3 >例 2：行单选</h3>
+                <table id="table8-2"></table>
+            </div>
+            <div class="clear"></div>
+            <hr >
+            <h2>九、分页</h2>
+            <p>
+                这里的分页示例借助了分页器，开发者可以根据自己的需求选择使用其他分页器。
+            </p>
+            <div class="grid-100">
+                <table id="table9-1"></table>
+                <div style="text-align:right;">
+                    <div id="paginator9-1"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <hr >
         </main>
+        <a href="https://github.com/miemiedev/mmGrid"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
 
         <script src="js/vendor/jquery-1.9.0.min.js"></script>
         <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        <script src="js/vendor/json2.js"></script>
         <script src="../src/mmGrid.js"></script>
         <script src="../src/mmPaginator.js"></script>
+        <script src="js/main.js"></script>
         <script>
-
         </script>
     </body>
 </html>
