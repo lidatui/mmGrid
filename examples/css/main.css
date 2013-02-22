@@ -119,6 +119,20 @@ h1{
     font-size: 38px;
     line-height: 1;
 }
+
+h1 a{
+    margin: 0 10px;
+    color: #b00;
+    font-size: 14px;
+    line-height: 1;
+    text-decoration: none;
+}
+
+h1 a:hover{
+    text-decoration: underline;
+
+}
+
 h2{
     font-size: 22px;
 }
