@@ -120,6 +120,8 @@ h1{
     line-height: 1;
 }
 
+
+
 h1 a{
     margin: 0 10px;
     color: #b00;
@@ -131,6 +133,14 @@ h1 a{
 h1 a:hover{
     text-decoration: underline;
 
+}
+
+h1 a.index{
+    margin: 0;
+    font-size: 38px;
+    color: #333;
+    font-weight: normal;
+    line-height: 1;
 }
 
 h2{
@@ -164,7 +174,14 @@ em {
     text-indent: 0;
 }
 
-
+.table {
+    margin-bottom: 20px;
+}
+.table td, .table th{
+    padding: 8px;
+    border: 1px solid rgb(221, 221, 221);
+    text-align: left;
+}
 
 
 
