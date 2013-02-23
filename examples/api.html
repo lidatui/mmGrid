@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/unsemantic-grid-responsive.css">
+        <link rel="stylesheet" href="../src/mmGrid.css">
+        <link rel="stylesheet" href="../src/mmPaginator.css">
+
+
+        <!--[if lt IE 9]>
+        <script src="js/vendor/html5shiv.js"></script>
+        <![endif]-->
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <header class="grid-container">
+            <h1 ><a class="index" href="index.html">mmGrid</a> <a href="#" >参数列表</a></h1>
+            <hr>
+        </header>
+        <main class="grid-container">
+            <h2 >一、表选项</h2>
+
+            <table class="table">
+                <tr>
+                    <th>名称</th>
+                    <th>可选值</th>
+                    <th>描述</th>
+                </tr>
+                <tr>
+                    <td>width</td>
+                    <td><em>'auto'</em>, 500, '500px'</td>
+                    <td>表格宽度。参数为'auto'和以'%'结尾,表格可在调整窗口尺寸时根据父元素调整尺寸。</td>
+                </tr>
+                <tr>
+                    <td>height</td>
+                    <td><em>'280px'</em>, 500, '500px'</td>
+                    <td>表格高度。如果以'%'结尾,表格可在调整窗口尺寸时根据父元素调整尺寸。</td>
+                </tr>
+                <tr>
+                    <td>url</td>
+                    <td><em>false</em>, string</td>
+                    <td>AJAX请求数据的地址。</td>
+                </tr>
+                <tr>
+                    <td>params</td>
+                    <td><em>{}</em>, object, function(){ return {}; }</td>
+                    <td>AJAX请求的参数。可以是普通对象或函数。
+                        函数返回一个参数对象，每次调用AJAX时调用。
+                    </td>
+                </tr>
+                <tr>
+                    <td>method</td>
+                    <td><em>‘post’</em>, 'get'</td>
+                    <td>AJAX提交方式。</td>
+                </tr>
+                <tr>
+                    <td>ache</td>
+                    <td><em>false</em>, true</td>
+                    <td>AJAX缓存。</td>
+                </tr>
+                <tr>
+                    <td>items</td>
+                    <td><em>[]</em>, Array</td>
+                    <td>数据使用本地对象数组。</td>
+                </tr>
+                <tr>
+                    <td>root</td>
+                    <td><em>''</em>, string</td>
+                    <td>指定json对象的数组字段为数据。</td>
+                </tr>
+
+                <tr>
+                    <td>nowrap</td>
+                    <td><em>false</em>, true</td>
+                    <td>表格显示的数据超出列宽时是否换行。</td>
+                </tr>
+                <tr>
+                    <td>multiSelect</td>
+                    <td><em>false</em>, true</td>
+                    <td>数据使用本地对象数组。</td>
+                </tr>
+                <tr>
+                    <td>fitColWidth</td>
+                    <td><em>false</em>, true</td>
+                    <td>true:表格第一次加载数据时列伸展，自动充满表格。</td>
+                </tr>
+                <tr>
+                    <td>checkCol</td>
+                    <td><em>false</em>, true</td>
+                    <td>表格第一列显示为checkbox。</td>
+                </tr>
+                <tr>
+                    <td>loadingText</td>
+                    <td><em>‘正在载入...’</em>, string</td>
+                    <td>数据载入时的提示文字。</td>
+                </tr>
+                <tr>
+                    <td>noDataText</td>
+                    <td><em>‘没有数据’</em>, string</td>
+                    <td>没有数据时的提示文字。</td>
+                </tr>
+                <tr>
+                    <td>cols</td>
+                    <td><em>[]</em>, Array</td>
+                    <td>数据模型。</td>
+                </tr>
+                <tr>
+                    <td>sortName</td>
+                    <td><em>''</em>, string</td>
+                    <td>排序的字段名。</td>
+                </tr>
+                <tr>
+                    <td>sortStatus</td>
+                    <td><em>'asc'</em>, string</td>
+                    <td>排序方向。</td>
+                </tr>
+                <tr>
+                    <td>remoteSort</td>
+                    <td><em>false</em>, true</td>
+                    <td>是否使用服务器端排序。当值为true时，sortName和sortStatus会作为参数放入AJAX请求中。</td>
+                </tr>
+                <tr>
+                    <td>autoLoad</td>
+                    <td><em>true</em>, false</td>
+                    <td>是否表格准备好时加载数据。</td>
+                </tr>
+                <tr>
+                    <td>onSuccess</td>
+                    <td><em>function(data){}</em>, function</td>
+                    <td>数据加载成功后执行。</td>
+                </tr>
+                <tr>
+                    <td>onError</td>
+                    <td><em>function(data){}</em>, function</td>
+                    <td>数据加载失败后执行。</td>
+                </tr>
+                <tr>
+                    <td>onSelected</td>
+                    <td><em>function(item, rowIndex, colIndex){}</em>, function</td>
+                    <td>
+                        表格中的数据被选择时执行。item：当前数据行对应的对象；rowIndex：行索引；colIndex：列索引。
+                        如果该函数返回false则不会触发选中和取消选中的操作。
+                    </td>
+                </tr>
+            </table>
+
+
+            <h2>二.列选项</h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>名称</th>
+                    <th>可选值</th>
+                    <th>描述</th>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>string</td>
+                    <td>标题文字。</td>
+                </tr>
+                <tr>
+                    <td>width</td>
+                    <td>int</td>
+                    <td>标题宽度像素值。</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td>string</td>
+                    <td>字段名。</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>'int','float'</td>
+                    <td>字段类型。在本地排序时用于转换文字。</td>
+                </tr>
+                <tr>
+                    <td>align</td>
+                    <td><em>'left'</em>, 'center', 'right'</td>
+                    <td>文字位置。</td>
+                </tr>
+                <tr>
+                    <td>hidden</td>
+                    <td><em>false</em>, true</td>
+                    <td>是否隐藏列。</td>
+                </tr>
+                <tr>
+                    <td>lockDipaly</td>
+                    <td><em>false</em>, true</td>
+                    <td>是否锁定列的显示状态。</td>
+                </tr>
+                <tr>
+                    <td>lockWidth</td>
+                    <td><em>false</em>, true</td>
+                    <td>是否锁定列宽。被锁定的列不参与fitCols选项的计算。</td>
+                </tr>
+                <tr>
+                    <td>sortable</td>
+                    <td><em>false</em>, true</td>
+                    <td>是否可排序。</td>
+                </tr>
+                <tr>
+                    <td>renderer</td>
+                    <td>function(val,item,items,rowIndex){ return val;}</td>
+                    <td>显示规则。参数: val 值, item 对象, items 对象数组, rowIndex 行索引;
+                        返回值: 可以是纯文本或html。
+                    </td>
+                </tr>
+            </table>
+
+            <h2>三.表操作</h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>名称</th>
+                    <th>参数</th>
+                    <th>描述</th>
+                </tr>
+                <tr>
+                    <td>load</td>
+                    <td>{} | []</td>
+                    <td>如果配置过AJAX选项，则这里是AJAX参数，如果传入对象数组，则为加载本地数据。</td>
+                </tr>
+                <tr>
+                    <td>selected</td>
+                    <td>无参数</td>
+                    <td>返回选择行的对象数组。</td>
+                </tr>
+                <tr>
+                    <td>selectedIndex</td>
+                    <td>无参数</td>
+                    <td>返回选择行的索引数组。</td>
+                </tr>
+                <tr>
+                    <td>select</td>
+                    <td>int | function(item, index){ return true; } | 'all'</td>
+                    <td>选中参数条件的行。int: 选中索引行; function: 过滤函数, item参数为行数据, index参数为行索引; 'all': 选中所有行。</td>
+                </tr>
+                <tr>
+                    <td>deselect</td>
+                    <td>int | function(item, index){ return true; } | 'all'</td>
+                    <td>取消选中参数条件的行。int: 取消选择索引行; function: 过滤函数, item参数为行数据, index参数为行索引; 'all': 取消选中所有行。</td>
+                </tr>
+                <tr>
+                    <td>items</td>
+                    <td>无参数</td>
+                    <td>返回选择行的索引数组。</td>
+                </tr>
+                <tr>
+                    <td>items</td>
+                    <td>int</td>
+                    <td>返回索引行的数据。</td>
+                </tr>
+                <tr>
+                    <td>count</td>
+                    <td>无参数</td>
+                    <td>返回行数。</td>
+                </tr>
+                <tr>
+                    <td>add</td>
+                    <td>item,index</td>
+                    <td>添加数据到索引行，index为可选。如item为对象数组则一次添加多行。</td>
+                </tr>
+                <tr>
+                    <td>update</td>
+                    <td>item,index</td>
+                    <td>更新数据到索引行，index为必选。一次只能更新一行。</td>
+                </tr>
+                <tr>
+                    <td>remove</td>
+                    <td>index</td>
+                    <td>移除索引行。如index为索引数组则一次移除多行。如果index为undefined则移除所有行。</td>
+                </tr>
+            </table>
+            <hr>
+        </main>
+        <a href="https://github.com/miemiedev/mmGrid"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+
+        <script src="js/vendor/jquery-1.9.1.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script>
+        </script>
+    </body>
+</html>
