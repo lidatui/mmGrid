@@ -85,7 +85,7 @@
             this.$head = $mmGrid.find('.mmg-head');
             this.$backboard = $mmGrid.find('.mmg-backboard');
             this.$bodyWrapper = $mmGrid.find('.mmg-bodyWrapper');
-            this.$body = $el.addClass('mmg-body').empty()
+            this.$body = $el.removeAttr("style").addClass('mmg-body').empty()
                 .html('<tbody><td style="border: 0px;background: none;">&nbsp;</td></tbody>')
                 .appendTo(this.$bodyWrapper);
 
