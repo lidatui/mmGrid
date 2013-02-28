@@ -280,7 +280,7 @@
             //向上按钮
             $mmGrid.find('a.mmg-btnBackboardUp').on('click', function(){
                 $backboard.slideUp().queue(function(next){
-                    if(!that.count()){
+                    if(!that.items().length){
                         that._showNoData();
                     }
                     next();
@@ -848,11 +848,6 @@
                     return $.data($tr[0],'item');
                 }
             }
-        }
-
-        , count: function(){
-            var items = this.items();
-            return items.length;
         }
 
         //添加数据，第一个参数可以为数组
