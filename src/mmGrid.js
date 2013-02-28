@@ -500,6 +500,9 @@
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
 
+            var scrollTop = $bodyWrapper.scrollTop();
+            var scrollLeft = $head.position().left;
+
             $bodyWrapper.width(9999);
             $body.width('auto');
             var styleText = [];
@@ -529,10 +532,13 @@
             $bodyWrapper.append($body);
 
             //调整滚动条
-            $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
+
+            $bodyWrapper.scrollLeft(-scrollLeft);
             if($bodyWrapper.scrollLeft() === 0){
                 $head.css('left', 0);
             }
+
+            $bodyWrapper.scrollTop(scrollTop);
         }
         , _fitColWidth: function(){
             var opts = this.opts;
