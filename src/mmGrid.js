@@ -55,8 +55,9 @@
                     '<style></style>',
                     '<div class="mmg-headWrapper">',
                         '<table class="mmg-head" cellspacing="0"></table>',
-                        '<div class="mmg-colResizePointer"></div>',
                     '</div>',
+                    '<div class="mmg-colResizePointer"></div>',
+                    '<div class="mmg-colResizePointer-before"></div>',
                     '<div class="mmg-backboard">',
                         '<a class="mmg-btnBackboardUp"></a>',
                     '</div>',
@@ -327,15 +328,17 @@
                 //调整列宽
                 var $resize = $(this);
                 var start = e.pageX;
-                var $colResizePointer = $headWrapper.find('.mmg-colResizePointer')
+                var $colResizePointer = $mmGrid.find('.mmg-colResizePointer')
                     .css('left', e.pageX - $headWrapper.offset().left).show();
+                var $colResizePointerBefore = $mmGrid.find('.mmg-colResizePointer-before')
+                    .css('left', $resize.parent().parent().position().left).show();
                 //取消文字选择
                 document.body.onselectstart = function () {
                     return false;
                 };
                 $headWrapper.css('-moz-user-select','none');
 
-                $headWrapper.on('mousemove', function(e){
+                $mmGrid.on('mousemove', function(e){
                     $colResizePointer.css('left', e.pageX - $headWrapper.offset().left);
                 }).on('mouseup', function(e){
                     //改变宽度
@@ -345,8 +348,9 @@
                     that._setColsWidth();
                     $headWrapper.mouseleave();
                 }).on('mouseleave',function(){
-                    $headWrapper.off('mouseup').off('mouseleave').off('mousemove');
-                        $colResizePointer.hide();
+                    $mmGrid.off('mouseup').off('mouseleave').off('mousemove');
+                    $colResizePointer.hide();
+                    $colResizePointerBefore.hide();
                     document.body.onselectstart = function(){
                         return true;//开启文字选择
                     };
@@ -496,6 +500,9 @@
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
 
+            var scrollTop = $bodyWrapper.scrollTop();
+            var scrollLeft = $head.position().left;
+
             $bodyWrapper.width(9999);
             $body.width('auto');
             var styleText = [];
@@ -525,10 +532,13 @@
             $bodyWrapper.append($body);
 
             //调整滚动条
-            $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
+
+            $bodyWrapper.scrollLeft(-scrollLeft);
             if($bodyWrapper.scrollLeft() === 0){
                 $head.css('left', 0);
             }
+
+            $bodyWrapper.scrollTop(scrollTop);
         }
         , _fitColWidth: function(){
             var opts = this.opts;
