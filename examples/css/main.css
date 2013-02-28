@@ -102,15 +102,16 @@ body{
         url(../img/pw_maze_white_@2X.png) 2x
     );
     */
-    font-family: Lucida, Verdana, 'Helvetica Neue',helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    font-family: Verdana,'Helvetica Neue',helvetica, "Hiragino Sans GB",'Microsoft YaHei', "WenQuanYi Micro Hei", sans-serif;
     font-size: 14px;
-    color: #555;
+    color: #444;
 }
 
 h1, h2, h3, h4, h5, h6 {
     margin: 0 0 0.4em 0;
     line-height: 1.5;
-    color: #333;
+    color: #000;
+    font-family: 'Segoe UI Light','Segoe UI', "Hiragino Sans GB",'Microsoft JhengHei UI', "Microsoft YaHei";
     font-weight: normal;
 }
 
@@ -123,6 +124,7 @@ h1{
 
 
 h1 a{
+    font-family:  "Hiragino Sans GB",'Microsoft YaHei', "WenQuanYi Micro Hei";
     margin: 0 10px;
     color: #b00;
     font-size: 14px;
@@ -139,6 +141,7 @@ h1 a.index{
     margin: 0;
     font-size: 38px;
     color: #333;
+    font-family:  Verdana;
     font-weight: normal;
     line-height: 1;
 }

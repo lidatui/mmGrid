@@ -158,15 +158,28 @@
     background: url(img/sort-desc.png) no-repeat center center;
 }
 
-.mmGrid .mmg-headWrapper .mmg-colResizePointer{
+.mmGrid  .mmg-colResizePointer{
     position: absolute;
     top: 0;
     left: 0;
     display: none;
-    width: 2px;
+    width: 1px;
     height: 100%;
     background: #999;
     cursor: col-resize;
+    z-index: 1;
+}
+
+.mmGrid  .mmg-colResizePointer-before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 1px;
+    height: 100%;
+    background: #999;
+    cursor: col-resize;
+    z-index: 1;
 }
 
 /* 背板 */
@@ -239,7 +252,6 @@
     border-bottom: 1px solid #e4e4e4;
     line-height: 2;
 }
-
 
 .mmGrid .mmg-bodyWrapper .mmg-body td.colSelected{
     background: #f7f7f7;
