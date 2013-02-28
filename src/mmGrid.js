@@ -330,9 +330,13 @@
                 var start = e.pageX;
                 var $colResizePointer = $mmGrid.find('.mmg-colResizePointer')
                     .css('left', e.pageX - $headWrapper.offset().left).show();
+
+                var scrollLeft = $head.position().left;
                 var $colResizePointerBefore = $mmGrid.find('.mmg-colResizePointer-before')
-                    .css('left', $resize.parent().parent().position().left).show();
+                    .css('left', $resize.parent().parent().position().left + scrollLeft).show();
                 //取消文字选择
+                document.selection && document.selection.empty && ( document.selection.empty(), 1)
+                || window.getSelection && window.getSelection().removeAllRanges();
                 document.body.onselectstart = function () {
                     return false;
                 };
