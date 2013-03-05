@@ -369,7 +369,7 @@
                 var $this = $(this);
 
 
-                that.$el.trigger('rowSelected', [$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index()]);
+                that.$el.triggerHandler('rowSelected', [$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index()]);
                 if(!$this.parent().hasClass('selected')){
                     that.select($this.parent().index());
                 }
@@ -724,7 +724,7 @@
                     that._refreshSortStatus();
                 }
 
-                that.$el.trigger('loadSuccess', data);
+                that.$el.triggerHandler('loadSuccess', data);
 
                 //分页控件加载
                 if(opts.paginator && opts.paginator.mmPaginator){
@@ -732,7 +732,7 @@
                     $pg.mmPaginator('load',data);
                 }
             }).fail(function(data){
-                that.$el.trigger('loadError', data);
+                that.$el.triggerHandler('loadError', data);
             });
 
         }
@@ -748,9 +748,13 @@
                 //加载本地数据
                 this._populate(args);
                 this._refreshSortStatus();
-                this.$el.trigger('loadSuccess', args);
+                this.$el.triggerHandler('loadSuccess', args);
             }else if(opts.url){
                 this._loadAjax(args);
+            }else if(opts.items){
+                this.load(opts.items);
+            }else{
+                this.load([]);
             }
         }
             //选中
@@ -978,6 +982,7 @@
         , paginator : undefined //分页器
     };
 //  event : loadSuccess(e,data), loadError(e, data), rowSelected(item, rowIndex, colIndex)
+//
 
 
     $.fn.mmGrid.Constructor = MMGrid;

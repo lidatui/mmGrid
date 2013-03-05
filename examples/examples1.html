@@ -106,17 +106,17 @@
 
                 $('#mmg').mmGrid({
                     height: 400
-
                     , cols: cols
-                    , url: 'data/stockQuotePage.json'
+                    //, url: 'data/stockQuotePage.json'
                     , method: 'get'
                     , remoteSort:true
-                    //, items: items
+                    , items: items
                     , sortName: 'SECUCODE'
                     , sortStatus: 'asc'
                     , multiSelect: true
                     , checkCol: true
                     , fitColWidth: true
+                    , autoLoad: false
                     , paginator: $('#paginator').mmPaginator()
                 }).on('rowSelected', function(e, item, rowIndex, colIndex){
                     console.log('rowSelected!');
@@ -128,7 +128,7 @@
                 }).on('loadSuccess', function(e, data){
                     console.log('loadSuccess!');
                     console.log(data);
-                });
+                }).mmGrid('load');
 
 
 
