@@ -134,24 +134,6 @@
                     <td><em>true</em>, false</td>
                     <td>是否表格准备好时加载数据。</td>
                 </tr>
-                <tr>
-                    <td>onSuccess</td>
-                    <td><em>function(data){}</em>, function</td>
-                    <td>数据加载成功后执行。</td>
-                </tr>
-                <tr>
-                    <td>onError</td>
-                    <td><em>function(data){}</em>, function</td>
-                    <td>数据加载失败后执行。</td>
-                </tr>
-                <tr>
-                    <td>onSelected</td>
-                    <td><em>function(item, rowIndex, colIndex){}</em>, function</td>
-                    <td>
-                        表格中的数据被选择时执行。item：当前数据行对应的对象；rowIndex：行索引；colIndex：列索引。
-                        如果该函数返回false则不会触发选中和取消选中的操作。
-                    </td>
-                </tr>
             </table>
 
 
@@ -272,6 +254,32 @@
                     <td>remove</td>
                     <td>index</td>
                     <td>移除索引行。如index为索引数组则一次移除多行。如果index为undefined则移除所有行。</td>
+                </tr>
+            </table>
+
+            <h2>四.事件</h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>名称</th>
+                    <th>参数</th>
+                    <th>描述</th>
+                </tr>
+                <tr>
+                    <td>loadSuccess</td>
+                    <td><em>function(e, data){}</em></td>
+                    <td>数据加载成功后执行。</td>
+                </tr>
+                <tr>
+                    <td>loadError</td>
+                    <td><em>function(e, data){}</em></td>
+                    <td>数据加载失败后执行。</td>
+                </tr>
+                <tr>
+                    <td>rowSelected</td>
+                    <td><em>function(e, item, rowIndex, colIndex){}</em>, function</td>
+                    <td>
+                        表格中的数据被选择时执行。item：当前数据行对应的对象；rowIndex：行索引；colIndex：列索引。
+                    </td>
                 </tr>
             </table>
             <hr>

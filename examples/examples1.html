@@ -118,6 +118,16 @@
                     , checkCol: true
                     , fitColWidth: true
                     , paginator: $('#paginator').mmPaginator()
+                }).on('rowSelected', function(e, item, rowIndex, colIndex){
+                    console.log('rowSelected!');
+                    console.log(this);
+                    console.log(e);
+                    console.log(item);
+                    console.log(rowIndex);
+                    console.log(colIndex);
+                }).on('loadSuccess', function(e, data){
+                    console.log('loadSuccess!');
+                    console.log(data);
                 });
 
 
@@ -159,6 +169,7 @@
                     }
 
                 });
+
 
             });
         </script>

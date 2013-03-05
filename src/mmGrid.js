@@ -370,14 +370,18 @@
 
 
                 that.$el.trigger('rowSelected', [$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index()]);
-//                var action = opts.onSelected($.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
-//                if(action === false){
-//                    return;
-//                }
                 if(!$this.parent().hasClass('selected')){
                     that.select($this.parent().index());
+                }
+            });
+
+            $body.on('click','tr > td:nth-child(1) :checkbox',function(e){
+                e.stopPropagation();
+                var $this = $(this);
+                if(this.checked){
+                    that.select($this.parent().parent().parent().index());
                 }else{
-                    that.deselect($this.parent().index());
+                    that.deselect($this.parent().parent().parent().index());
                 }
             });
 
@@ -971,10 +975,9 @@
         , checkCol: false
         , fitColWidth: false
         , nowrap: false
-        , onSelected: function(item, rowIndex, colIndex){}
         , paginator : undefined //分页器
     };
-//    event : loadSuccess(e,data), loadError(e, data), rowSelected(item, rowIndex, colIndex)
+//  event : loadSuccess(e,data), loadError(e, data), rowSelected(item, rowIndex, colIndex)
 
 
     $.fn.mmGrid.Constructor = MMGrid;
