@@ -7,7 +7,8 @@
         this._id = (((1 + Math.random()) * 0x10000) | 0).toString(16);
         this._loadCount = 0;
         this.opts = options;
-        this._initLayout($(element));
+        this.$el = $(element);
+        this._initLayout(this.$el);
         this._initHead();
         this._initOptions();
         this._initEvents();
@@ -366,10 +367,13 @@
             var $body = this.$body;
             $body.on('click','td',function(){
                 var $this = $(this);
-                var action = opts.onSelected($.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
-                if(action === false){
-                    return;
-                }
+
+
+                that.$el.trigger('rowSelected', [$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index()]);
+//                var action = opts.onSelected($.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
+//                if(action === false){
+//                    return;
+//                }
                 if(!$this.parent().hasClass('selected')){
                     that.select($this.parent().index());
                 }else{
@@ -715,9 +719,8 @@
                 if(!opts.remoteSort){
                     that._refreshSortStatus();
                 }
-                if(opts.onSuccess){
-                    opts.onSuccess(data);
-                }
+
+                that.$el.trigger('loadSuccess', data);
 
                 //分页控件加载
                 if(opts.paginator && opts.paginator.mmPaginator){
@@ -725,9 +728,7 @@
                     $pg.mmPaginator('load',data);
                 }
             }).fail(function(data){
-                if(opts.onError){
-                    opts.onError(data);
-                }
+                that.$el.trigger('loadError', data);
             });
 
         }
@@ -743,9 +744,7 @@
                 //加载本地数据
                 this._populate(args);
                 this._refreshSortStatus();
-                if(opts.onSuccess){
-                    opts.onSuccess(args);
-                }
+                this.$el.trigger('loadSuccess', args);
             }else if(opts.url){
                 this._loadAjax(args);
             }
@@ -972,11 +971,11 @@
         , checkCol: false
         , fitColWidth: false
         , nowrap: false
-        , onSuccess: function(data){}
-        , onError: function(data){}
         , onSelected: function(item, rowIndex, colIndex){}
         , paginator : undefined //分页器
     };
+//    event : loadSuccess(e,data), loadError(e, data), rowSelected(item, rowIndex, colIndex)
+
 
     $.fn.mmGrid.Constructor = MMGrid;
 
