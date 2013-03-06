@@ -233,6 +233,7 @@
                     }else{
                         $mmGrid.height(opts.height);
                     }
+                    $bodyWrapper.height($mmGrid.height() - $headWrapper.outerHeight(true));
 
                     //调整message
                     var $message = $mmGrid.find('.mmg-message');
