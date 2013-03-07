@@ -899,6 +899,8 @@
             }
             $tr.data('item', item);
             this._setStyle();
+
+            this.$el.triggerHandler('rowInserted', [item, index]);
         }
         //更新行内容，两个参数都必填
         , updateRow: function(item, index){
@@ -908,7 +910,8 @@
                 return ;
             }
 
-            var items = this.rows();
+            var items = this.rows()
+            var oldItem = this.row(index);
 
             var $tr = $tbody.find('tr').eq(index);
             var checked = $tr.find('td:first :checkbox').is(':checked');
@@ -917,26 +920,34 @@
                 $tr.find('td:first :checkbox').prop('checked',checked);
             }
 
-
             $tr.data('item', item);
             this._setStyle();
+
+            this.$el.triggerHandler('rowUpdated', [oldItem, item, index]);
         }
 
         //删除行，参数可以为索引数组
         , removeRow: function(index){
-            var $tbody = this.$body.find('tbody');
+            var that = this;
+            var $tbody = that.$body.find('tbody');
 
             if($.isArray(index)){
                 for(var i=index.length-1; i >= 0; i--){
-                    this.removeRow(index[i]);
+                    that.removeRow(index[i]);
                 }
                 return ;
             }
 
             if(index === undefined){
+                var items = that.rows();
                 $tbody.find('tr').remove();
+                $.each(items, function(index, item){
+                    that.$el.triggerHandler('rowRemoved',  [item, index]);
+                })
             }else{
+                var item = that.row(index);
                 $tbody.find('tr').eq(index).remove();
+                this.$el.triggerHandler('rowRemoved', [item, index]);
             }
             this._setStyle();
         }
@@ -986,6 +997,7 @@
         , paginator : undefined //分页器
     };
 //  event : loadSuccess(e,data), loadError(e, data), rowSelected(item, rowIndex, colIndex)
+//          rowInserted(e,item, rowIndex), rowUpdated(e, oldItem, newItem, rowIndex), rowRemoved(e,item, rowIndex)
 //
 
 

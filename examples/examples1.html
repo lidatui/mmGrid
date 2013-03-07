@@ -125,6 +125,19 @@
                 }).on('loadSuccess', function(e, data){
                     console.log('loadSuccess!');
                     console.log(data);
+                }).on('rowInserted', function(e, item, index){
+                    console.log('rowInserted!');
+                    console.log(item);
+                    console.log(index);
+                }).on('rowUpdated', function(e, oldItem, newItem, index){
+                    console.log('rowUpdated!');
+                    console.log(oldItem);
+                    console.log(newItem);
+                    console.log(index);
+                }).on('rowRemoved', function(e, item, index){
+                    console.log('rowRemoved!');
+                    console.log(item);
+                    console.log(index);
                 }).load();
 
 
@@ -160,9 +173,7 @@
                 $('#btnUpdate').on('click', function(){
                     var updateItem = mmg.row(1);
                     if(updateItem){
-                        updateItem.SECUCODE = '999999';
-                        updateItem.SECUABBR = '更新股票';
-                        mmg.updateRow(updateItem, 1);
+                        mmg.updateRow(item1, 1);
                     }
 
                 });
