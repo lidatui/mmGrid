@@ -75,7 +75,7 @@
     min-width: 320px;
   }
 }
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 980px) {
 
     .grid-container {
         width: 100%;
