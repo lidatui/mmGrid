@@ -979,7 +979,7 @@
                 data = new MMGrid(this[0], options);
                 this.data('mmGrid', data);
             }
-            return $.extend(this, data);
+            return $.extend(true, this, data);
         }
         if(typeof arguments[0] === 'string'){
             var data = this.data('mmGrid');
