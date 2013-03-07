@@ -88,7 +88,7 @@
             this.$backboard = $mmGrid.find('.mmg-backboard');
             this.$bodyWrapper = $mmGrid.find('.mmg-bodyWrapper');
             this.$body = $el.removeAttr("style").addClass('mmg-body').empty()
-                .html('<tbody><td style="border: 0px;background: none;">&nbsp;</td></tbody>')
+                .html('<tbody><tr class="emptyRow"><td  style="border: 0px;background: none;">&nbsp;</td></tr></tbody>')
                 .appendTo(this.$bodyWrapper);
 
             //放回原位置
@@ -282,7 +282,7 @@
             //向上按钮
             $mmGrid.find('a.mmg-btnBackboardUp').on('click', function(){
                 $backboard.slideUp().queue(function(next){
-                    if(!that.rowsLength()){
+                    if(!that.rowsLength() || (that.rowsLength() === 1 && $body.find('tr.emptyRow').length)){
                         that._showNoData();
                     }
                     next();
@@ -466,7 +466,7 @@
                     $.data($trs.eq(rowIndex)[0],'item',items[rowIndex]);
                 }
             }else{
-                $body.empty().html('<tbody><td style="border: 0px;background: none;">&nbsp;</td></tbody>');
+                this._insertEmptyRow();
                 this._showNoData();
             }
             this._setStyle();
@@ -476,6 +476,15 @@
             }
 
             this._hideLoading();
+        }
+
+        , _insertEmptyRow: function(){
+            var $body = this.$body;
+            $body.empty().html('<tbody><tr class="emptyRow"><td  style="border: 0px;background: none;">&nbsp;</td></tr></tbody>');
+        }
+        , _removeEmptyRow: function(){
+            var $body = this.$body;
+            $body.find('tr.emptyRow').remove();
         }
 
         /* 生成列类 */
@@ -880,6 +889,9 @@
                 return ;
             }
 
+            this._hideNoData();
+            this._removeEmptyRow();
+
             var $tr;
 
             if(index === undefined || index < 0){
@@ -901,7 +913,7 @@
             }
             $tr.data('item', item);
             this._setStyle();
-            this._hideNoData();
+
 
             this.$el.triggerHandler('rowInserted', [item, index]);
         }
@@ -952,6 +964,7 @@
             this._setStyle();
             if(this.rowsLength() === 0){
                 this._showNoData();
+                this._insertEmptyRow();
             }
         }
     };
