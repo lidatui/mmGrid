@@ -77,10 +77,6 @@
 }
 @media screen and (min-width: 980px) {
 
-    .grid-container {
-        width: 640px;
-    }
-
   .grid-100:before,
   .grid-100:after {
     content: ".";
