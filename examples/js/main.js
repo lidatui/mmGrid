@@ -194,7 +194,7 @@ $(document).ready(function(){
     $('#table6-1').mmGrid({
         cols: cols6,
         items: items,
-        fitColWidth: true
+        fullWidthRows: true
     });
     $('#table6-2').mmGrid({
         cols: cols6,

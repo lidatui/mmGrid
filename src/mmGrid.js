@@ -13,8 +13,8 @@
         this._initOptions();
         this._initEvents();
         this._setColsWidth();
-        if(this.opts.fitColWidth){
-            this._fitColWidth();
+        if(this.opts.fullWidthRows){
+            this._fullWidthRows();
         }
 
         if(options.autoLoad){
@@ -471,8 +471,8 @@
             }
             this._setStyle();
 
-            if(opts.fitColWidth && this._loadCount <= 1){
-                this._fitColWidth();
+            if(opts.fullWidthRows && this._loadCount <= 1){
+                this._fullWidthRows();
             }
 
             this._hideLoading();
@@ -553,7 +553,7 @@
 
             $bodyWrapper.scrollTop(scrollTop);
         }
-        , _fitColWidth: function(){
+        , _fullWidthRows: function(){
             var opts = this.opts;
             var $bodyWrapper = this.$bodyWrapper;
             var $mmGrid = this.$mmGrid;
@@ -738,7 +738,11 @@
 
         }
 
-
+        , _loadNative: function(args){
+            this._populate(args);
+            this._refreshSortStatus();
+            this.$el.triggerHandler('loadSuccess', args);
+        }
         , load: function(args){
             var opts = this.opts;
             this._hideMessage();
@@ -747,15 +751,13 @@
 
             if($.isArray(args)){
                 //加载本地数据
-                this._populate(args);
-                this._refreshSortStatus();
-                this.$el.triggerHandler('loadSuccess', args);
+                this._loadNative(args);
             }else if(opts.url){
                 this._loadAjax(args);
             }else if(opts.items){
-                this.load(opts.items);
+                this._loadNative(opts.items);
             }else{
-                this.load([]);
+                this._loadNative([]);
             }
         }
             //选中
@@ -979,7 +981,7 @@
         , noDataText: '没有数据'
         , multiSelect: false
         , checkCol: false
-        , fitColWidth: false
+        , fullWidthRows: false
         , nowrap: false
         , paginator : undefined //分页器
     };
