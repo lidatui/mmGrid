@@ -22,7 +22,7 @@ $(document).ready(function(){
     };
     //列
     var cols = [
-        {title:'行情', name:'', width: 30, align: 'center', renderer: function(val,item,items,rowIndex){
+        {title:'行情', name:'', width: 30, align: 'center', renderer: function(val,item,rowIndex){
             return '<div class="btnPrice"></div>';
         }},
         { title:'股票代码', name:'SECUCODE' ,width:100, align:'center' },
@@ -60,7 +60,7 @@ $(document).ready(function(){
 
 
     var cols3 = [
-        {title:'行情', name:'', width: 30, align: 'center', sortable: true, renderer: function(val,item,items,rowIndex){
+        {title:'行情', name:'', width: 30, align: 'center', sortable: true, renderer: function(val,item,rowIndex){
             return '<div class="btnPrice"></div>';
         }},
         { title:'股票代码', name:'SECUCODE' ,width:100, align:'center', sortable: true},
@@ -101,7 +101,7 @@ $(document).ready(function(){
 
     //锁定列宽
     var cols41 = [
-        {title:'行情', name:'', width: 30, align: 'center',lockWidth:true, renderer: function(val,item,items,rowIndex){
+        {title:'行情', name:'', width: 30, align: 'center',lockWidth:true, renderer: function(val,item,rowIndex){
             return '<div class="btnPrice"></div>';
         }},
         { title:'股票代码', name:'SECUCODE' ,width:80,lockWidth:true, align:'center' },
@@ -117,7 +117,7 @@ $(document).ready(function(){
 
     //隐藏列
     var cols42 = [
-        {title:'行情', name:'',width: 30, align: 'center', renderer: function(val,item,items,rowIndex){
+        {title:'行情', name:'',width: 30, align: 'center', renderer: function(val,item,rowIndex){
             return '<div class="btnPrice"></div>';
         }},
         { title:'股票代码', name:'SECUCODE' ,width:80, align:'center', hidden: true },
@@ -133,7 +133,7 @@ $(document).ready(function(){
 
     //锁定列显示状态
     var cols43 = [
-        {title:'行情', name:'',width: 30, align: 'center',lockDisplay: true, renderer: function(val,item,items,rowIndex){
+        {title:'行情', name:'',width: 30, align: 'center',lockDisplay: true, renderer: function(val,item,rowIndex){
             return '<div class="btnPrice"></div>';
         }},
         { title:'股票代码', name:'SECUCODE' ,width:80, align:'center' },
@@ -149,7 +149,7 @@ $(document).ready(function(){
 
     //内容折行
     var cols5 = [
-        {title:'行情', name:'', width: 30, align: 'center', renderer: function(val,item,items,rowIndex){
+        {title:'行情', name:'', width: 30, align: 'center', renderer: function(val,item,rowIndex){
             return '<div class="btnPrice"></div>';
         }},
         { title:'股票名称', name:'' ,width:80, align:'center', renderer: function(val, item){
@@ -183,7 +183,7 @@ $(document).ready(function(){
 
     //列宽自适应表格宽度
     var cols6 = [
-        {title:'行情', name:'', width: 30, align: 'center',lockWidth:true, renderer: function(val,item,items,rowIndex){
+        {title:'行情', name:'', width: 30, align: 'center',lockWidth:true, renderer: function(val,item,rowIndex){
             return '<div class="btnPrice"></div>';
         }},
         { title:'股票代码', name:'SECUCODE' ,width:80, align:'center' },
@@ -194,7 +194,7 @@ $(document).ready(function(){
     $('#table6-1').mmGrid({
         cols: cols6,
         items: items,
-        fitColWidth: true
+        fullWidthRows: true
     });
     $('#table6-2').mmGrid({
         cols: cols6,

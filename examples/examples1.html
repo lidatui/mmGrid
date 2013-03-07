@@ -41,18 +41,15 @@
                 <button id="btnAddArr" class="button" >添加列表到第二行</button>
                 <button id="btnRemove" class="button" >删除第二行</button>
                 <button id="btnRemoveSelected" class="button" >删除选择的行</button>
+                <button id="btnRemoveAll" class="button" >删除全部行</button>
                 <button id="btnUpdate" class="button" >更新第二行</button>
             </div>
-            <table id="mmg"></table>
-            <div id="paginator" style="text-align: right;">
-
-            </div>
+            <table id="mmg" class="mmg"></table>
         </main>
 
         <script src="js/vendor/jquery-1.9.1.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="../src/mmGrid.js"></script>
-        <script src="../src/mmPaginator.js"></script>
         <script>
             $(document).ready(function(){
 
@@ -66,7 +63,7 @@
                     return val.toFixed(2);
                 }
                 var cols = [
-                    {title:'行情', name:'', width: 30, align: 'center',lockWidth:true,  renderer: function(val,item,items,rowIndex){
+                    {title:'行情', name:'', width: 30, align: 'center',lockWidth:true,  renderer: function(val,item,rowIndex){
                         return '<div class="btnPrice"></div>';
                     }},
                     { title:'股票代码', name:'SECUCODE' ,width:100, sortable: true, align:'center' ,lockDisplay: true },
@@ -104,21 +101,49 @@
                 ];
 
 
-                $('#mmg').mmGrid({
+                var mmg = $('.mmg').mmGrid({
                     height: 400
-
                     , cols: cols
-                    , url: 'data/stockQuotePage.json'
+                    //, url: 'data/stockQuotePage.json'
                     , method: 'get'
                     , remoteSort:true
-                    //, items: items
+                    , items: items
                     , sortName: 'SECUCODE'
                     , sortStatus: 'asc'
                     , multiSelect: true
                     , checkCol: true
-                    , fitColWidth: true
-                    , paginator: $('#paginator').mmPaginator()
+                    , fullWidthRows: true
+                    , autoLoad: false
                 });
+
+                mmg.on('rowSelected', function(e, item, rowIndex, colIndex){
+                    console.log('rowSelected!');
+                    console.log(this);
+                    console.log(e);
+                    console.log(item);
+                    console.log(rowIndex);
+                    console.log(colIndex);
+                }).on('loadSuccess', function(e, data){
+                    //这个事件需要在数据加载之前注册才能触发
+                    console.log('loadSuccess!');
+                    console.log(data);
+                    console.log(mmg.rowsLength());
+                }).on('rowInserted', function(e, item, index){
+                    console.log('rowInserted!');
+                    console.log(item);
+                    console.log(index);
+                    console.log(mmg.rowsLength());
+                }).on('rowUpdated', function(e, oldItem, newItem, index){
+                    console.log('rowUpdated!');
+                    console.log(oldItem);
+                    console.log(newItem);
+                    console.log(index);
+                }).on('rowRemoved', function(e, item, index){
+                    console.log('rowRemoved!');
+                    console.log(item);
+                    console.log(index);
+                    console.log(mmg.rowsLength());
+                }).load();
 
 
 
@@ -126,15 +151,15 @@
                 var item2 = {AMPLITUDE:0.7389,PREVCLOSINGPRICE:12.18,TURNOVERDEALS:0,HIGHESTPRICE:12.22,TURNOVERVOL:1332194,TRADINGDAY:1345478400000,TOTALSHARE:1926958448,SECUCODE:"100001",EPS:0.1909,LOWESTPRICE:12.13,OPENINGPRICE:12.19,SECUABBR:"新加股票2",ALISTEDSHARE:1093476397,ID:3131171,WCOSTAVG:12.8369,NETCASHFLOWOPERPS:-0.04,SECUNAME:"上海国际机场股份有限公司",CLOSINGPRICE:12.14,DAYCHANGERATE:-0.3284,TURNOVERVAL:16207539,BVPS:8.16,DAYCHANGE:-0.04,PE:15.5997,TURNOVERRATE:0.1218,ADJUSTCLOSINGPRICE:33.1878,PB:1.523};
 
                 $('#btnAdd').on('click', function(){
-                    $('#mmg').mmGrid('deselect', 'all');
-                    $('#mmg').mmGrid('add', item1, 2);
-                    $('#mmg').mmGrid('select', 2);
+                    mmg.deselect( 'all');
+                    mmg.addRow(item1, 2);
+                    mmg.select(2);
                 });
 
                 $('#btnAddArr').on('click', function(){
-                    $('#mmg').mmGrid('deselect', 'all');
-                    $('#mmg').mmGrid('add', [item1,item2], 1);
-                    $('#mmg').mmGrid('select',function(item, index){
+                    mmg.deselect( 'all');
+                    mmg.addRow([item1,item2], 1);
+                    mmg.select(function(item, index){
                         if(index === 1 || index === 2){
                             return true;
                         }
@@ -142,23 +167,26 @@
                 });
 
                 $('#btnRemove').on('click', function(){
-                    $('#mmg').mmGrid('remove', 1);
+                    mmg.removeRow(1);
+                });
+                $('#btnRemoveAll').on('click', function(){
+                    mmg.removeRow();
                 });
 
+
                 $('#btnRemoveSelected').on('click', function(){
-                    var selectedIndexes = $('#mmg').mmGrid('selectedIndex');
-                    $('#mmg').mmGrid('remove', selectedIndexes);
+                    var selectedIndexes = mmg.selectedRowsIndex();
+                    mmg.removeRow(selectedIndexes);
                 });
 
                 $('#btnUpdate').on('click', function(){
-                    var updateItem = $('#mmg').mmGrid('item',1);
+                    var updateItem = mmg.row(1);
                     if(updateItem){
-                        updateItem.SECUCODE = '999999';
-                        updateItem.SECUABBR = '更新股票';
-                        $('#mmg').mmGrid('update', updateItem, 1);
+                        mmg.updateRow(item1, 1);
                     }
 
                 });
+
 
             });
         </script>
