@@ -872,6 +872,9 @@
 
         , rowsLength: function(){
             var $body = this.$body;
+            if($body.find('tr').length === 1 && $body.find('tr.emptyRow').length){
+                return 0;
+            }
             return $body.find('tr').length;
         }
 
