@@ -7,8 +7,7 @@
         this._id = (((1 + Math.random()) * 0x10000) | 0).toString(16);
         this._loadCount = 0;
         this.opts = options;
-        this.$el = $(element);
-        this._initLayout(this.$el);
+        this._initLayout($(element));
         this._initHead();
         this._initOptions();
         this._initEvents();
@@ -371,7 +370,7 @@
                 var $this = $(this);
 
 
-                that.$el.triggerHandler('rowSelected', [$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index()]);
+                that.$body.triggerHandler('rowSelected', [$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index()]);
                 if(!$this.parent().hasClass('selected')){
                     that.select($this.parent().index());
                 }
@@ -735,7 +734,7 @@
                     that._refreshSortStatus();
                 }
 
-                that.$el.triggerHandler('loadSuccess', data);
+                that.$body.triggerHandler('loadSuccess', data);
 
                 //分页控件加载
                 if(opts.paginator && opts.paginator.mmPaginator){
@@ -743,7 +742,7 @@
                     $pg.mmPaginator('load',data);
                 }
             }).fail(function(data){
-                that.$el.triggerHandler('loadError', data);
+                that.$body.triggerHandler('loadError', data);
             });
 
         }
@@ -751,7 +750,7 @@
         , _loadNative: function(args){
             this._populate(args);
             this._refreshSortStatus();
-            this.$el.triggerHandler('loadSuccess', args);
+            this.$body.triggerHandler('loadSuccess', args);
         }
         , load: function(args){
             var opts = this.opts;
@@ -920,7 +919,7 @@
             this._setStyle();
 
 
-            this.$el.triggerHandler('rowInserted', [item, index]);
+            this.$body.triggerHandler('rowInserted', [item, index]);
         }
         //更新行内容，两个参数都必填
         , updateRow: function(item, index){
@@ -941,7 +940,7 @@
             $tr.data('item', item);
             this._setStyle();
 
-            this.$el.triggerHandler('rowUpdated', [oldItem, item, index]);
+            this.$body.triggerHandler('rowUpdated', [oldItem, item, index]);
         }
 
         //删除行，参数可以为索引数组
@@ -964,7 +963,7 @@
             }else{
                 var item = that.row(index);
                 $tbody.find('tr').eq(index).remove();
-                this.$el.triggerHandler('rowRemoved', [item, index]);
+                this.$body.triggerHandler('rowRemoved', [item, index]);
             }
             this._setStyle();
             if(this.rowsLength() === 0){
