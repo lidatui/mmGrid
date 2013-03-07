@@ -282,7 +282,7 @@
             //向上按钮
             $mmGrid.find('a.mmg-btnBackboardUp').on('click', function(){
                 $backboard.slideUp().queue(function(next){
-                    if(!that.items().length){
+                    if(!that.rows().length){
                         that._showNoData();
                     }
                     next();
