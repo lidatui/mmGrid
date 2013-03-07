@@ -87,9 +87,10 @@
             this.$head = $mmGrid.find('.mmg-head');
             this.$backboard = $mmGrid.find('.mmg-backboard');
             this.$bodyWrapper = $mmGrid.find('.mmg-bodyWrapper');
-            this.$body = $el.removeAttr("style").addClass('mmg-body').empty()
-                .html('<tbody><tr class="emptyRow"><td  style="border: 0px;background: none;">&nbsp;</td></tr></tbody>')
-                .appendTo(this.$bodyWrapper);
+            this.$body = $el.removeAttr("style").addClass('mmg-body');
+            this._insertEmptyRow();
+            this.$body.appendTo(this.$bodyWrapper);
+
 
             //放回原位置
             if(elIndex === 0 || $elParent.children().length == 0){
