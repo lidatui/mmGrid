@@ -897,11 +897,11 @@
                     }else{
                         $before.after($($tr));
                     }
-
                 }
             }
             $tr.data('item', item);
             this._setStyle();
+            this._hideNoData();
 
             this.$el.triggerHandler('rowInserted', [item, index]);
         }
@@ -950,6 +950,9 @@
                 this.$el.triggerHandler('rowRemoved', [item, index]);
             }
             this._setStyle();
+            if(this.rowsLength() === 0){
+                this._showNoData();
+            }
         }
     };
 
