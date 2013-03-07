@@ -283,7 +283,7 @@
             //向上按钮
             $mmGrid.find('a.mmg-btnBackboardUp').on('click', function(){
                 $backboard.slideUp().queue(function(next){
-                    if(!that.rowsLength() || (that.rowsLength() === 1 && $body.find('tr.emptyRow').length)){
+                    if(!that.rowsLength() || (that.rowsLength() === 1 && $body.find('tr.emptyRow').length === 1)){
                         that._showNoData();
                     }
                     next();
@@ -873,7 +873,7 @@
         , rowsLength: function(){
             var $body = this.$body;
             var length = $body.find('tr').length;
-            if(length === 1 && $body.find('tr.emptyRow').length){
+            if(length === 1 && $body.find('tr.emptyRow').length === 1){
                 return 0;
             }
             return length;
