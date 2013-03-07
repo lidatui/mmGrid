@@ -822,7 +822,7 @@
                 }
             }
         }
-        , selected: function(){
+        , selectedRows: function(){
             var $body = this.$body;
             var selected = [];
             $.each($body.find('tr.selected'), function(index ,item){
@@ -831,7 +831,7 @@
             return selected;
         }
 
-        , selectedIndex: function(){
+        , selectedRowsIndex: function(){
             var $body = this.$body;
             var $trs = this.$body.find('tr')
             var selected = [];
@@ -841,7 +841,7 @@
             return selected;
         }
 
-        , items: function(){
+        , rows: function(){
             var $body = this.$body;
             var items = [];
             $.each($body.find('tr'), function(){
@@ -850,7 +850,7 @@
             return items;
         }
 
-        , item: function(index){
+        , row: function(index){
             var $body = this.$body;
             if(index !== undefined && index >= 0){
                 var $tr = $body.find('tr').eq(index);
@@ -861,12 +861,12 @@
         }
 
         //添加数据，第一个参数可以为数组
-        , add: function(item, index){
+        , addRow: function(item, index){
             var $tbody = this.$body.find('tbody');
 
             if($.isArray(item)){
                 for(var i=item.length-1; i >= 0; i--){
-                    this.add(item[i], index);
+                    this.addRow(item[i], index);
                 }
                 return ;
             }
@@ -875,7 +875,7 @@
                 return ;
             }
 
-            var items = this.items();
+            var items = this.rows();
 
             var $tr;
 
@@ -901,14 +901,14 @@
             this._setStyle();
         }
         //更新行内容，两个参数都必填
-        , update: function(item, index){
+        , updateRow: function(item, index){
             var opts = this.opts;
             var $tbody = this.$body.find('tbody');
             if(!$.isPlainObject(item)){
                 return ;
             }
 
-            var items = this.items();
+            var items = this.rows();
 
             var $tr = $tbody.find('tr').eq(index);
             var checked = $tr.find('td:first :checkbox').is(':checked');
@@ -923,12 +923,12 @@
         }
 
         //删除行，参数可以为索引数组
-        , remove: function(index){
+        , removeRow: function(index){
             var $tbody = this.$body.find('tbody');
 
             if($.isArray(index)){
                 for(var i=index.length-1; i >= 0; i--){
-                    this.remove(index[i]);
+                    this.removeRow(index[i]);
                 }
                 return ;
             }

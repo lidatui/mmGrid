@@ -211,12 +211,12 @@
                     <td>如果配置过AJAX选项，则这里是AJAX参数，如果传入对象数组，则为加载本地数据。</td>
                 </tr>
                 <tr>
-                    <td>selected</td>
+                    <td>selectedRows</td>
                     <td>无参数</td>
                     <td>返回选择行数据的数组。</td>
                 </tr>
                 <tr>
-                    <td>selectedIndex</td>
+                    <td>selectedRowsIndex</td>
                     <td>无参数</td>
                     <td>返回选择行索引的数组。</td>
                 </tr>
@@ -231,27 +231,27 @@
                     <td>取消选中参数条件的行。int: 取消选择索引行; function: 过滤函数, item参数为行数据, index参数为行索引; 'all': 取消选中所有行。</td>
                 </tr>
                 <tr>
-                    <td>items</td>
+                    <td>rows</td>
                     <td>无参数</td>
                     <td>返回所有行的数据数组。</td>
                 </tr>
                 <tr>
-                    <td>item</td>
+                    <td>row</td>
                     <td>int</td>
                     <td>返回指定索引行的数据。</td>
                 </tr>
                 <tr>
-                    <td>add</td>
+                    <td>addRow</td>
                     <td>item,index</td>
                     <td>添加数据到索引行，index为可选。如item为对象数组则一次添加多行。</td>
                 </tr>
                 <tr>
-                    <td>update</td>
+                    <td>updateRow</td>
                     <td>item,index</td>
                     <td>更新数据到索引行，index为必选。一次只能更新一行。</td>
                 </tr>
                 <tr>
-                    <td>remove</td>
+                    <td>removeRow</td>
                     <td>index</td>
                     <td>移除索引行。如index为索引数组则一次移除多行。如果index为undefined则移除所有行。</td>
                 </tr>

@@ -134,13 +134,13 @@
 
                 $('#btnAdd').on('click', function(){
                     mmg.deselect( 'all');
-                    mmg.add(item1, 2);
+                    mmg.addRow(item1, 2);
                     mmg.select(2);
                 });
 
                 $('#btnAddArr').on('click', function(){
                     mmg.deselect( 'all');
-                    mmg.add([item1,item2], 1);
+                    mmg.addRow([item1,item2], 1);
                     mmg.select(function(item, index){
                         if(index === 1 || index === 2){
                             return true;
@@ -149,20 +149,20 @@
                 });
 
                 $('#btnRemove').on('click', function(){
-                    mmg.remove(1);
+                    mmg.removeRow(1);
                 });
 
                 $('#btnRemoveSelected').on('click', function(){
-                    var selectedIndexes = mmg.selectedIndex();
-                    mmg.remove(selectedIndexes);
+                    var selectedIndexes = mmg.selectedRowsIndex();
+                    mmg.removeRow(selectedIndexes);
                 });
 
                 $('#btnUpdate').on('click', function(){
-                    var updateItem = mmg.item(1);
+                    var updateItem = mmg.row(1);
                     if(updateItem){
                         updateItem.SECUCODE = '999999';
                         updateItem.SECUABBR = '更新股票';
-                        mmg.update(updateItem, 1);
+                        mmg.updateRow(updateItem, 1);
                     }
 
                 });
