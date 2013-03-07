@@ -123,6 +123,7 @@
                     console.log(rowIndex);
                     console.log(colIndex);
                 }).on('loadSuccess', function(e, data){
+                    //这个事件需要在数据加载之前注册才能触发
                     console.log('loadSuccess!');
                     console.log(data);
                 }).on('rowInserted', function(e, item, index){
