@@ -942,16 +942,17 @@
 
     $.fn.mmGrid = function(){
         if(arguments.length === 0 || typeof arguments[0] === 'object'){
-            var option = arguments[0];
-            return this.each(function(){
-                var $this = $(this)
-                    , data = $this.data('mmGrid')
-                    , options = $.extend(true, {}, $.fn.mmGrid.defaults, option);
-                if (!data) $this.data('mmGrid', new MMGrid(this, options))
-            });
+            var option = arguments[0]
+                , data = this.data('mmGrid')
+                , options = $.extend(true, {}, $.fn.mmGrid.defaults, option);
+            if (!data) {
+                data = new MMGrid(this[0], options);
+                this.data('mmGrid', data);
+            }
+            return $.extend(this, data);
         }
         if(typeof arguments[0] === 'string'){
-            var data = $(this).data('mmGrid');
+            var data = this.data('mmGrid');
             var fn =  data[arguments[0]];
             if(fn){
                 var args = Array.prototype.slice.call(arguments);

@@ -43,16 +43,12 @@
                 <button id="btnRemoveSelected" class="button" >删除选择的行</button>
                 <button id="btnUpdate" class="button" >更新第二行</button>
             </div>
-            <table id="mmg"></table>
-            <div id="paginator" style="text-align: right;">
-
-            </div>
+            <table id="mmg" class="mmg"></table>
         </main>
 
         <script src="js/vendor/jquery-1.9.1.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="../src/mmGrid.js"></script>
-        <script src="../src/mmPaginator.js"></script>
         <script>
             $(document).ready(function(){
 
@@ -104,7 +100,7 @@
                 ];
 
 
-                $('#mmg').mmGrid({
+                var mmg = $('.mmg').mmGrid({
                     height: 400
                     , cols: cols
                     //, url: 'data/stockQuotePage.json'
@@ -117,8 +113,9 @@
                     , checkCol: true
                     , fitColWidth: true
                     , autoLoad: false
-                    , paginator: $('#paginator').mmPaginator()
-                }).on('rowSelected', function(e, item, rowIndex, colIndex){
+                });
+
+                mmg.on('rowSelected', function(e, item, rowIndex, colIndex){
                     console.log('rowSelected!');
                     console.log(this);
                     console.log(e);
@@ -128,7 +125,7 @@
                 }).on('loadSuccess', function(e, data){
                     console.log('loadSuccess!');
                     console.log(data);
-                }).mmGrid('load');
+                }).load();
 
 
 
@@ -136,15 +133,15 @@
                 var item2 = {AMPLITUDE:0.7389,PREVCLOSINGPRICE:12.18,TURNOVERDEALS:0,HIGHESTPRICE:12.22,TURNOVERVOL:1332194,TRADINGDAY:1345478400000,TOTALSHARE:1926958448,SECUCODE:"100001",EPS:0.1909,LOWESTPRICE:12.13,OPENINGPRICE:12.19,SECUABBR:"新加股票2",ALISTEDSHARE:1093476397,ID:3131171,WCOSTAVG:12.8369,NETCASHFLOWOPERPS:-0.04,SECUNAME:"上海国际机场股份有限公司",CLOSINGPRICE:12.14,DAYCHANGERATE:-0.3284,TURNOVERVAL:16207539,BVPS:8.16,DAYCHANGE:-0.04,PE:15.5997,TURNOVERRATE:0.1218,ADJUSTCLOSINGPRICE:33.1878,PB:1.523};
 
                 $('#btnAdd').on('click', function(){
-                    $('#mmg').mmGrid('deselect', 'all');
-                    $('#mmg').mmGrid('add', item1, 2);
-                    $('#mmg').mmGrid('select', 2);
+                    mmg.deselect( 'all');
+                    mmg.add(item1, 2);
+                    mmg.select(2);
                 });
 
                 $('#btnAddArr').on('click', function(){
-                    $('#mmg').mmGrid('deselect', 'all');
-                    $('#mmg').mmGrid('add', [item1,item2], 1);
-                    $('#mmg').mmGrid('select',function(item, index){
+                    mmg.deselect( 'all');
+                    mmg.add([item1,item2], 1);
+                    mmg.select(function(item, index){
                         if(index === 1 || index === 2){
                             return true;
                         }
@@ -152,20 +149,20 @@
                 });
 
                 $('#btnRemove').on('click', function(){
-                    $('#mmg').mmGrid('remove', 1);
+                    mmg.remove(1);
                 });
 
                 $('#btnRemoveSelected').on('click', function(){
-                    var selectedIndexes = $('#mmg').mmGrid('selectedIndex');
-                    $('#mmg').mmGrid('remove', selectedIndexes);
+                    var selectedIndexes = mmg.selectedIndex();
+                    mmg.remove(selectedIndexes);
                 });
 
                 $('#btnUpdate').on('click', function(){
-                    var updateItem = $('#mmg').mmGrid('item',1);
+                    var updateItem = mmg.item(1);
                     if(updateItem){
                         updateItem.SECUCODE = '999999';
                         updateItem.SECUABBR = '更新股票';
-                        $('#mmg').mmGrid('update', updateItem, 1);
+                        mmg.update(updateItem, 1);
                     }
 
                 });
