@@ -415,7 +415,7 @@
             }
         }
 
-        , _rowHtml: function(item, items, rowIndex){
+        , _rowHtml: function(item, rowIndex){
             var opts = this.opts;
 
             if($.isPlainObject(item)){
@@ -434,7 +434,7 @@
                     }
                     trHtml.push('">');
                     if(col.renderer){
-                        trHtml.push(col.renderer(item[col.name],item,items,rowIndex));
+                        trHtml.push(col.renderer(item[col.name],item,rowIndex));
                     }else{
                         trHtml.push(item[col.name]);
                     }
@@ -457,7 +457,7 @@
                 tbodyHtmls.push('<tbody>');
                 for(var rowIndex=0; rowIndex < items.length; rowIndex++){
                     var item = items[rowIndex];
-                    tbodyHtmls.push(this._rowHtml(item, items, rowIndex));
+                    tbodyHtmls.push(this._rowHtml(item, rowIndex));
                 }
                 tbodyHtmls.push('</tbody>');
                 $body.empty().html(tbodyHtmls.join(''));
@@ -880,15 +880,13 @@
                 return ;
             }
 
-            var items = this.rows();
-
             var $tr;
 
             if(index === undefined || index < 0){
-                $tr = $(this._rowHtml(item, items, items.length));
+                $tr = $(this._rowHtml(item, this.rowsLength()));
                 $tbody.append($tr);
             }else{
-                $tr = $(this._rowHtml(item, items, index));
+                $tr = $(this._rowHtml(item, index));
                 if(index === 0){
                     $tbody.prepend($tr);
                 }else{
@@ -914,13 +912,11 @@
             if(!$.isPlainObject(item)){
                 return ;
             }
-
-            var items = this.rows()
             var oldItem = this.row(index);
 
             var $tr = $tbody.find('tr').eq(index);
             var checked = $tr.find('td:first :checkbox').is(':checked');
-            $tr.html(this._rowHtml(item, items, index).slice(4,-5));
+            $tr.html(this._rowHtml(item, index).slice(4,-5));
             if(opts.checkCol){
                 $tr.find('td:first :checkbox').prop('checked',checked);
             }

@@ -63,7 +63,7 @@
                     return val.toFixed(2);
                 }
                 var cols = [
-                    {title:'行情', name:'', width: 30, align: 'center',lockWidth:true,  renderer: function(val,item,items,rowIndex){
+                    {title:'行情', name:'', width: 30, align: 'center',lockWidth:true,  renderer: function(val,item,rowIndex){
                         return '<div class="btnPrice"></div>';
                     }},
                     { title:'股票代码', name:'SECUCODE' ,width:100, sortable: true, align:'center' ,lockDisplay: true },
