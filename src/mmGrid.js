@@ -872,10 +872,11 @@
 
         , rowsLength: function(){
             var $body = this.$body;
-            if($body.find('tr').length === 1 && $body.find('tr.emptyRow').length){
+            var length = $body.find('tr').length;
+            if(length === 1 && $body.find('tr.emptyRow').length){
                 return 0;
             }
-            return $body.find('tr').length;
+            return length;
         }
 
         //添加数据，第一个参数可以为数组
