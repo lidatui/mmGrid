@@ -41,6 +41,7 @@
                 <button id="btnAddArr" class="button" >添加列表到第二行</button>
                 <button id="btnRemove" class="button" >删除第二行</button>
                 <button id="btnRemoveSelected" class="button" >删除选择的行</button>
+                <button id="btnRemoveAll" class="button" >删除全部行</button>
                 <button id="btnUpdate" class="button" >更新第二行</button>
             </div>
             <table id="mmg" class="mmg"></table>
@@ -126,10 +127,12 @@
                     //这个事件需要在数据加载之前注册才能触发
                     console.log('loadSuccess!');
                     console.log(data);
+                    console.log(mmg.rowsLength());
                 }).on('rowInserted', function(e, item, index){
                     console.log('rowInserted!');
                     console.log(item);
                     console.log(index);
+                    console.log(mmg.rowsLength());
                 }).on('rowUpdated', function(e, oldItem, newItem, index){
                     console.log('rowUpdated!');
                     console.log(oldItem);
@@ -139,6 +142,7 @@
                     console.log('rowRemoved!');
                     console.log(item);
                     console.log(index);
+                    console.log(mmg.rowsLength());
                 }).load();
 
 
@@ -165,6 +169,10 @@
                 $('#btnRemove').on('click', function(){
                     mmg.removeRow(1);
                 });
+                $('#btnRemoveAll').on('click', function(){
+                    mmg.removeRow();
+                });
+
 
                 $('#btnRemoveSelected').on('click', function(){
                     var selectedIndexes = mmg.selectedRowsIndex();

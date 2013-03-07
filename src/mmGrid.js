@@ -860,6 +860,11 @@
             }
         }
 
+        , rowsLength: function(){
+            var $body = this.$body;
+            return $body.find('tr').length;
+        }
+
         //添加数据，第一个参数可以为数组
         , addRow: function(item, index){
             var $tbody = this.$body.find('tbody');
@@ -939,11 +944,10 @@
             }
 
             if(index === undefined){
-                var items = that.rows();
-                $tbody.find('tr').remove();
-                $.each(items, function(index, item){
-                    that.$el.triggerHandler('rowRemoved',  [item, index]);
-                })
+                var $trs = $tbody.find('tr');
+                for(var i=$trs.length-1; i >= 0; i--){
+                    that.removeRow(i);
+                }
             }else{
                 var item = that.row(index);
                 $tbody.find('tr').eq(index).remove();
