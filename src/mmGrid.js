@@ -293,7 +293,7 @@
             $backboard.on('click', ':checkbox', function(){
                 var index = $backboard.find('label').index($(this).parent());
                 //最后一个不隐藏
-                if($backboard.find('label :checked').length <= 1){
+                if($backboard.find('label :checked').length < 1){
                     this.checked = true;
                     return;
                 }
