@@ -75,10 +75,6 @@
 }
 @media screen and (min-width: 767px) {
 
-    .grid-container {
-        max-width: 100%;
-    }
-
   .grid-100:before,
   .grid-100:after {
     content: ".";
