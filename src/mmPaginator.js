@@ -117,21 +117,25 @@
 
         , load: function(params){
             var $el = this.$el;
+            var $pageSizeList = this.$pageSizeList;
             var opts = this.opts;
 
             var pageNo = params[opts.pageNoName];
-            if(!pageNo){
-                pageNo = 0;
+            if(pageNo === undefined){
+                pageNo = $el.data('pageNo');
             }
             $el.data('pageNo', pageNo);
 
             var totalCount = params[opts.totalCountName];
-            if(!totalCount){
+            if(totalCount === undefined){
                 totalCount = 0;
             }
             $el.data('totalCount', totalCount);
 
             var pageSize = params[opts.pageSizeName];
+            if(pageSize === undefined){
+                pageSize = $pageSizeList.val();
+            }
             this.$pageSizeList.val(pageSize);
 
             this.$totalCountLabel.html(this.formatString(opts.totalCountLabel,[totalCount]));
@@ -203,8 +207,8 @@
     $.fn.mmPaginator.defaults = {
          style: 'plain'
         , totalCountName: 'totalCount'
-        , pageNoName: 'pageNo'
-        , pageSizeName: 'pageSize'
+        , pageNoName: 'page'
+        , pageSizeName: 'limit'
         , pageSizeLabel: '每页{0}条'
         , totalCountLabel: '共<span>{0}</span>条记录'
         , pageSizeList: [10, 20, 30, 40, 50]
