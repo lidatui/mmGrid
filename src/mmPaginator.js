@@ -2,12 +2,12 @@
     var MMPaginator = function(element, options){
         this.$el = $(element);
         this.opts = options;
-        this._initLayout();
+        //this._initLayout();
 
-        var params = {};
-        params[options.totalCountName] = 0;
-        params[options.pageNoName] = 0;
-        this.load(params);
+//        var params = {};
+//        params[options.totalCountName] = 0;
+//        params[options.pageNoName] = 0;
+//        this.load(params);
     };
 
     MMPaginator.prototype = {
@@ -37,7 +37,7 @@
             });
 
             $pageSizeList.on('change', function(){
-                that.submit();
+                that.$mmGrid.load();
             });
 
         }
@@ -63,7 +63,7 @@
             }else{
                 $prev.find('a').on('click', function(){
                     $el.data('pageNo', pageNo-1);
-                    that.submit();
+                    that.$mmGrid.load();
                 });
             }
             $pageNoList.append($prev);
@@ -93,7 +93,7 @@
                 }else{
                     $li.find('a').text(item).prop('title','第'+item+'页').on('click', function(e){
                         $el.data('pageNo', item-1);
-                        that.submit();
+                        that.$mmGrid.load();
                     });
                 }
                 $pageNoList.append($li);
@@ -105,7 +105,7 @@
             }else{
                 $next.find('a').on('click', function(){
                     $el.data('pageNo', pageNo+1);
-                    that.submit();
+                    that.$mmGrid.load();
                 });
             }
             $pageNoList.append($next);
@@ -160,33 +160,38 @@
             return params;
         }
 
-        , submit: function(){
-            var $el = this.$el;
-            var $pageSizeList = this.$pageSizeList;
-            this.onSubmit($el.data('pageNo'), $pageSizeList.val());
+        , init: function($grid){
+            var that = this;
+            var opt = that.opts;
+            this.$mmGrid = $grid;
+            this._initLayout();
+            this.$mmGrid.on('loadSuccess', function(e, data){
+                that.load(data);
+            });
+
+            var params = {};
+            params[opt.totalCountName] = 0;
+            params[opt.pageNoName] = 0;
+            this.load(params);
+
         }
 
-        , addSubmitListener: function(callback){
-            this.onSubmit = callback;
-        }
-
-        , removeSubmitListener: function(){
-            this.onSubmit = undefined;
-        }
     };
 
     $.fn.mmPaginator = function(){
+
         if(arguments.length === 0 || typeof arguments[0] === 'object'){
-            var option = arguments[0];
-            return this.each(function(){
-                var $this = $(this)
-                    , data = $this.data('mmPaginator')
-                    , options = $.extend(true, {}, $.fn.mmPaginator.defaults, option);
-                if (!data) $this.data('mmPaginator', new MMPaginator(this, options))
-            });
+            var option = arguments[0]
+                , data = this.data('mmPaginator')
+                , options = $.extend(true, {}, $.fn.mmPaginator.defaults, option);
+            if (!data) {
+                data = new MMPaginator(this[0], options);
+                this.data('mmPaginator', data);
+            }
+            return $.extend(true, this, data);
         }
         if(typeof arguments[0] === 'string'){
-            var data = $(this).data('mmPaginator');
+            var data = this.data('mmPaginator');
             var fn =  data[arguments[0]];
             if(fn){
                 var args = Array.prototype.slice.call(arguments);
@@ -202,7 +207,7 @@
         , pageSizeName: 'pageSize'
         , pageSizeLabel: '每页{0}条'
         , totalCountLabel: '共<span>{0}</span>条记录'
-        , pageSizeList: [15, 30, 50]
+        , pageSizeList: [10, 20, 30, 40, 50]
     };
 
     $.fn.mmPaginator.Constructor = MMPaginator;

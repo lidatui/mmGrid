@@ -13,8 +13,6 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/unsemantic-grid-responsive.css">
-        <link rel="stylesheet" href="../src/mmGrid.css">
-        <link rel="stylesheet" href="../src/mmPaginator.css">
 
 
         <!--[if lt IE 9]>
@@ -133,6 +131,11 @@
                     <td>autoLoad</td>
                     <td><em>true</em>, false</td>
                     <td>是否表格准备好时加载数据。</td>
+                </tr>
+                <tr>
+                    <td>plugins</td>
+                    <td>[]</td>
+                    <td>表格插件，插件必须实现 init($mmGrid)和params()方法，参考mmPaginator</td>
                 </tr>
             </table>
 
