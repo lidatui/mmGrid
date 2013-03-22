@@ -16,6 +16,12 @@
             this._fullWidthRows();
         }
 
+        //初始化插件
+        for(var i=0; i< this.opts.plugins.length; i++){
+            var plugin = this.opts.plugins[i];
+            plugin.init($.extend(true, element, this));
+        }
+
         if(options.autoLoad){
             if(options.url){
                 this.load();
@@ -411,13 +417,7 @@
                 });
             };
 
-            //注册分页事件
-            if(opts.paginator && opts.paginator.mmPaginator){
-                var $pg = opts.paginator;
-                $pg.mmPaginator('addSubmitListener', function(){
-                    that._loadAjax();  //只有远程分页
-                })
-            }
+
         }
 
         , _rowHtml: function(item, rowIndex){
@@ -713,11 +713,10 @@
                 }
             }
 
-            //分页参数合并
-            if(opts.paginator && opts.paginator.mmPaginator){
-                var $pg = opts.paginator;
-                var pgParams = $pg.mmPaginator('params');
-                $.extend(params, pgParams);
+            //插件参数合并
+            for(var i=0; i< this.opts.plugins.length; i++){
+                var plugin = this.opts.plugins[i];
+                $.extend(params, plugin.params());
             }
 
             //合并load的参数
@@ -741,11 +740,6 @@
 
                 that.$body.triggerHandler('loadSuccess', data);
 
-                //分页控件加载
-                if(opts.paginator && opts.paginator.mmPaginator){
-                    var $pg = opts.paginator;
-                    $pg.mmPaginator('load',data);
-                }
             }).fail(function(data){
                 that.$body.triggerHandler('loadError', data);
             });
@@ -984,7 +978,7 @@
                 , data = this.data('mmGrid')
                 , options = $.extend(true, {}, $.fn.mmGrid.defaults, option);
             if (!data) {
-                data = new MMGrid(this[0], options);
+                data = new MMGrid(this, options);
                 this.data('mmGrid', data);
             }
             return $.extend(true, this, data);
@@ -1019,7 +1013,7 @@
         , checkCol: false
         , fullWidthRows: false
         , nowrap: false
-        , paginator : undefined //分页器
+        , plugins: [] //插件 插件必须实现 init($mmGrid)和params()方法，参考mmPaginator
     };
 //  event : loadSuccess(e,data), loadError(e, data), rowSelected(item, rowIndex, colIndex)
 //          rowInserted(e,item, rowIndex), rowUpdated(e, oldItem, newItem, rowIndex), rowRemoved(e,item, rowIndex)

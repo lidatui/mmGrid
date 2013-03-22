@@ -45,11 +45,13 @@
                 <button id="btnUpdate" class="button" >更新第二行</button>
             </div>
             <table id="mmg" class="mmg"></table>
+            <div id="pg" style="text-align: right;"></div>
         </main>
 
         <script src="js/vendor/jquery-1.9.1.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="../src/mmGrid.js"></script>
+        <script src="../src/mmPaginator.js"></script>
         <script>
             $(document).ready(function(){
 
@@ -104,17 +106,21 @@
                 var mmg = $('.mmg').mmGrid({
                     height: 400
                     , cols: cols
-                    //, url: 'data/stockQuotePage.json'
+                    , url: 'data/stockQuotePage.json'
                     , method: 'get'
                     , remoteSort:true
-                    , items: items
+                    //, items: items
                     , sortName: 'SECUCODE'
                     , sortStatus: 'asc'
                     , multiSelect: true
                     , checkCol: true
                     , fullWidthRows: true
                     , autoLoad: false
+                    , plugins: [
+                        $('#pg').mmPaginator({})
+                    ]
                 });
+
 
                 mmg.on('rowSelected', function(e, item, rowIndex, colIndex){
                     console.log('rowSelected!');
