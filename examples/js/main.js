@@ -256,6 +256,8 @@ $(document).ready(function(){
         url: 'data/stockQuotePage.json',
         method: 'get',
         root: 'items',
-        paginator : $('#paginator9-1').mmPaginator()
+        plugins : [
+            $('#paginator9-1').mmPaginator()
+        ]
     });
 });
