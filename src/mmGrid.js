@@ -162,6 +162,9 @@
             }
 
             $.each($head.find('th'),function(index){
+                if(!opts.cols[index].width){
+                    opts.cols[index].width = 100;
+                }
                 $.data(this,'col-width',opts.cols[index].width);
             });
 
