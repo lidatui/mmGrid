@@ -221,7 +221,7 @@
         , pageSizeName: 'limit'
         , pageSizeLabel: '每页{0}条'
         , totalCountLabel: '共<span>{0}</span>条记录'
-        , pageSizeList: [10, 20, 30, 40, 50]
+        , pageSizeList: [20, 30, 40, 50]
     };
 
     $.fn.mmPaginator.Constructor = MMPaginator;
