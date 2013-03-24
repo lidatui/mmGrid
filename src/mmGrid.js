@@ -269,6 +269,8 @@
                             'top': ($mmGrid.height() - $loadingWrapper.height()) / 2
                         })
                     }
+
+                    $bodyWrapper.trigger('scroll');
                 });
             }
 
