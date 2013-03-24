@@ -84,13 +84,16 @@
         如果排序字段为数字类型需要将列选项添加<em>type:'number'</em>属性。
     </p>
     <div class="grid-50">
-        <h3 >例 1：使用本地对象加载数据</h3>
+        <h3 >例 1：客户端排序</h3>
         <table id="table3-1"></table>
     </div>
     <div class="grid-50">
-        <h3 >例 2：使用AJAX加载数据</h3>
+        <h3 >例 2：AJAX远程排序</h3>
         <table id="table3-2"></table>
-        * 由于服务器端无处理程序，此示例可查看请求url的<em>sort</em>参数。
+        <p class="well">
+            列模型设置<em>sortName</em>来指定远程排序的字段名称，如不设置则为<em>name</em>中的值。<br />
+            <span style="font-size: 12px;">* 此示例无后端处理程序，请查看xhr</span>
+        </p>
     </div>
     <div class="clear"></div>
     <hr >

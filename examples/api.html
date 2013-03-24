@@ -115,7 +115,7 @@
                 <tr>
                     <td>sortName</td>
                     <td><em>''</em>, string</td>
-                    <td>排序的字段名。</td>
+                    <td>排序的字段名。字段名的值为列模型设置的sortName或name中的值。</td>
                 </tr>
                 <tr>
                     <td>sortStatus</td>
@@ -191,6 +191,11 @@
                     <td>sortable</td>
                     <td><em>false</em>, true</td>
                     <td>是否可排序。</td>
+                </tr>
+                <tr>
+                    <td>sortName</td>
+                    <td>string</td>
+                    <td>当sortable为true，远程排序发出的字段名，如果这个字段名为空，则发出的字段名为name的值</td>
                 </tr>
                 <tr>
                     <td>renderer</td>
