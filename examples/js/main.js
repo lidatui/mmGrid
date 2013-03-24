@@ -159,10 +159,10 @@ $(document).ready(function(){
         { title:'涨跌幅', name:'DAYCHANGERATE' ,width:60, align:'right',renderer: highliht},
         { title:'涨跌额', name:'DAYCHANGE' ,width:60, align:'right', renderer: highliht},
         { title:'振幅', name:'AMPLITUDE' ,width:60, align:'right', renderer: fixed2percentage},
-        { title:'成交量(手)', name:'TURNOVERVOL' ,width:100, align:'right', renderer: function(val){
+        { title:'成交量(手)', name:'TURNOVERVOL' ,width:90, align:'right', renderer: function(val){
             return (val / 100).toFixed(2);
         }},
-        { title:'成交额(万)', name:'TURNOVERVAL' ,width:100, align:'right', renderer: function(val){
+        { title:'成交额(万)', name:'TURNOVERVAL' ,width:90, align:'right', renderer: function(val){
             return (val / 10000).toFixed(2);
         }},
         { title:'昨收盘', name:'PREVCLOSINGPRICE' ,width:60, align:'right', renderer: fixed2},
