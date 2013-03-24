@@ -182,7 +182,7 @@
                 var indexCol = $grid.opts.cols[0];
                 indexCol.renderer = function(val,item,rowIndex){
                     var params = that.params();
-                    return '<label class="index">' +
+                    return '<label class="mmg-index">' +
                         (rowIndex + 1 + (params[opts.pageNoName] * params[opts.pageSizeName])) +
                         '</label>';
                 };
