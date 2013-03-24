@@ -63,8 +63,8 @@ $(document).ready(function(){
         {title:'行情', name:'', width: 30, align: 'center', sortable: true, renderer: function(val,item,rowIndex){
             return '<div class="btnPrice"></div>';
         }},
-        { title:'股票代码', name:'SECUCODE' ,width:100, align:'center', sortable: true},
-        { title:'股票名称', name:'SECUABBR' ,width:100, align:'center', sortable: true},
+        { title:'股票代码', name:'SECUCODE' ,width:100, align:'center', sortable: true, sortName:'secu_code'},
+        { title:'股票名称', name:'SECUABBR' ,width:100, align:'center', sortable: true, sortName:'secu_abbr'},
         { title:'今收盘', name:'CLOSINGPRICE' ,width:60, align:'right',type:'number', sortable: true, renderer: fixed2},
         { title:'涨跌幅', name:'DAYCHANGERATE' ,width:60, align:'right',type:'number', sortable: true,renderer: highliht},
         { title:'涨跌额', name:'DAYCHANGE' ,width:60, align:'right',type:'number', sortable: true, renderer: highliht},

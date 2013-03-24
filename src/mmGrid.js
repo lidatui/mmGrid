@@ -169,7 +169,7 @@
                 var $ths = $head.find('th');
                 for(var colIndex=0; colIndex< opts.cols.length; colIndex++){
                     var col = opts.cols[colIndex];
-                    if(col.name === opts.sortName){
+                    if(col.sortName === opts.sortName || col.name === opts.sortName){
                         var $th= $ths.eq(colIndex);
                         $.data($th.find('.mmg-title')[0],'sortStatus',opts.sortStatus);
                         $th.find('.mmg-sort').addClass('mmg-'+opts.sortStatus);
@@ -704,7 +704,8 @@
                 for(var colIndex=0; colIndex<$titles.length; colIndex++){
                     var status = $.data($titles[colIndex], 'sortStatus');
                     if(status){
-                        sortName = opts.cols[colIndex].name;
+                        sortName = opts.cols[colIndex].sortName ?
+                            opts.cols[colIndex].sortName : opts.cols[colIndex].name;
                         sortStatus = status;
                     }
                 }
