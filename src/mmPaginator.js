@@ -182,7 +182,7 @@
                 var indexCol = $grid.opts.cols[0];
                 indexCol.renderer = function(val,item,rowIndex){
                     var params = that.params();
-                    return '<label class="index">' +
+                    return '<label class="mmg-index">' +
                         (rowIndex + 1 + (params[opts.pageNoName] * params[opts.pageSizeName])) +
                         '</label>';
                 };
@@ -221,7 +221,7 @@
         , pageSizeName: 'limit'
         , pageSizeLabel: '每页{0}条'
         , totalCountLabel: '共<span>{0}</span>条记录'
-        , pageSizeList: [10, 20, 30, 40, 50]
+        , pageSizeList: [20, 30, 40, 50]
     };
 
     $.fn.mmPaginator.Constructor = MMPaginator;
