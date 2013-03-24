@@ -19,7 +19,7 @@
         //初始化插件
         for(var i=0; i< this.opts.plugins.length; i++){
             var plugin = this.opts.plugins[i];
-            plugin.init($.extend(true, element, this));
+            plugin.init($.extend(element, this));
         }
 
         if(options.autoLoad){
@@ -121,9 +121,16 @@
             }
 
             if(opts.checkCol){
-                var chkHtml = opts.multiSelect ? '<input type="checkbox" class="checkAll" >' : '<input type="checkbox" disabled="disabled" class="checkAll">';
-                opts.cols.unshift({title:chkHtml,width: 20, align: 'center' ,lockWidth: true, renderer:function(){
-                    return '<input type="checkbox" class="check">';
+                var chkHtml = opts.multiSelect ?  '<input type="checkbox" class="checkAll" >'
+                    : '<input type="checkbox" disabled="disabled" class="checkAll">';
+                opts.cols.unshift({title:chkHtml,width: 20, align: 'center' ,lockWidth: true, checkCol: true, renderer:function(){
+                    return '<input type="checkbox" class="mmg-check">';
+                }});
+            }
+
+            if(opts.indexCol){
+                opts.cols.unshift({title:'#',width: opts.indexColWidth, align: 'center' ,lockWidth: true, indexCol:true, renderer:function(val,item,rowIndex){
+                    return '<label class="mmg-index">' + (rowIndex+1) + '</label>';
                 }});
             }
         }
@@ -155,6 +162,9 @@
             }
 
             $.each($head.find('th'),function(index){
+                if(!opts.cols[index].width){
+                    opts.cols[index].width = 100;
+                }
                 $.data(this,'col-width',opts.cols[index].width);
             });
 
@@ -191,7 +201,7 @@
                 var bbHtml = ['<h1>显示列</h1>'];
                 for(var colIndex=0; colIndex<opts.cols.length; colIndex++){
                     bbHtml.push('<label ');
-                    if(opts.checkCol && colIndex===0){
+                    if(opts.cols[colIndex].checkCol || opts.cols[colIndex].indexCol){
                         bbHtml.push('style="display:none;" ');
                     }
                     var col = opts.cols[colIndex];
@@ -298,8 +308,15 @@
             //隐藏列
             $backboard.on('click', ':checkbox', function(){
                 var index = $backboard.find('label').index($(this).parent());
-                //最后一个不能隐藏
-                if($backboard.find('label :checked').length < 1){
+                //最后一个不隐藏
+                var last = 1;
+                if(opts.checkCol){
+                    last = last + 1;
+                }
+                if(opts.indexCol){
+                    last = last + 1;
+                }
+                if($backboard.find('label :checked').length < last){
                     this.checked = true;
                     return;
                 }
@@ -387,7 +404,7 @@
                 }
             });
 
-            $body.on('click','tr > td:nth-child(1) :checkbox',function(e){
+            $body.on('click','tr > td .mmg-check',function(e){
                 e.stopPropagation();
                 var $this = $(this);
                 if(this.checked){
@@ -399,7 +416,7 @@
 
             //checkbox列
             if(opts.checkCol){
-                $head.find('th:first :checkbox').on('click', function(){
+                $head.find('th .checkAll').on('click', function(){
                     if(this.checked){
                         that.select('all');
                     }else{
@@ -779,13 +796,13 @@
                 if(!opts.multiSelect){
                     $body.find('tr.selected').removeClass('selected');
                     if(opts.checkCol){
-                        $body.find('tr > td:nth-child(1)').find(':checkbox').prop('checked','');
+                        $body.find('tr > td').find('.mmg-check').prop('checked','');
                     }
                 }
                 if(!$tr.hasClass('selected')){
                     $tr.addClass('selected');
                     if(opts.checkCol){
-                        $tr.find('td:first :checkbox').prop('checked','checked');
+                        $tr.find('td .mmg-check').prop('checked','checked');
                     }
                 }
             }else if(typeof args === 'function'){
@@ -795,7 +812,7 @@
                         if(!$this.hasClass('selected')){
                             $this.addClass('selected');
                             if(opts.checkCol){
-                                $this.find('td:first :checkbox').prop('checked','checked');
+                                $this.find('td .mmg-check').prop('checked','checked');
                             }
                         }
                     }
@@ -803,7 +820,7 @@
             }else if(args === undefined || (typeof args === 'string' && args === 'all')){
                 $body.find('tr.selected').removeClass('selected');
                 $body.find('tr').addClass('selected');
-                $body.find('tr > td:nth-child(1)').find(':checkbox').prop('checked','checked');
+                $body.find('tr > td').find('.mmg-check').prop('checked','checked');
             }
         }
             //取消选中
@@ -813,21 +830,21 @@
             if(typeof args === 'number'){
                 $body.find('tr').eq(args).removeClass('selected');
                 if(opts.checkCol){
-                    $body.find('tr').eq(args).find('td:first :checkbox').prop('checked','');
+                    $body.find('tr').eq(args).find('td .mmg-check').prop('checked','');
                 }
             }else if(typeof args === 'function'){
                 $.each($body.find('tr'), function(index){
                     if(args($.data(this, 'item'), index)){
                         $(this).removeClass('selected');
                         if(opts.checkCol){
-                            $(this).find('td:first :checkbox').prop('checked','');
+                            $(this).find('td .mmg-check').prop('checked','');
                         }
                     }
                 });
             }else if(args === undefined || (typeof args === 'string' && args === 'all')){
                 $body.find('tr.selected').removeClass('selected');
                 if(opts.checkCol){
-                    $body.find('tr > td:nth-child(1)').find(':checkbox').prop('checked','');
+                    $body.find('tr > td').find('.mmg-check').prop('checked','');
                 }
             }
         }
@@ -1012,6 +1029,8 @@
         , noDataText: '没有数据'
         , multiSelect: false
         , checkCol: false
+        , indexCol: false
+        , indexColWidth: 30
         , fullWidthRows: false
         , nowrap: false
         , plugins: [] //插件 插件必须实现 init($mmGrid)和params()方法，参考mmPaginator

@@ -81,7 +81,7 @@
         排序参数为<em>sortName</em>和<em>sortStatus</em>。 如果初始化时设置排序列，则直接显示排序后数据。
         排序方式分为客户端排序与AJAX服务器端排序，设置参数为<em>remoteSort</em>。
         排序方式与数据源关系不大，但如果数据源为本地数据，设置<em>remoteSort</em>为<em>true</em>无效。
-        如果排序字段为数字类型需要将列选项添加<em>type:'number'</em>属性。
+        如果排序字段为数字类型需要将列选项添加<em>type:'number'</em>属性。远程排序时，列模型可以设置<em>sortName</em>来指定远程排序的字段名称，如不设置则为<em>name</em>中的值。
     </p>
     <div class="grid-50">
         <h3 >例 1：客户端排序</h3>
@@ -90,10 +90,7 @@
     <div class="grid-50">
         <h3 >例 2：AJAX远程排序</h3>
         <table id="table3-2"></table>
-        <p class="well">
-            列模型设置<em>sortName</em>来指定远程排序的字段名称，如不设置则为<em>name</em>中的值。<br />
-            <span style="font-size: 12px;">* 此示例无后端处理程序，请查看xhr</span>
-        </p>
+        <span style="font-size: 12px;">* 此示例无后端处理程序，请查看请求的url参数</span>
     </div>
     <div class="clear"></div>
     <hr >
@@ -178,14 +175,30 @@
     </div>
     <div class="clear"></div>
     <hr >
-    <h2>九、分页</h2>
+
+    <h2>九、索引列</h2>
+    <p>
+        表选项<em>indexCol</em>可以在表格前插入索引列。如果索引数字过大超出单元格可使用<em>indexColWidth</em>调整宽度。
+    </p>
+    <div class="grid-50">
+        <h3 >例 1：索引列</h3>
+        <table id="table9-1"></table>
+    </div>
+    <div class="grid-50">
+        <h3 >例 2：索引选框列同时显示</h3>
+        <table id="table9-2"></table>
+    </div>
+    <div class="clear"></div>
+    <hr >
+
+    <h2>十、分页</h2>
     <p>
         这里的分页示例借助了分页器，开发者可以根据自己的需求选择使用其他分页器。
     </p>
     <div class="grid-100">
-        <table id="table9-1"></table>
+        <table id="table10-1"></table>
         <div style="text-align:right;">
-            <div id="paginator9-1"></div>
+            <div id="paginator10-1"></div>
         </div>
     </div>
     <div class="clear"></div>
