@@ -250,14 +250,30 @@ $(document).ready(function(){
         }
     });
 
-    //分页
+
+    //索引列
     $('#table9-1').mmGrid({
+        indexCol: true,
+        indexColWidth: 25,
+        cols: cols,
+        items: items
+    });
+    $('#table9-2').mmGrid({
+        checkCol: true,
+        indexCol: true,
+        indexColWidth: 25,
+        cols: cols,
+        items: items
+    });
+
+    //分页
+    $('#table10-1').mmGrid({
         cols: cols,
         url: 'data/stockQuotePage.json',
         method: 'get',
         root: 'items',
         plugins : [
-            $('#paginator9-1').mmPaginator()
+            $('#paginator10-1').mmPaginator()
         ]
     });
 });

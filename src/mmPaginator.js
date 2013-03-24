@@ -166,7 +166,7 @@
 
         , init: function($grid){
             var that = this;
-            var opt = that.opts;
+            var opts = that.opts;
             this.$mmGrid = $grid;
             this._initLayout();
             this.$mmGrid.on('loadSuccess', function(e, data){
@@ -174,9 +174,19 @@
             });
 
             var params = {};
-            params[opt.totalCountName] = 0;
-            params[opt.pageNoName] = 0;
+            params[opts.totalCountName] = 0;
+            params[opts.pageNoName] = 0;
             this.load(params);
+
+            if($grid.opts.indexCol){
+                var indexCol = $grid.opts.cols[0];
+                indexCol.renderer = function(val,item,rowIndex){
+                    var params = that.params();
+                    return '<label class="index">' +
+                        (rowIndex + (params[opts.pageNoName] * params[opts.pageSizeName])) +
+                        '</label>';
+                };
+            }
 
         }
 

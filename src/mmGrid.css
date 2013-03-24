@@ -273,6 +273,10 @@
     background: #fff5cc;
 }
 
+.mmGrid .mmg-bodyWrapper .mmg-body td .mmg-index{
+    font-size: 0.9em;
+}
+
 .mmGrid .nowrap{
     overflow: hidden;
     white-space: nowrap;
