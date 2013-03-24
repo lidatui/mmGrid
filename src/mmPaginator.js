@@ -183,7 +183,7 @@
                 indexCol.renderer = function(val,item,rowIndex){
                     var params = that.params();
                     return '<label class="index">' +
-                        (rowIndex + (params[opts.pageNoName] * params[opts.pageSizeName])) +
+                        (rowIndex + 1 + (params[opts.pageNoName] * params[opts.pageSizeName])) +
                         '</label>';
                 };
             }

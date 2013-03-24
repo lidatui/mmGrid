@@ -268,6 +268,8 @@ $(document).ready(function(){
 
     //分页
     $('#table10-1').mmGrid({
+        indexCol: true,
+        indexColWidth: 35,
         cols: cols,
         url: 'data/stockQuotePage.json',
         method: 'get',

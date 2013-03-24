@@ -130,7 +130,7 @@
 
             if(opts.indexCol){
                 opts.cols.unshift({title:'#',width: opts.indexColWidth, align: 'center' ,lockWidth: true, indexCol:true, renderer:function(val,item,rowIndex){
-                    return '<label class="mmg-index">' + rowIndex + '</label>';
+                    return '<label class="mmg-index">' + (rowIndex+1) + '</label>';
                 }});
             }
         }
