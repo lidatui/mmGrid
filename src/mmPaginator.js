@@ -50,15 +50,15 @@
             var totalPage = totalCount % pageSize === 0 ? parseInt(totalCount/pageSize) : parseInt(totalCount/pageSize) + 1;
             totalPage = totalPage ? totalPage : 0;
             if(totalPage === 0){
-                pageNo = 0;
+                pageNo = 1;
             }else if(pageNo > totalPage){
                 pageNo = totalPage;
             }else if(pageNo < 1 && totalPage != 0){
-                pageNo = 0;
+                pageNo = 1;
             }
             //
             var $prev = $('<li><a>«</a></li>');
-            if(pageNo<=0){
+            if(pageNo<=1){
                 $prev.addClass('disable');
             }else{
                 $prev.find('a').on('click', function(){
@@ -69,16 +69,16 @@
             $pageNoList.append($prev);
             /////
             var list = [1];
-            if(pageNo+1 > 4 ){
+            if(pageNo > 4 ){
                 list.push('...');
             }
             for(var i= 0; i < 5; i++){
-                var no = pageNo - 1 + i;
+                var no = pageNo - 2 + i;
                 if(no > 1 && no <= totalPage-1){
                     list.push(no);
                 }
             }
-            if(pageNo+2 < totalPage-1){
+            if(pageNo+1 < totalPage-1){
                 list.push('...');
             }
             if(totalPage>1){
@@ -88,11 +88,11 @@
                 var $li = $('<li><a></a></li>');
                 if(item === '...'){
                     $li.addClass('active').find('a').text('...');
-                }else if(item === pageNo+1){
+                }else if(item === pageNo){
                     $li.addClass('active').find('a').text(item);
                 }else{
                     $li.find('a').text(item).prop('title','第'+item+'页').on('click', function(e){
-                        $el.data('pageNo', item-1);
+                        $el.data('pageNo', item);
                         that.$mmGrid.load();
                     });
                 }
@@ -100,7 +100,7 @@
             });
             //
             var $next = $('<li><a title="下一页">»</a></li>');
-            if(pageNo+1>=totalPage){
+            if(pageNo>=totalPage){
                 $next.addClass('disable');
             }else{
                 $next.find('a').on('click', function(){
@@ -175,7 +175,7 @@
 
             var params = {};
             params[opts.totalCountName] = 0;
-            params[opts.pageNoName] = 0;
+            params[opts.pageNoName] = 1;
             this.load(params);
 
             if($grid.opts.indexCol){
@@ -183,7 +183,7 @@
                 indexCol.renderer = function(val,item,rowIndex){
                     var params = that.params();
                     return '<label class="mmg-index">' +
-                        (rowIndex + 1 + (params[opts.pageNoName] * params[opts.pageSizeName])) +
+                        (rowIndex + 1 + ((params[opts.pageNoName]-1) * params[opts.pageSizeName])) +
                         '</label>';
                 };
             }
