@@ -2,12 +2,6 @@
     var MMPaginator = function(element, options){
         this.$el = $(element);
         this.opts = options;
-        //this._initLayout();
-
-//        var params = {};
-//        params[options.totalCountName] = 0;
-//        params[options.pageNoName] = 0;
-//        this.load(params);
     };
 
     MMPaginator.prototype = {
@@ -19,66 +13,66 @@
             $el.addClass("mmPaginator");
             var pgHtmls = [
                 '<div class="totalCountLabel"></div>',
-                '<ul class="pageNoList"></ul>',
-                '<div class="pageSize"><select></select></div>'
+                '<ul class="pageList"></ul>',
+                '<div class="limit"><select></select></div>'
             ];
             $el.append($(pgHtmls.join('')));
 
             this.$totalCountLabel = $el.find('.totalCountLabel');
-            this.$pageNoList = $el.find('.pageNoList');
-            this.$pageSizeList = $el.find('.pageSize select');
+            this.$pageList = $el.find('.pageList');
+            this.$limitList = $el.find('.limit select');
 
-             var $pageSizeList = this.$pageSizeList
-            $.each(opts.pageSizeList, function(){
+             var $limitList = this.$limitList
+            $.each(opts.limitList, function(){
                 var $option = $('<option></option>')
                     .prop('value',this)
-                    .text(that.formatString(opts.pageSizeLabel,[this]));
-                $pageSizeList.append($option);
+                    .text(that.formatString(opts.limitLabel,[this]));
+                $limitList.append($option);
             });
 
-            $pageSizeList.on('change', function(){
+            $limitList.on('change', function(){
                 that.$mmGrid.load();
             });
 
         }
 
-        , _plain: function(pageNo, totalCount, pageSize){
+        , _plain: function(page, totalCount, limit){
             var that = this;
             var $el = this.$el;
-            var $pageNoList = this.$pageNoList;
+            var $pageList = this.$pageList;
 
-            var totalPage = totalCount % pageSize === 0 ? parseInt(totalCount/pageSize) : parseInt(totalCount/pageSize) + 1;
+            var totalPage = totalCount % limit === 0 ? parseInt(totalCount/limit) : parseInt(totalCount/limit) + 1;
             totalPage = totalPage ? totalPage : 0;
             if(totalPage === 0){
-                pageNo = 0;
-            }else if(pageNo > totalPage){
-                pageNo = totalPage;
-            }else if(pageNo < 1 && totalPage != 0){
-                pageNo = 0;
+                page = 1;
+            }else if(page > totalPage){
+                page = totalPage;
+            }else if(page < 1 && totalPage != 0){
+                page = 1;
             }
             //
             var $prev = $('<li><a>«</a></li>');
-            if(pageNo<=0){
+            if(page<=1){
                 $prev.addClass('disable');
             }else{
                 $prev.find('a').on('click', function(){
-                    $el.data('pageNo', pageNo-1);
+                    $el.data('page', page-1);
                     that.$mmGrid.load();
                 });
             }
-            $pageNoList.append($prev);
+            $pageList.append($prev);
             /////
             var list = [1];
-            if(pageNo+1 > 4 ){
+            if(page > 4 ){
                 list.push('...');
             }
             for(var i= 0; i < 5; i++){
-                var no = pageNo - 1 + i;
+                var no = page - 2 + i;
                 if(no > 1 && no <= totalPage-1){
                     list.push(no);
                 }
             }
-            if(pageNo+2 < totalPage-1){
+            if(page+1 < totalPage-1){
                 list.push('...');
             }
             if(totalPage>1){
@@ -88,43 +82,43 @@
                 var $li = $('<li><a></a></li>');
                 if(item === '...'){
                     $li.addClass('active').find('a').text('...');
-                }else if(item === pageNo+1){
+                }else if(item === page){
                     $li.addClass('active').find('a').text(item);
                 }else{
                     $li.find('a').text(item).prop('title','第'+item+'页').on('click', function(e){
-                        $el.data('pageNo', item-1);
+                        $el.data('page', item);
                         that.$mmGrid.load();
                     });
                 }
-                $pageNoList.append($li);
+                $pageList.append($li);
             });
             //
             var $next = $('<li><a title="下一页">»</a></li>');
-            if(pageNo+1>=totalPage){
+            if(page>=totalPage){
                 $next.addClass('disable');
             }else{
                 $next.find('a').on('click', function(){
-                    $el.data('pageNo', pageNo+1);
+                    $el.data('page', page+1);
                     that.$mmGrid.load();
                 });
             }
-            $pageNoList.append($next);
+            $pageList.append($next);
         }
 
-        , _search: function(pageNo, totalCount, pageSize){
+        , _search: function(page, totalCount, limit){
 
         }
 
         , load: function(params){
             var $el = this.$el;
-            var $pageSizeList = this.$pageSizeList;
+            var $limitList = this.$limitList;
             var opts = this.opts;
 
-            var pageNo = params[opts.pageNoName];
-            if(pageNo === undefined){
-                pageNo = $el.data('pageNo');
+            var page = params[opts.pageParamName];
+            if(page === undefined){
+                page = $el.data('page');
             }
-            $el.data('pageNo', pageNo);
+            $el.data('page', page);
 
             var totalCount = params[opts.totalCountName];
             if(totalCount === undefined){
@@ -132,16 +126,16 @@
             }
             $el.data('totalCount', totalCount);
 
-            var pageSize = params[opts.pageSizeName];
-            if(pageSize === undefined){
-                pageSize = $pageSizeList.val();
+            var limit = params[opts.limitParamName];
+            if(limit === undefined){
+                limit = $limitList.val();
             }
-            this.$pageSizeList.val(pageSize);
+            this.$limitList.val(limit);
 
             this.$totalCountLabel.html(this.formatString(opts.totalCountLabel,[totalCount]));
-            this.$pageNoList.empty();
+            this.$pageList.empty();
 
-            this._plain(pageNo, totalCount, this.$pageSizeList.val());
+            this._plain(page, totalCount, this.$limitList.val());
         }
 
         , formatString: function(text, args){
@@ -156,11 +150,11 @@
         , params: function(){
             var opts = this.opts;
             var $el = this.$el;
-            var $pageSizeList = this.$pageSizeList;
+            var $limitList = this.$limitList;
 
             var params = {};
-            params[opts.pageNoName] = $el.data('pageNo');
-            params[opts.pageSizeName] = $pageSizeList.val();
+            params[opts.pageParamName] = $el.data('page');
+            params[opts.limitParamName] = $limitList.val();
             return params;
         }
 
@@ -175,7 +169,8 @@
 
             var params = {};
             params[opts.totalCountName] = 0;
-            params[opts.pageNoName] = 0;
+            params[opts.pageParamName] = opts.page;
+            params[opts.limitParamName] = opts.limit;
             this.load(params);
 
             if($grid.opts.indexCol){
@@ -183,7 +178,7 @@
                 indexCol.renderer = function(val,item,rowIndex){
                     var params = that.params();
                     return '<label class="mmg-index">' +
-                        (rowIndex + 1 + (params[opts.pageNoName] * params[opts.pageSizeName])) +
+                        (rowIndex + 1 + ((params[opts.pageParamName]-1) * params[opts.limitParamName])) +
                         '</label>';
                 };
             }
@@ -217,11 +212,13 @@
     $.fn.mmPaginator.defaults = {
          style: 'plain'
         , totalCountName: 'totalCount'
-        , pageNoName: 'page'
-        , pageSizeName: 'limit'
-        , pageSizeLabel: '每页{0}条'
+        , page: 1
+        , pageParamName: 'page'
+        , limitParamName: 'limit'
+        , limitLabel: '每页{0}条'
         , totalCountLabel: '共<span>{0}</span>条记录'
-        , pageSizeList: [20, 30, 40, 50]
+        , limit: null
+        , limitList: [20, 30, 40, 50]
     };
 
     $.fn.mmPaginator.Constructor = MMPaginator;
