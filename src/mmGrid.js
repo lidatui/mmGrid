@@ -23,11 +23,14 @@
         }
 
         if(options.autoLoad){
-            if(options.url){
-                this.load();
-            }else{
-                this.load(options.items);
-            }
+            var that = this;
+            setTimeout(function(){
+                if(options.url){
+                    that.load();
+                }else{
+                    this.load(options.items);
+                }
+            },0); //chrome style problem
         }
 
     };
