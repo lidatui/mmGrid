@@ -28,7 +28,7 @@
                 if(options.url){
                     that.load();
                 }else{
-                    this.load(options.items);
+                    that.load(options.items);
                 }
             },0); //chrome style problem
         }
