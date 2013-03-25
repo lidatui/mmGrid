@@ -176,6 +176,7 @@
             var params = {};
             params[opts.totalCountName] = 0;
             params[opts.pageNoName] = 1;
+            params[opts.pageSizeName] = opts.pageSize;
             this.load(params);
 
             if($grid.opts.indexCol){
@@ -221,6 +222,7 @@
         , pageSizeName: 'limit'
         , pageSizeLabel: '每页{0}条'
         , totalCountLabel: '共<span>{0}</span>条记录'
+        , pageSize: null
         , pageSizeList: [20, 30, 40, 50]
     };
 
