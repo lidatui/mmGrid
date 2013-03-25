@@ -23,11 +23,14 @@
         }
 
         if(options.autoLoad){
-            if(options.url){
-                this.load();
-            }else{
-                this.load(options.items);
-            }
+            var that = this;
+            setTimeout(function(){
+                if(options.url){
+                    that.load();
+                }else{
+                    that.load(options.items);
+                }
+            },0); //chrome style problem
         }
 
     };
@@ -235,42 +238,7 @@
             if(opts.width === 'auto' || opts.height === 'auto' || (typeof opts.width === 'string' && opts.width.indexOf('%') === opts.width.length-1) ||
                 typeof opts.height === 'string' && opts.height.indexOf('%') === opts.height.length-1){
                 $(window).on('resize', function(){
-                    // fix in ie6
-                    if(browser.isIE6 && (!opts.width || opts.width === 'auto')){
-                        $mmGrid.width('100%');
-                        $mmGrid.width($mmGrid.width() - ($mmGrid.outerWidth(true) - $mmGrid.width()));
-                    }else{
-                        $mmGrid.width(opts.width);
-                    }
-
-                    if(browser.isIE6 && (!opts.height || opts.height === 'auto')){
-                        $mmGrid.height('100%');
-                        $mmGrid.height($mmGrid.height() - ($mmGrid.outerHeight(true) - $mmGrid.height()));
-                    }else{
-                        $mmGrid.height(opts.height);
-                    }
-                    $bodyWrapper.height($mmGrid.height() - $headWrapper.outerHeight(true));
-
-                    //调整message
-                    var $message = $mmGrid.find('.mmg-message');
-                    if($message.is(':visible')){
-                        $message.css({
-                            'left': ($mmGrid.width() - $message.width()) / 2,
-                            'top': ($mmGrid.height() + $headWrapper.height() - $message.height()) / 2
-                        });
-                    }
-                    //调整loading
-                    var $mask = $mmGrid.find('.mmg-mask');
-                    if($mask.is(':visible')){
-                        $mask.width($mmGrid.width()).height($mmGrid.height());
-                        var $loadingWrapper = $mmGrid.find('.mmg-loading');
-                        $loadingWrapper.css({
-                            'left': ($mmGrid.width() - $loadingWrapper.width()) / 2,
-                            'top': ($mmGrid.height() - $loadingWrapper.height()) / 2
-                        })
-                    }
-
-                    $bodyWrapper.trigger('scroll');
+                    that.resize();
                 });
             }
 
@@ -788,6 +756,52 @@
                 this._loadNative([]);
             }
         }
+
+        //重设尺寸
+        , resize: function(){
+            var opts = this.opts;
+            var $mmGrid = this.$mmGrid;
+            var $headWrapper = this.$headWrapper;
+            var $bodyWrapper = this.$bodyWrapper;
+
+            // fix in ie6
+            if(browser.isIE6 && (!opts.width || opts.width === 'auto')){
+                $mmGrid.width('100%');
+                $mmGrid.width($mmGrid.width() - ($mmGrid.outerWidth(true) - $mmGrid.width()));
+            }else{
+                $mmGrid.width(opts.width);
+            }
+
+            if(browser.isIE6 && (!opts.height || opts.height === 'auto')){
+                $mmGrid.height('100%');
+                $mmGrid.height($mmGrid.height() - ($mmGrid.outerHeight(true) - $mmGrid.height()));
+            }else{
+                $mmGrid.height(opts.height);
+            }
+            $bodyWrapper.height($mmGrid.height() - $headWrapper.outerHeight(true));
+
+            //调整message
+            var $message = $mmGrid.find('.mmg-message');
+            if($message.is(':visible')){
+                $message.css({
+                    'left': ($mmGrid.width() - $message.width()) / 2,
+                    'top': ($mmGrid.height() + $headWrapper.height() - $message.height()) / 2
+                });
+            }
+            //调整loading
+            var $mask = $mmGrid.find('.mmg-mask');
+            if($mask.is(':visible')){
+                $mask.width($mmGrid.width()).height($mmGrid.height());
+                var $loadingWrapper = $mmGrid.find('.mmg-loading');
+                $loadingWrapper.css({
+                    'left': ($mmGrid.width() - $loadingWrapper.width()) / 2,
+                    'top': ($mmGrid.height() - $loadingWrapper.height()) / 2
+                })
+            }
+
+            $bodyWrapper.trigger('scroll');
+        }
+
             //选中
         , select: function(args){
             var opts = this.opts;
