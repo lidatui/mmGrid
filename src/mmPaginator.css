@@ -17,7 +17,7 @@
     font-weight: bold;
 }
 
-.mmPaginator .pageNoList{
+.mmPaginator .pageList{
     display: inline-block;
     *display: inline;
     *zoom: 1;
@@ -26,7 +26,7 @@
     list-style: none;
 }
 
-.mmPaginator .pageNoList li{
+.mmPaginator .pageList li{
     display: inline-block;
     *display: inline;
     *zoom: 1;
@@ -39,73 +39,73 @@
 
 }
 
-.mmPaginator .pageNoList li.active{
+.mmPaginator .pageList li.active{
     background: none;
     padding-top: 1px;
     border: 0;
 }
 
-.mmPaginator .pageNoList li.disable a{
+.mmPaginator .pageList li.disable a{
     color: #333;
     cursor: default;
 }
 
-.mmPaginator .pageNoList li.disable{
+.mmPaginator .pageList li.disable{
     background: #efefef;
 }
 
-.mmPaginator .pageNoList li.disable a{
+.mmPaginator .pageList li.disable a{
     color: #333;
     cursor: default;
 }
 
-.mmPaginator .pageNoList li a{
+.mmPaginator .pageList li a{
     color: #b00;
     text-align: center;
     cursor: pointer;
 }
 
-.mmPaginator .pageNoList li a.head{
+.mmPaginator .pageList li a.head{
 
 }
 
-.mmPaginator .pageNoList li a.headDisable{
+.mmPaginator .pageList li a.headDisable{
 
 }
 
-.mmPaginator .pageNoList li a.prev{
+.mmPaginator .pageList li a.prev{
 
 }
 
-.mmPaginator .pageNoList li a.prevDisable{
+.mmPaginator .pageList li a.prevDisable{
 
 }
 
-.mmPaginator .pageNoList li a.next{
+.mmPaginator .pageList li a.next{
 
 }
 
-.mmPaginator .pageNoList li a.nextDisable{
+.mmPaginator .pageList li a.nextDisable{
 
 }
 
-.mmPaginator .pageNoList li a.tail{
+.mmPaginator .pageList li a.tail{
 
 }
 
-.mmPaginator .pageNoList li a.tailDisable{
+.mmPaginator .pageList li a.tailDisable{
 
 }
 
-.mmPaginator .pageNoList li a.current{
+.mmPaginator .pageList li a.current{
 
 }
 
-.mmPaginator .pageNoList li a.skip{
+.mmPaginator .pageList li a.skip{
 
 }
 
-.mmPaginator .pageSize{
+.mmPaginator .limit{
     display: inline-block;
     *display: inline;
     *zoom: 1;
@@ -113,7 +113,7 @@
     vertical-align: top;
 }
 
-.mmPaginator .pageSize select{
+.mmPaginator .limit select{
     border: 1px solid #ccc;
     padding: 1px;
     width: auto;
