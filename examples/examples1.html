@@ -6,20 +6,27 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>操作演示&更改样式</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="../examples/bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="../src/mmGrid.css">
+        <link rel="stylesheet" href="../src/theme/bootstrap/mmGrid-bootstrap.css">
         <link rel="stylesheet" href="../src/mmPaginator.css">
+        <link rel="stylesheet" href="../src/theme/bootstrap/mmPaginator-bootstrap.css">
         <style>
-
-            .mmGrid{
-                font-size: 14px;
+            html,
+            body{
+                font-family: 'Helvetica Neue',helvetica, "Hiragino Sans GB",'Microsoft YaHei', "WenQuanYi Micro Hei", sans-serif;
+                font-size: 12px;
+                color: #444;
+            }
+            .btn{
+                font-size: 12px;
             }
             .btnPrice {
                 display: block;
@@ -41,12 +48,12 @@
     <body style="padding: 40px;">
         <main>
             <div style="margin-bottom: 5px;">
-                <button id="btnAdd" class="button">添加到第三行</button>
-                <button id="btnAddArr" class="button" >添加列表到第二行</button>
-                <button id="btnRemove" class="button" >删除第二行</button>
-                <button id="btnRemoveSelected" class="button" >删除选择的行</button>
-                <button id="btnRemoveAll" class="button" >删除全部行</button>
-                <button id="btnUpdate" class="button" >更新第二行</button>
+                <button id="btnAdd" class="btn">添加到第三行</button>
+                <button id="btnAddArr" class="btn" >添加列表到第二行</button>
+                <button id="btnRemove" class="btn" >删除第二行</button>
+                <button id="btnRemoveSelected" class="btn" >删除选择的行</button>
+                <button id="btnRemoveAll" class="btn" >删除全部行</button>
+                <button id="btnUpdate" class="btn" >更新第二行</button>
             </div>
             <table id="mmg" class="mmg"></table>
             <div id="pg" style="text-align: right;"></div>
