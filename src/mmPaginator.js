@@ -51,7 +51,7 @@
                 page = 1;
             }
             //
-            var $prev = $('<li><a>«</a></li>');
+            var $prev = $('<li class="prev"><a>«</a></li>');
             if(page<=1){
                 $prev.addClass('disable');
             }else{
@@ -81,7 +81,7 @@
             $.each(list, function(index, item){
                 var $li = $('<li><a></a></li>');
                 if(item === '...'){
-                    $li.addClass('active').find('a').text('...');
+                    $li.addClass('').html('...');
                 }else if(item === page){
                     $li.addClass('active').find('a').text(item);
                 }else{
@@ -93,7 +93,7 @@
                 $pageList.append($li);
             });
             //
-            var $next = $('<li><a title="下一页">»</a></li>');
+            var $next = $('<li class="next"><a title="下一页">»</a></li>');
             if(page>=totalPage){
                 $next.addClass('disable');
             }else{
