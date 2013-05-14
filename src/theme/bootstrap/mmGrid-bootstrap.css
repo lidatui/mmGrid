@@ -1,0 +1,54 @@
+
+.mmGrid{
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.mmGrid .mmg-headWrapper{
+    background: #fff;
+    filter: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-top: 0;
+}
+
+.mmGrid .mmg-headWrapper .mmg-head th{
+    padding: 4px 6px;
+    border-right: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+}
+
+.mmGrid .mmg-backboard{
+    background: #f7f7f7;
+}
+.mmGrid .mmg-bodyWrapper .mmg-body td{
+    padding: 4px 6px;
+    border-right: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+
+}
+
+.mmGrid .mmg-bodyWrapper .mmg-body tr.hover td{
+    background: #d9edf7;
+}
+
+.mmGrid .mmg-bodyWrapper .mmg-body tr:hover td{
+    background: #d9edf7;
+}
+
+.mmGrid .mmg-bodyWrapper .mmg-body tr.selected td{
+    background: #fcf8e3;
+}
+
+
+
+
+
+
+
+
+
+
+
