@@ -806,6 +806,7 @@
         , select: function(args){
             var opts = this.opts;
             var $body = this.$body;
+            var $head = this.$head;
 
             if(typeof args === 'number'){
                 var $tr = $body.find('tr').eq(args);
@@ -837,12 +838,26 @@
                 $body.find('tr.selected').removeClass('selected');
                 $body.find('tr').addClass('selected');
                 $body.find('tr > td').find('.mmg-check').prop('checked','checked');
+            }else{
+                return;
             }
+
+            if(opts.checkCol){
+                var $checks = $body.find('tr > td').find('.mmg-check');
+                console.log($checks.length) ;
+                console.log($checks.filter(':checked').length) ;
+                if($checks.length === $checks.filter(':checked').length){
+                    $head.find('th .checkAll').prop('checked','checked');
+                }
+            }
+
+
         }
             //取消选中
         , deselect: function(args){
             var opts = this.opts;
             var $body = this.$body;
+            var $head = this.$head;
             if(typeof args === 'number'){
                 $body.find('tr').eq(args).removeClass('selected');
                 if(opts.checkCol){
@@ -862,7 +877,12 @@
                 if(opts.checkCol){
                     $body.find('tr > td').find('.mmg-check').prop('checked','');
                 }
+            }else{
+                return;
             }
+
+            $head.find('th .checkAll').prop('checked','');
+
         }
         , selectedRows: function(){
             var $body = this.$body;
