@@ -5,7 +5,7 @@
 !function($){
     var MMGrid = function (element, options) {
         this._id = (((1 + Math.random()) * 0x10000) | 0).toString(16);
-        this._loadCount = 1;
+        this._loadCount = 0;
         this.opts = options;
         this._initLayout($(element));
         this._initHead();
@@ -24,7 +24,6 @@
 
         if(options.autoLoad){
             var that = this;
-            this._loadCount = 0;
             this.opts = options;
             setTimeout(function(){
 
