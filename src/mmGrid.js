@@ -5,7 +5,7 @@
 !function($){
     var MMGrid = function (element, options) {
         this._id = (((1 + Math.random()) * 0x10000) | 0).toString(16);
-        this._loadCount = 0;
+        this._loadCount = 1;
         this.opts = options;
         this._initLayout($(element));
         this._initHead();
@@ -24,7 +24,10 @@
 
         if(options.autoLoad){
             var that = this;
+            this._loadCount = 0;
+            this.opts = options;
             setTimeout(function(){
+
                 if(options.url){
                     that.load();
                 }else{
@@ -860,8 +863,9 @@
                 for(var colIndex=0; colIndex<$titles.length; colIndex++){
                     var status = $.data($titles[colIndex], 'sortStatus');
                     if(status){
-                        sortName = opts.cols[colIndex].sortName ?
-                            opts.cols[colIndex].sortName : opts.cols[colIndex].name;
+                        var col = $titles.eq(colIndex).parent().parent().data('col');
+                        sortName = col.sortName ?
+                            col.sortName : col.name;
                         sortStatus = status;
                     }
                 }
