@@ -307,9 +307,6 @@ $(document).ready(function(){
     ];
     $('#table11-1').mmGrid({
         cols: groupCols,
-        items: items,
-        plugins : [
-            $('#paginator10-1').mmPaginator()
-        ]
+        items: items
     });
 });
