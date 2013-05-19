@@ -278,4 +278,38 @@ $(document).ready(function(){
             $('#paginator10-1').mmPaginator()
         ]
     });
+
+    //表头分组
+    var groupCols = [
+        {title:'行情', name:'', width: 30, align: 'center', renderer: function(val,item,rowIndex){
+            return '<div class="btnPrice"></div>';
+        }},
+        {title:'股票', align: 'center', cols:[
+            { title:'股票代码', name:'SECUCODE' ,width:100, align:'center' ,sortable: true},
+            { title:'股票名称', name:'SECUABBR' ,width:100, align:'center' ,sortable: true}
+        ]},
+        { title:'今收盘', name:'CLOSINGPRICE' ,width:60, align:'right' ,sortable: true, renderer: fixed2},
+        { title:'涨跌幅', name:'DAYCHANGERATE' ,width:60, align:'right' ,sortable: true,renderer: highliht},
+        { title:'涨跌额', name:'DAYCHANGE' ,width:60, align:'right' ,sortable: true, renderer: highliht},
+        { title:'振幅', name:'AMPLITUDE' ,width:60, align:'right' ,sortable: true, renderer: fixed2percentage},
+        { title:'成交' ,align: 'center', cols: [
+            { title:'成交量(手)', name:'TURNOVERVOL' ,width:100, align:'right' ,sortable: true, renderer: function(val){
+                return (val / 100).toFixed(2);
+            }},
+            { title:'成交额(万)', name:'TURNOVERVAL' ,width:100, align:'right' ,sortable: true, renderer: function(val){
+                return (val / 10000).toFixed(2);
+            }}
+        ]},
+        { title:'昨收盘', name:'PREVCLOSINGPRICE' ,width:60, align:'right' ,sortable: true, renderer: fixed2},
+        { title:'今开盘', name:'OPENINGPRICE',width:60, align:'right' ,sortable: true, renderer: fixed2},
+        { title:'最高价', name:'HIGHESTPRICE' ,width:60, align:'right' ,sortable: true, renderer: fixed2},
+        { title:'最低价', name:'LOWESTPRICE' ,width:60, align:'right' ,sortable: true, renderer: fixed2}
+    ];
+    $('#table11-1').mmGrid({
+        cols: groupCols,
+        items: items,
+        plugins : [
+            $('#paginator10-1').mmPaginator()
+        ]
+    });
 });

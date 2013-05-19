@@ -210,7 +210,7 @@
             for(var colIndex=0; colIndex<cols.length; colIndex++){
                 var col = cols[colIndex];
                 if(col.cols){
-                    var newDeep = deep + this._titleDeep(col.cols);
+                    var newDeep = 1 + this._titleDeep(col.cols);
                     if(deep < newDeep){
                         deep = newDeep;
                     }
@@ -261,7 +261,6 @@
                 titleHtml.push('">');
                 titleHtml.push(col.title);
                 titleHtml.push('</span><div class="mmg-sort"></div>');
-                if(!col.lockWidth) titleHtml.push('<div class="mmg-colResize"></div>');
                 titleHtml.push('</div></th>');
             }
 
