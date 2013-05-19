@@ -55,7 +55,11 @@
                 <button id="btnRemoveAll" class="btn" >删除全部行</button>
                 <button id="btnUpdate" class="btn" >更新第二行</button>
             </div>
-            <table id="mmg" class="mmg"></table>
+            <table id="mmg" class="mmg">
+                <tr>
+                    <th rowspan="" colspan=""></th>
+                </tr>
+            </table>
             <div id="pg" style="text-align: right;"></div>
         </main>
 
@@ -79,8 +83,10 @@
                     {title:'行情', name:'', width: 30, align: 'center',lockWidth:true,  renderer: function(val,item,rowIndex){
                         return '<div class="btnPrice"></div>';
                     }},
-                    { title:'股票代码', name:'SECUCODE' ,width:100, sortable: true, align:'center' ,lockDisplay: true },
-                    { title:'股票名称', name:'SECUABBR' ,width:100, sortable: true, align:'center' ,lockDisplay: true},
+                    {title:'股票', cols:[
+                        { title:'股票代码', name:'SECUCODE' ,width:100, sortable: true, align:'center'  },
+                        { title:'股票名称', name:'SECUABBR' ,width:100, sortable: true, align:'center' }
+                    ]},
                     { title:'今收盘', name:'CLOSINGPRICE' ,width:60, align:'right', sortable: true, type: 'number', renderer: fixed2},
                     { title:'涨跌幅', name:'DAYCHANGERATE' ,width:60, align:'right', sortable: true, type: 'number',renderer: function(val){
                         if(val > 0){
@@ -117,10 +123,10 @@
                 var mmg = $('.mmg').mmGrid({
                     height: 400
                     , cols: cols
-                    , url: 'data/stockQuotePage.json'
+                    //, url: 'data/stockQuotePage.json'
                     , method: 'get'
                     , remoteSort:true
-                    //, items: items
+                    , items: items
                     , sortName: 'SECUCODE'
                     , sortStatus: 'asc'
                     , multiSelect: true
