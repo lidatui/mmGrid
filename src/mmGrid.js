@@ -24,7 +24,9 @@
 
         if(options.autoLoad){
             var that = this;
+            this.opts = options;
             setTimeout(function(){
+
                 if(options.url){
                     that.load();
                 }else{
@@ -55,7 +57,9 @@
     }();
 
     MMGrid.prototype = {
+
         _initLayout: function($el){
+            var opts = this.opts;
             var $elParent = $el.parent();
             var elIndex = $el.index();
 
@@ -100,6 +104,7 @@
             this.$body.appendTo(this.$bodyWrapper);
 
 
+
             //放回原位置
             if(elIndex === 0 || $elParent.children().length == 0){
                 $elParent.prepend(this.$mmGrid);
@@ -107,7 +112,7 @@
                 $elParent.children().eq(elIndex-1).after(this.$mmGrid);
             }
 
-            var opts = this.opts;
+
             // fix in ie6
             if(browser.isIE6 && (!opts.width || opts.width === 'auto')){
                 $mmGrid.width('100%');
@@ -136,39 +141,162 @@
                     return '<label class="mmg-index">' + (rowIndex+1) + '</label>';
                 }});
             }
+
+        }
+
+        ,_expandCols: function(cols){
+            var newCols = [];
+            if(!cols){
+               return newCols;
+            }
+            for(var colIndex=0; colIndex<cols.length; colIndex++){
+               var col = cols[colIndex];
+               if(col.cols){
+                   newCols.push(col);
+                   newCols.push.apply(newCols,this._expandCols(col.cols));
+               }else{
+                   newCols.push(col);
+               }
+            }
+            return newCols;
+        }
+        ,_leafCols: function(){
+            var opts = this.opts;
+            var newCols = [];
+            var cols = this._expandCols(opts.cols);
+            for(var colIndex=0; colIndex<cols.length; colIndex++){
+                var col = cols[colIndex];
+                if(!col.cols){
+                    newCols.push(col);
+                }
+            }
+            return newCols;
+        }
+
+        ,_expandThs: function(){
+            return this.$head.find('th').sort(function(a, b){
+               return parseInt($(a).data('colindex')) - parseInt($(b).data('colindex'));
+            });
+        }
+
+        ,_leafThs: function(){
+            return this.$head.find('th').filter(function(){
+                return !$.data(this,'col').cols;
+            }).sort(function(a, b){
+                return parseInt($(a).data('colindex')) - parseInt($(b).data('colindex'));
+            });
+        }
+
+
+        ,_colsWithTitleDept: function(cols,deep){
+            var newCols = [];
+            if(!cols){
+                return newCols;
+            }
+            for(var colIndex=0; colIndex<cols.length; colIndex++){
+                var col = cols[colIndex];
+                if(deep === 1){
+                    newCols.push(col);
+                }else{
+                    newCols.push.apply(newCols, this._colsWithTitleDept(col.cols, deep-1));
+                }
+            }
+            return newCols;
+        }
+
+        ,_titleDeep: function(cols){
+            var deep = 1;
+            for(var colIndex=0; colIndex<cols.length; colIndex++){
+                var col = cols[colIndex];
+                if(col.cols){
+                    var newDeep = 1 + this._titleDeep(col.cols);
+                    if(deep < newDeep){
+                        deep = newDeep;
+                    }
+                }
+            }
+            return deep;
+        }
+
+        , _titleHtml: function(col, rowspan){
+            var opts = this.opts;
+
+            var titleHtml = [];
+            if(!col.cols){
+                titleHtml.push('<th class="');
+                var colIndex =  $.inArray(col, this._expandCols(opts.cols));
+                titleHtml.push(this._genColClass(colIndex));
+                titleHtml.push(' " ');
+                titleHtml.push(' rowspan="');
+                titleHtml.push(rowspan);
+                titleHtml.push('" colspan="');
+                titleHtml.push(1);
+                titleHtml.push('" data-colIndex="');
+                titleHtml.push(colIndex);
+                titleHtml.push('" >');
+                titleHtml.push('<div class="mmg-titleWrapper" >');
+                titleHtml.push('<span class="mmg-title ');
+                if(col.sortable) titleHtml.push('mmg-canSort ');
+                titleHtml.push('">');
+                titleHtml.push(col.title);
+                titleHtml.push('</span><div class="mmg-sort"></div>');
+                if(!col.lockWidth) titleHtml.push('<div class="mmg-colResize"></div>');
+                titleHtml.push('</div></th>');
+            }else{
+                titleHtml.push('<th class="');
+                var colIndex =  $.inArray(col, this._expandCols(opts.cols));
+                titleHtml.push(this._genColClass(colIndex));
+                titleHtml.push(' " ');
+                titleHtml.push(' rowspan="');
+                titleHtml.push(rowspan-1);
+                titleHtml.push('" colspan="');
+                titleHtml.push(col.cols.length);
+                titleHtml.push('" data-colIndex="');
+                titleHtml.push(colIndex);
+                titleHtml.push('" >');
+                titleHtml.push('<div class="mmg-titleWrapper" >');
+                titleHtml.push('<span class="mmg-title ');
+                if(col.sortable) titleHtml.push('mmg-canSort ');
+                titleHtml.push('">');
+                titleHtml.push(col.title);
+                titleHtml.push('</span><div class="mmg-sort"></div>');
+                titleHtml.push('</div></th>');
+            }
+
+            return titleHtml.join("");
         }
 
         , _initHead: function(){
+            var that = this;
             var opts = this.opts;
             var $head = this.$head;
 
             if(opts.cols){
                 var theadHtmls = ['<thead>'];
 
-                for(var colIndex=0; colIndex< opts.cols.length; colIndex++){
-                    var col = opts.cols[colIndex];
-                    theadHtmls.push('<th class="');
-                    theadHtmls.push(this._genColClass(colIndex));
-                    theadHtmls.push(' nowrap">');
-                    theadHtmls.push('<div class="mmg-titleWrapper" >');
-                    theadHtmls.push('<span class="mmg-title ');
-                    if(col.sortable) theadHtmls.push('mmg-canSort ');
-                    theadHtmls.push('">');
-                    theadHtmls.push(col.title);
-                    theadHtmls.push('</span><div class="mmg-sort"></div>');
-                    if(!col.lockWidth) theadHtmls.push('<div class="mmg-colResize"></div>');
-                    theadHtmls.push('</div></th>');
+                //获取标题深度
+                var titleDeep = that._titleDeep(opts.cols);
+                for(var deep=1; deep<= titleDeep; deep++){
+                    var cols = that._colsWithTitleDept(opts.cols, deep);
+                    theadHtmls.push('<tr>');
+                    for(var colIndex=0; colIndex< cols.length; colIndex++){
+                        var col = cols[colIndex];
+                        theadHtmls.push(this._titleHtml(col, titleDeep-deep+1));
+                    }
+                    theadHtmls.push('</tr>');
                 }
-
                 theadHtmls.push('</thead>');
                 $head.html(theadHtmls.join(''));
             }
 
-            $.each($head.find('th'),function(index){
-                if(!opts.cols[index].width){
-                    opts.cols[index].width = 100;
+            var $ths = this._expandThs();
+            var expandCols = this._expandCols(opts.cols);
+            $.each($ths,function(index){
+                if(!expandCols[index].width){
+                    expandCols[index].width = 100;
                 }
-                $.data(this,'col-width',opts.cols[index].width);
+                $.data(this,'col-width',expandCols[index].width);
+                $.data(this,'col',expandCols[index]);
             });
 
             var $mmGrid = this.$mmGrid;
@@ -179,9 +307,8 @@
 
             //初始化排序状态
             if(opts.sortName){
-                var $ths = $head.find('th');
-                for(var colIndex=0; colIndex< opts.cols.length; colIndex++){
-                    var col = opts.cols[colIndex];
+                for(var colIndex=0; colIndex< expandCols.length; colIndex++){
+                    var col = expandCols[colIndex];
                     if(col.sortName === opts.sortName || col.name === opts.sortName){
                         var $th= $ths.eq(colIndex);
                         $.data($th.find('.mmg-title')[0],'sortStatus',opts.sortStatus);
@@ -200,14 +327,15 @@
                 'top': $headWrapper.outerHeight(true)
             }).slideUp('fast');
 
-            if(opts.cols){
+            var cols = this._leafCols();
+            if(cols){
                 var bbHtml = ['<h1>显示列</h1>'];
-                for(var colIndex=0; colIndex<opts.cols.length; colIndex++){
+                for(var colIndex=0; colIndex<cols.length; colIndex++){
                     bbHtml.push('<label ');
-                    if(opts.cols[colIndex].checkCol || opts.cols[colIndex].indexCol){
+                    if(cols[colIndex].checkCol || cols[colIndex].indexCol){
                         bbHtml.push('style="display:none;" ');
                     }
-                    var col = opts.cols[colIndex];
+                    var col = cols[colIndex];
                     bbHtml.push('><input type="checkbox"  ');
                     if(!col.hidden) bbHtml.push('checked="checked"');
                     if(col.lockDisplay) bbHtml.push(' disabled="disabled"');
@@ -233,6 +361,9 @@
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
             var $backboard = this.$backboard;
+            var $ths = this._expandThs();
+            var expandCols = this._expandCols(opts.cols);
+            var leafCols = this._leafCols();
 
             //调整浏览器
             if(opts.width === 'auto' || opts.height === 'auto' || (typeof opts.width === 'string' && opts.width.indexOf('%') === opts.width.length-1) ||
@@ -290,21 +421,46 @@
                     this.checked = true;
                     return;
                 }
+
+                var col = leafCols[index];
                 if(this.checked){
-                    opts.cols[index].hidden = false;
-                    that._setColsWidth();
+                    col.hidden = false;
+
                 }else{
-                    opts.cols[index].hidden = true;
-                    that._setColsWidth();
+                    col.hidden = true;
                 }
+
+                for(var colIndex=expandCols.length-1; colIndex>=0; colIndex--){
+                    var col = expandCols[colIndex];
+                    if(col.cols){
+                        var hidden = true;
+                        $.each(col.cols,function(index,item){
+                             if(!item.hidden){
+                                 hidden = false;
+                             }
+                        });
+                        col.hidden = hidden;
+                    }
+                }
+
+                that._setColsWidth();
+                $backboard.height($mmGrid.height() - $headWrapper.outerHeight(true));
+                $bodyWrapper.height($mmGrid.height() - $headWrapper.outerHeight(true));
+                $mmGrid.find('a.mmg-btnBackboardDn').css({
+                    'top': $headWrapper.outerHeight(true)
+                })
             });
+
+
 
             //排序事件
             $head.on('click', '.mmg-title', function(){
                 var $this = $(this);
-                var $titles =  $head.find('.mmg-title');
+                var $titles =  $ths.find('.mmg-title');
+
                 //当前列不允许排序
-                if(!opts.cols[$titles.index($this)].sortable){
+                var col =$this.parent().parent().data('col');
+                if(!col.sortable){
                     return;
                 }
                 //取得当前列下一个排序状态
@@ -313,7 +469,7 @@
                 $.each($titles, function(){
                     $.removeData(this,'sortStatus');
                 });
-                $head.find('.mmg-sort').removeClass('mmg-asc').removeClass('mmg-desc');
+                $ths.find('.mmg-sort').removeClass('mmg-asc').removeClass('mmg-desc');
                 //设置当前列排序状态
                 $.data(this, 'sortStatus', sortStatus);
                 $this.siblings('.mmg-sort').addClass('mmg-'+sortStatus);
@@ -321,7 +477,7 @@
                 if(opts.url && opts.remoteSort){
                     that.load()
                 }else{
-                    that._nativeSorter($titles.index($this), sortStatus);
+                    that._nativeSorter($.inArray(col, leafCols), sortStatus);
                     that._setStyle();
                 }
             }).on('mousedown', '.mmg-colResize', function(e){
@@ -409,14 +565,18 @@
 
         , _rowHtml: function(item, rowIndex){
             var opts = this.opts;
+            var expandCols = this._expandCols(opts.cols);
+            var leafCols = this._leafCols();
+
 
             if($.isPlainObject(item)){
                 var trHtml = [];
                 trHtml.push('<tr>');
-                for(var colIndex=0; colIndex < opts.cols.length; colIndex++){
-                    var col = opts.cols[colIndex];
+                for(var colIndex=0; colIndex < leafCols.length; colIndex++){
+                    var col = leafCols[colIndex];
                     trHtml.push('<td class="');
-                    trHtml.push(this._genColClass(colIndex));
+                    var index =  $.inArray(col, expandCols);
+                    trHtml.push(this._genColClass(index));
                     if(opts.nowrap){
                         trHtml.push(' nowrap');
                     }
@@ -486,8 +646,9 @@
 
         , _setStyle: function(){
             var $head = this.$head;
-            var $ths = $head.find('th');
+            var $ths = this._expandThs();
             var $body = this.$body;
+            var leafCol = this._leafCols();
 
             //head
             $ths.eq(0).addClass('first');
@@ -498,9 +659,11 @@
 
             $body.find('tr:odd').addClass('even');
 
-            var sortIndex = $head.find('.mmg-title').index($head.find('.mmg-title').filter(function(){
+
+
+            var sortIndex = $.inArray($head.find('.mmg-title').filter(function(){
                 return $.data(this,'sortStatus') === 'asc' || $(this).data('sortStatus') === 'desc';
-            }));
+            }).parent().parent().data('col'), leafCol);
 
             $body.find('tr > td:nth-child('+(sortIndex+1)+')').addClass('colSelected')
                 .filter(':odd').addClass('colSelectedEven');
@@ -510,9 +673,11 @@
             var opts = this.opts;
             var $style = this.$style;
             var $head = this.$head;
-            var $ths = $head.find('th');
+
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
+            var $ths = this._expandThs();
+            var expandCols = this._expandCols(opts.cols);
 
             var scrollTop = $bodyWrapper.scrollTop();
             var scrollLeft = $head.position().left;
@@ -526,10 +691,12 @@
                 var width = $.data($th[0],'col-width');
                 styleText.push('width: '+ width +'px;');
                 styleText.push('max-width: '+ width +'px;');
-                if(opts.cols[colIndex].align){
-                    styleText.push('text-align: '+opts.cols[colIndex].align+';');
+
+                var col = expandCols[colIndex];
+                if(col.align){
+                    styleText.push('text-align: '+col.align+';');
                 }
-                if(opts.cols[colIndex].hidden){
+                if(col.hidden){
                     styleText.push('display: none; ');
                 }
                 styleText.push(' }');
@@ -571,9 +738,10 @@
             }
 
             var thsArr = [];
-            var $ths = $head.find('th');
-            for(var i=0; i< opts.cols.length; i++){
-                var col = opts.cols[i];
+            var $ths = this._leafThs();
+            var leafCol = this._leafCols();
+            for(var i=0; i< leafCol.length; i++){
+                var col = leafCol[i];
                 var $th = $ths.eq(i);
                 if(!col.lockWidth && $th.is(':visible')){
                     thsArr.push($th);
@@ -637,7 +805,9 @@
         }
 
         , _nativeSorter: function(colIndex, sortStatus){
-            var col = this.opts.cols[colIndex];
+            var leafCols = this._leafCols();
+            var col = leafCols[colIndex];
+
             this.$body.find('tr > td:nth-child('+(colIndex+1)+')')
                 .sortElements(function(a, b){
                     var av = $.text($(a));
@@ -691,8 +861,9 @@
                 for(var colIndex=0; colIndex<$titles.length; colIndex++){
                     var status = $.data($titles[colIndex], 'sortStatus');
                     if(status){
-                        sortName = opts.cols[colIndex].sortName ?
-                            opts.cols[colIndex].sortName : opts.cols[colIndex].name;
+                        var col = $titles.eq(colIndex).parent().parent().data('col');
+                        sortName = col.sortName ?
+                            col.sortName : col.name;
                         sortStatus = status;
                     }
                 }
@@ -806,6 +977,7 @@
         , select: function(args){
             var opts = this.opts;
             var $body = this.$body;
+            var $head = this.$head;
 
             if(typeof args === 'number'){
                 var $tr = $body.find('tr').eq(args);
@@ -837,12 +1009,26 @@
                 $body.find('tr.selected').removeClass('selected');
                 $body.find('tr').addClass('selected');
                 $body.find('tr > td').find('.mmg-check').prop('checked','checked');
+            }else{
+                return;
             }
+
+            if(opts.checkCol){
+                var $checks = $body.find('tr > td').find('.mmg-check');
+                console.log($checks.length) ;
+                console.log($checks.filter(':checked').length) ;
+                if($checks.length === $checks.filter(':checked').length){
+                    $head.find('th .checkAll').prop('checked','checked');
+                }
+            }
+
+
         }
             //取消选中
         , deselect: function(args){
             var opts = this.opts;
             var $body = this.$body;
+            var $head = this.$head;
             if(typeof args === 'number'){
                 $body.find('tr').eq(args).removeClass('selected');
                 if(opts.checkCol){
@@ -862,7 +1048,12 @@
                 if(opts.checkCol){
                     $body.find('tr > td').find('.mmg-check').prop('checked','');
                 }
+            }else{
+                return;
             }
+
+            $head.find('th .checkAll').prop('checked','');
+
         }
         , selectedRows: function(){
             var $body = this.$body;
