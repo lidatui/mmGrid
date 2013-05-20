@@ -226,7 +226,7 @@
                 titleHtml.push('<th class="');
                 var colIndex =  $.inArray(col, this._expandCols(opts.cols));
                 titleHtml.push(this._genColClass(colIndex));
-                titleHtml.push(' nowrap" ');
+                titleHtml.push(' " ');
                 titleHtml.push(' rowspan="');
                 titleHtml.push(rowspan);
                 titleHtml.push('" colspan="');
@@ -246,7 +246,7 @@
                 titleHtml.push('<th class="');
                 var colIndex =  $.inArray(col, this._expandCols(opts.cols));
                 titleHtml.push(this._genColClass(colIndex));
-                titleHtml.push(' nowrap" ');
+                titleHtml.push(' " ');
                 titleHtml.push(' rowspan="');
                 titleHtml.push(rowspan-1);
                 titleHtml.push('" colspan="');
