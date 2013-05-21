@@ -206,23 +206,11 @@ $(document).ready(function(){
     $('#table7-1').mmGrid({
         multiSelect: true,
         cols: cols,
-        items: items,
-        onSelected: function(item, rowIndex, colIndex){
-            if(colIndex === 0){
-                alert(JSON.stringify(item));
-                return false;//返回false取消执行选中或取消选中的操作
-            }
-        }
+        items: items
     });
     $('#table7-2').mmGrid({
         cols: cols,
-        items: items,
-        onSelected: function(item, rowIndex, colIndex){
-            if(colIndex === 0){
-                alert(JSON.stringify(item));
-                return false;//返回false取消执行选中或取消选中的操作
-            }
-        }
+        items: items
     });
 
     //选框列
@@ -230,24 +218,12 @@ $(document).ready(function(){
         multiSelect: true,
         checkCol: true,
         cols: cols,
-        items: items,
-        onSelected: function(item, rowIndex, colIndex){
-            if(colIndex === 1){
-                alert(JSON.stringify(item));
-                return false;//返回false取消执行选中或取消选中的操作
-            }
-        }
+        items: items
     });
     $('#table8-2').mmGrid({
         checkCol: true,
         cols: cols,
-        items: items,
-        onSelected: function(item, rowIndex, colIndex){
-            if(colIndex === 1){
-                alert(JSON.stringify(item));
-                return false;//返回false取消执行选中或取消选中的操作
-            }
-        }
+        items: items
     });
 
 
