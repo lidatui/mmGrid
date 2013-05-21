@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>操作演示&更改样式</title>
+        <title>操作演示&Bootstrap样式</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
@@ -65,6 +65,7 @@
 
         <script src="js/vendor/jquery-1.9.1.min.js"></script>
         <script src="js/plugins.js"></script>
+        <script src="js/vendor/json2.js"></script>
         <script src="../src/mmGrid.js"></script>
         <script src="../src/mmPaginator.js"></script>
         <script>
@@ -83,7 +84,7 @@
                     {title:'行情', name:'', width: 30, align: 'center',lockWidth:true,  renderer: function(val,item,rowIndex){
                         return '<div class="btnPrice"></div>';
                     }},
-                    {title:'股票', cols:[
+                    {title:'股票',align: 'center', cols:[
                         { title:'股票代码', name:'SECUCODE' ,width:100, sortable: true, align:'center'  },
                         { title:'股票名称', name:'SECUABBR' ,width:100, sortable: true, align:'center' }
                     ]},
@@ -116,7 +117,10 @@
                     { title:'昨收盘', name:'PREVCLOSINGPRICE' ,width:60, align:'right', sortable: true, type: 'number', renderer: fixed2},
                     { title:'今开盘', name:'OPENINGPRICE',width:60, align:'right', sortable: true, type: 'number', renderer: fixed2},
                     { title:'最高价', name:'HIGHESTPRICE' ,width:60, align:'right', hidden: true, sortable: true, type: 'number', renderer: fixed2},
-                    { title:'最低价', name:'LOWESTPRICE' ,width:60, align:'right', hidden: true, sortable: true, type: 'number', renderer: fixed2}
+                    { title:'最低价', name:'LOWESTPRICE' ,width:60, align:'right', hidden: true, sortable: true, type: 'number', renderer: fixed2},
+                    { title:'操作', name:'' ,width:100, align:'center', lockWidth:true, lockDisplay: true, renderer: function(val){
+                        return '<button  class="btn btn-primary">查看</button>'
+                    }}
                 ];
 
 
@@ -131,7 +135,6 @@
                     , sortStatus: 'asc'
                     , multiSelect: true
                     , checkCol: true
-                    , indexCol: true
                     , fullWidthRows: true
                     , autoLoad: false
                     , plugins: [
@@ -147,6 +150,11 @@
                     console.log(item);
                     console.log(rowIndex);
                     console.log(colIndex);
+                    //查看
+                    if(colIndex === 1 || colIndex === 14){
+                        alert(JSON.stringify(item));
+                        return false;//返回false取消执行选中或取消选中的操作
+                    }
                 }).on('loadSuccess', function(e, data){
                     //这个事件需要在数据加载之前注册才能触发
                     console.log('loadSuccess!');
