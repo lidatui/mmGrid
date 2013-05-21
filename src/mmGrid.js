@@ -246,7 +246,7 @@
                 titleHtml.push('<th class="');
                 var colIndex =  $.inArray(col, this._expandCols(opts.cols));
                 titleHtml.push(this._genColClass(colIndex));
-                titleHtml.push(' " ');
+                titleHtml.push(' mmg-groupCol" ');
                 titleHtml.push(' rowspan="');
                 titleHtml.push(rowspan-1);
                 titleHtml.push('" colspan="');
@@ -524,7 +524,11 @@
                 var $this = $(this);
 
 
-                that.$body.triggerHandler('rowSelected', [$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index()]);
+                var isSelect = that.$body.triggerHandler('rowSelected', [$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index()]);
+
+                if(isSelect === false){
+                    return;
+                }
                 if(!$this.parent().hasClass('selected')){
                     that.select($this.parent().index());
                 }
