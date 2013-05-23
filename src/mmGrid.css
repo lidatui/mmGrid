@@ -11,7 +11,7 @@
     border-collapse: separate;
     border-spacing: 0;
     text-align: left;
-    table-layout: fixed;
+
 }
 
 .mmGrid input[type="radio"],
@@ -100,6 +100,10 @@
     border-bottom: 1px solid #d2d2d2;
 }
 
+.mmGrid .mmg-headWrapper .mmg-head th.mmg-groupCol{
+    /* 分组列 */
+}
+
 .mmGrid .mmg-headWrapper .mmg-head th input{
     height: 2em;
 }
@@ -107,7 +111,6 @@
 .mmGrid .mmg-headWrapper .mmg-head th .mmg-titleWrapper{
     position: relative;
     height: 2em;
-    white-space: nowrap;
 }
 
 .mmGrid .mmg-headWrapper .mmg-head th .mmg-titleWrapper .mmg-colResize{
@@ -235,7 +238,7 @@
 
 /* 内容 */
 .mmGrid .mmg-bodyWrapper .mmg-body{
-
+    table-layout: fixed;
 }
 
 .mmGrid .mmg-bodyWrapper .mmg-body tr{
