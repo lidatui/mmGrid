@@ -1019,8 +1019,6 @@
 
             if(opts.checkCol){
                 var $checks = $body.find('tr > td').find('.mmg-check');
-                console.log($checks.length) ;
-                console.log($checks.filter(':checked').length) ;
                 if($checks.length === $checks.filter(':checked').length){
                     $head.find('th .checkAll').prop('checked','checked');
                 }
