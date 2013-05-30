@@ -238,7 +238,11 @@
                 titleHtml.push('<span class="mmg-title ');
                 if(col.sortable) titleHtml.push('mmg-canSort ');
                 titleHtml.push('">');
-                titleHtml.push(col.title);
+                if(col.titleHtml){
+                    titleHtml.push(col.titleHtml);
+                }else{
+                    titleHtml.push(col.title);
+                }
                 titleHtml.push('</span><div class="mmg-sort"></div>');
                 if(!col.lockWidth) titleHtml.push('<div class="mmg-colResize"></div>');
                 titleHtml.push('</div></th>');
@@ -258,7 +262,11 @@
                 titleHtml.push('<span class="mmg-title ');
                 if(col.sortable) titleHtml.push('mmg-canSort ');
                 titleHtml.push('">');
-                titleHtml.push(col.title);
+                if(col.titleHtml){
+                    titleHtml.push(col.titleHtml);
+                }else{
+                    titleHtml.push(col.title);
+                }
                 titleHtml.push('</span><div class="mmg-sort"></div>');
                 titleHtml.push('</div></th>');
             }

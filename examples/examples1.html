@@ -81,7 +81,7 @@
                     return val.toFixed(2);
                 }
                 var cols = [
-                    {title:'行情', name:'', width: 30, align: 'center',lockWidth:true,  renderer: function(val,item,rowIndex){
+                    {title:'行情',titleHtml: '<span title="下面图片按钮可点击" style="cursor: help;color: #b00;">行情</span>', name:'', width: 30, align: 'center',lockWidth:true,  renderer: function(val,item,rowIndex){
                         return '<div class="btnPrice"></div>';
                     }},
                     {title:'分组一',align: 'center', cols:[
