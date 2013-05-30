@@ -81,41 +81,45 @@
                     return val.toFixed(2);
                 }
                 var cols = [
-                    {title:'行情', name:'', width: 30, align: 'center',lockWidth:true,  renderer: function(val,item,rowIndex){
+                    {title:'行情',titleHtml: '<span title="下面图片按钮可点击" style="cursor: help;color: #b00;">行情</span>', name:'', width: 30, align: 'center',lockWidth:true,  renderer: function(val,item,rowIndex){
                         return '<div class="btnPrice"></div>';
                     }},
-                    {title:'股票',align: 'center', cols:[
+                    {title:'分组一',align: 'center', cols:[
                         { title:'股票代码', name:'SECUCODE' ,width:100, sortable: true, align:'center'  },
                         { title:'股票名称', name:'SECUABBR' ,width:100, sortable: true, align:'center' }
                     ]},
-                    { title:'今收盘', name:'CLOSINGPRICE' ,width:60, align:'right', sortable: true, type: 'number', renderer: fixed2},
-                    { title:'涨跌幅', name:'DAYCHANGERATE' ,width:60, align:'right', sortable: true, type: 'number',renderer: function(val){
-                        if(val > 0){
-                            return '<span style="color: #b00">' + val.toFixed(2) +'%' + '</span>';
-                        }else if(val < 0){
-                            return '<span style="color: #0b0">' + val.toFixed(2) +'%' + '</span>';
-                        }
-                        return val.toFixed(2)+'%';
-                    }},
-                    { title:'涨跌额', name:'DAYCHANGE' ,width:60, align:'right', sortable: true, type: 'number', renderer: function(val){
-                        if(val > 0){
-                            return '<span style="color: #b00">' + val.toFixed(2) + '</span>';
-                        }else if(val < 0){
-                            return '<span style="color: #0b0">' + val.toFixed(2) + '</span>';
-                        }
-                        return val.toFixed(2);
-                    }},
-                    { title:'振幅', name:'AMPLITUDE' ,width:60, align:'right', sortable: true, type: 'number', renderer: function(val){
-                        return val.toFixed(2)+'%';
-                    }},
+                    { title:'分组二',align: 'center', cols:[
+                        { title:'今收盘', name:'CLOSINGPRICE' ,width:60, align:'right', sortable: true, type: 'number', renderer: fixed2},
+                        { title:'涨跌幅', name:'DAYCHANGERATE' ,width:60, align:'right', sortable: true, type: 'number',renderer: function(val){
+                            if(val > 0){
+                                return '<span style="color: #b00">' + val.toFixed(2) +'%' + '</span>';
+                            }else if(val < 0){
+                                return '<span style="color: #0b0">' + val.toFixed(2) +'%' + '</span>';
+                            }
+                            return val.toFixed(2)+'%';
+                        }},
+                        { title:'涨跌额', name:'DAYCHANGE' ,width:60, align:'right', sortable: true, type: 'number', renderer: function(val){
+                            if(val > 0){
+                                return '<span style="color: #b00">' + val.toFixed(2) + '</span>';
+                            }else if(val < 0){
+                                return '<span style="color: #0b0">' + val.toFixed(2) + '</span>';
+                            }
+                            return val.toFixed(2);
+                        }},
+                        { title:'振幅', name:'AMPLITUDE' ,width:60, align:'right', sortable: true, type: 'number', renderer: function(val){
+                            return val.toFixed(2)+'%';
+                        }}
+                    ]},
                     { title:'成交量(手)', name:'TURNOVERVOL' ,width:100, align:'right', sortable: true, type: 'number', renderer: function(val){
                         return (val / 100).toFixed(2);
                     }},
                     { title:'成交额(万)', name:'TURNOVERVAL' ,width:100, align:'right', sortable: true, type: 'number', renderer: function(val){
                         return (val / 10000).toFixed(2);
                     }},
-                    { title:'昨收盘', name:'PREVCLOSINGPRICE' ,width:60, align:'right', sortable: true, type: 'number', renderer: fixed2},
-                    { title:'今开盘', name:'OPENINGPRICE',width:60, align:'right', sortable: true, type: 'number', renderer: fixed2},
+                    {title: '分组三', align: 'center', cols:[
+                        { title:'昨收盘', name:'PREVCLOSINGPRICE' ,width:60, align:'right', sortable: true, type: 'number', renderer: fixed2},
+                        { title:'今开盘', name:'OPENINGPRICE',width:60, align:'right', sortable: true, type: 'number', renderer: fixed2}
+                    ]},
                     { title:'最高价', name:'HIGHESTPRICE' ,width:60, align:'right', hidden: true, sortable: true, type: 'number', renderer: fixed2},
                     { title:'最低价', name:'LOWESTPRICE' ,width:60, align:'right', hidden: true, sortable: true, type: 'number', renderer: fixed2},
                     { title:'操作', name:'' ,width:100, align:'center', lockWidth:true, lockDisplay: true, renderer: function(val){

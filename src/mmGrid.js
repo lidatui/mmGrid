@@ -188,7 +188,7 @@
         }
 
 
-        ,_colsWithTitleDept: function(cols,deep){
+        ,_colsWithTitleDeep: function(cols,deep){
             var newCols = [];
             if(!cols){
                 return newCols;
@@ -198,7 +198,7 @@
                 if(deep === 1){
                     newCols.push(col);
                 }else{
-                    newCols.push.apply(newCols, this._colsWithTitleDept(col.cols, deep-1));
+                    newCols.push.apply(newCols, this._colsWithTitleDeep(col.cols, deep-1));
                 }
             }
             return newCols;
@@ -238,7 +238,11 @@
                 titleHtml.push('<span class="mmg-title ');
                 if(col.sortable) titleHtml.push('mmg-canSort ');
                 titleHtml.push('">');
-                titleHtml.push(col.title);
+                if(col.titleHtml){
+                    titleHtml.push(col.titleHtml);
+                }else{
+                    titleHtml.push(col.title);
+                }
                 titleHtml.push('</span><div class="mmg-sort"></div>');
                 if(!col.lockWidth) titleHtml.push('<div class="mmg-colResize"></div>');
                 titleHtml.push('</div></th>');
@@ -258,7 +262,11 @@
                 titleHtml.push('<span class="mmg-title ');
                 if(col.sortable) titleHtml.push('mmg-canSort ');
                 titleHtml.push('">');
-                titleHtml.push(col.title);
+                if(col.titleHtml){
+                    titleHtml.push(col.titleHtml);
+                }else{
+                    titleHtml.push(col.title);
+                }
                 titleHtml.push('</span><div class="mmg-sort"></div>');
                 titleHtml.push('</div></th>');
             }
@@ -277,7 +285,7 @@
                 //获取标题深度
                 var titleDeep = that._titleDeep(opts.cols);
                 for(var deep=1; deep<= titleDeep; deep++){
-                    var cols = that._colsWithTitleDept(opts.cols, deep);
+                    var cols = that._colsWithTitleDeep(opts.cols, deep);
                     theadHtmls.push('<tr>');
                     for(var colIndex=0; colIndex< cols.length; colIndex++){
                         var col = cols[colIndex];
@@ -392,7 +400,7 @@
                 $btnBackboardDn.slideUp('fast');
             });
             $headWrapper.on('mouseenter',function(){
-                if($backboard.is(':hidden')){
+                if($backboard.is(':hidden') && opts.showBackboard){
                     $btnBackboardDn.slideDown('fast');
                 }
             });
@@ -430,16 +438,21 @@
                     col.hidden = true;
                 }
 
-                for(var colIndex=expandCols.length-1; colIndex>=0; colIndex--){
-                    var col = expandCols[colIndex];
-                    if(col.cols){
+                var $ths = $head.find('th');
+                for(var colIndex=$ths.length-1; colIndex>=0; colIndex--){
+                    var $th = $ths.eq(colIndex);
+                    var iCol = $th.data('col');
+                    if(iCol.cols){
                         var hidden = true;
-                        $.each(col.cols,function(index,item){
-                             if(!item.hidden){
-                                 hidden = false;
-                             }
+                        var colspan = 0;
+                        $.each(iCol.cols,function(index,item){
+                            if(!item.hidden){
+                                hidden = false;
+                                colspan++;
+                            }
                         });
-                        col.hidden = hidden;
+                        $th.prop('colspan',colspan);
+                        iCol.hidden = hidden;
                     }
                 }
 
@@ -1242,6 +1255,7 @@
         , indexColWidth: 30
         , fullWidthRows: false
         , nowrap: false
+        , showBackboard: true
         , plugins: [] //插件 插件必须实现 init($mmGrid)和params()方法，参考mmPaginator
     };
 //  event : loadSuccess(e,data), loadError(e, data), rowSelected(item, rowIndex, colIndex)
