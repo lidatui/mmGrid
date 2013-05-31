@@ -451,7 +451,10 @@
                                 colspan++;
                             }
                         });
-                        $th.attr('colspan',colspan);
+                        //IE bug
+                        if(colspan !== 0){
+                            $th.prop('colspan',colspan);
+                        }
                         iCol.hidden = hidden;
                     }
                 }
