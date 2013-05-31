@@ -451,7 +451,7 @@
                                 colspan++;
                             }
                         });
-                        $th.prop('colspan',colspan);
+                        $th.attr('colspan',colspan);
                         iCol.hidden = hidden;
                     }
                 }
