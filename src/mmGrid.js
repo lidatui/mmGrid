@@ -547,6 +547,8 @@
                 }
                 if(!$this.parent().hasClass('selected')){
                     that.select($this.parent().index());
+                }else{
+                    that.deselect($this.parent().index());
                 }
             });
 
