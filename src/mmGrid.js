@@ -536,17 +536,19 @@
 
             //选中事件
             var $body = this.$body;
-            $body.on('click','td',function(){
+            $body.on('click','td',function(e){
                 var $this = $(this);
+                var event = jQuery.Event("cellSelected");
+                event.target = e.target;
+                that.$body.triggerHandler(event, [$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index()]);
 
-
-                var isSelect = that.$body.triggerHandler('rowSelected', [$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index()]);
-
-                if(isSelect === false){
+                if(event.isPropagationStopped()){
                     return;
                 }
                 if(!$this.parent().hasClass('selected')){
                     that.select($this.parent().index());
+                }else{
+                    that.deselect($this.parent().index());
                 }
             });
 
@@ -1261,7 +1263,7 @@
         , showBackboard: true
         , plugins: [] //插件 插件必须实现 init($mmGrid)和params()方法，参考mmPaginator
     };
-//  event : loadSuccess(e,data), loadError(e, data), rowSelected(item, rowIndex, colIndex)
+//  event : loadSuccess(e,data), loadError(e, data), cellSelected(e, item, rowIndex, colIndex)
 //          rowInserted(e,item, rowIndex), rowUpdated(e, oldItem, newItem, rowIndex), rowRemoved(e,item, rowIndex)
 //
 
