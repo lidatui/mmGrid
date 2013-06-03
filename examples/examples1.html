@@ -122,8 +122,8 @@
                     ]},
                     { title:'最高价', name:'HIGHESTPRICE' ,width:60, align:'right', hidden: true, sortable: true, type: 'number', renderer: fixed2},
                     { title:'最低价', name:'LOWESTPRICE' ,width:60, align:'right', hidden: true, sortable: true, type: 'number', renderer: fixed2},
-                    { title:'操作', name:'' ,width:100, align:'center', lockWidth:true, lockDisplay: true, renderer: function(val){
-                        return '<button  class="btn btn-primary">查看</button>'
+                    { title:'操作', name:'' ,width:150, align:'center', lockWidth:true, lockDisplay: true, renderer: function(val){
+                        return '<button  class="btn btn-info">查看</button> <button  class="btn btn-danger">删除</button>'
                     }}
                 ];
 
@@ -147,17 +147,18 @@
                 });
 
 
-                mmg.on('rowSelected', function(e, item, rowIndex, colIndex){
-                    console.log('rowSelected!');
+                mmg.on('cellSelected', function(e, item, rowIndex, colIndex){
+                    console.log('cellSelected!');
                     console.log(this);
                     console.log(e);
                     console.log(item);
                     console.log(rowIndex);
                     console.log(colIndex);
                     //查看
-                    if(colIndex === 1 || colIndex === 14){
+                    if($(e.target).is('.btn-info, .btnPrice')){
                         alert(JSON.stringify(item));
-                        return false;//返回false取消执行选中或取消选中的操作
+                    }else if($(e.target).is('.btn-danger') && confirm('你确定要删除该行记录吗?')){
+                        mmg.removeRow(rowIndex);
                     }
                 }).on('loadSuccess', function(e, data){
                     //这个事件需要在数据加载之前注册才能触发
