@@ -156,8 +156,10 @@
                     console.log(colIndex);
                     //查看
                     if($(e.target).is('.btn-info, .btnPrice')){
+                        e.stopPropagation();  //阻止事件冒泡
                         alert(JSON.stringify(item));
                     }else if($(e.target).is('.btn-danger') && confirm('你确定要删除该行记录吗?')){
+                        e.stopPropagation(); //阻止事件冒泡
                         mmg.removeRow(rowIndex);
                     }
                 }).on('loadSuccess', function(e, data){

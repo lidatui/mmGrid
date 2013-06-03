@@ -541,12 +541,8 @@
                 var event = jQuery.Event("cellSelected");
                 event.target = e.target;
                 that.$body.triggerHandler(event, [$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index()]);
-                var isSelected = true;
-                if(e.target !== this && e.target.parentElement !== this){
-                    isSelected = false;
-                }
 
-                if(isSelected === false){
+                if(event.isPropagationStopped()){
                     return;
                 }
                 if(!$this.parent().hasClass('selected')){
