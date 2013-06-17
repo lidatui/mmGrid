@@ -556,9 +556,9 @@
                 e.stopPropagation();
                 var $this = $(this);
                 if(this.checked){
-                    that.select($this.parent().parent().parent().index());
+                    that.select($($this.parents('tr')[0]).index());
                 }else{
-                    that.deselect($this.parent().parent().parent().index());
+                    that.deselect($($this.parents('tr')[0]).index());
                 }
             });
 
