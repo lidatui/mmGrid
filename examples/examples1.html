@@ -75,7 +75,7 @@
 
 
                 var fixed2 = function(val){
-                    if(!val){
+                    if(typeof val != 'number'){
                         return '';
                     }
                     return val.toFixed(2);
