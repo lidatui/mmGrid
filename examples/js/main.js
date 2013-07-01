@@ -242,8 +242,16 @@ $(document).ready(function(){
         items: items
     });
 
-    //分页
+
+    //显示全部行
     $('#table10-1').mmGrid({
+        height: 'auto',
+        cols: cols,
+        items: items
+    });
+
+    //分页
+    $('#table11-1').mmGrid({
         indexCol: true,
         indexColWidth: 35,
         cols: cols,
@@ -251,7 +259,7 @@ $(document).ready(function(){
         method: 'get',
         root: 'items',
         plugins : [
-            $('#paginator10-1').mmPaginator()
+            $('#paginator11-1').mmPaginator()
         ]
     });
 
@@ -281,7 +289,7 @@ $(document).ready(function(){
         { title:'最高价', name:'HIGHESTPRICE' ,width:60, align:'right' ,sortable: true, renderer: fixed2},
         { title:'最低价', name:'LOWESTPRICE' ,width:60, align:'right' ,sortable: true, renderer: fixed2}
     ];
-    $('#table11-1').mmGrid({
+    $('#table12-1').mmGrid({
         cols: groupCols,
         items: items
     });
