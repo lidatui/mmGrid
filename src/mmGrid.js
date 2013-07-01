@@ -392,7 +392,7 @@
             //向下按钮
             var $btnBackboardDn = $mmGrid.find('a.mmg-btnBackboardDn').on('click', function(){
                 var backboardHeight = $mmGrid.height() - $headWrapper.outerHeight(true);
-                if(opts.backboardMinHeight !== 'auto' && backboardHeight < opts.backboardMinHeight){
+                if(opts.height === 'auto'&& opts.backboardMinHeight !== 'auto' && backboardHeight < opts.backboardMinHeight){
                     backboardHeight = opts.backboardMinHeight;
                 }
                 $backboard.height(backboardHeight);
