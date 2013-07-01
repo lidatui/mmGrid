@@ -391,10 +391,14 @@
 
             //向下按钮
             var $btnBackboardDn = $mmGrid.find('a.mmg-btnBackboardDn').on('click', function(){
-                if(opts.height === 'auto'){
-                    $mmGrid.height($mmGrid.height());
+                var backboardHeight = $mmGrid.height() - $headWrapper.outerHeight(true);
+                if(opts.backboardMinHeight !== 'auto' && backboardHeight < opts.backboardMinHeight){
+                    backboardHeight = opts.backboardMinHeight;
                 }
-                $backboard.height($mmGrid.height() - $headWrapper.outerHeight(true));
+                $backboard.height(backboardHeight);
+                if(opts.height === 'auto'){
+                    $mmGrid.height($headWrapper.outerHeight(true) + $backboard.outerHeight(true));
+                }
                 $backboard.slideDown();
                 $btnBackboardDn.slideUp('fast');
 
@@ -1292,6 +1296,7 @@
         , fullWidthRows: false
         , nowrap: false
         , showBackboard: true
+        , backboardMinHeight: 125
         , plugins: [] //插件 插件必须实现 init($mmGrid)和params()方法，参考mmPaginator
     };
 //  event : loadSuccess(e,data), loadError(e, data), cellSelected(e, item, rowIndex, colIndex)
