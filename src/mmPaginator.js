@@ -115,7 +115,7 @@
             var opts = this.opts;
 
             var page = params[opts.pageParamName];
-            if(page === undefined){
+            if(page === undefined || page === null){
                 page = $el.data('page');
             }
             $el.data('page', page);
@@ -127,7 +127,7 @@
             $el.data('totalCount', totalCount);
 
             var limit = params[opts.limitParamName];
-            if(limit === undefined){
+            if(!limit){
                 limit = $limitList.val();
             }
             this.$limitList.val(limit);
@@ -217,7 +217,7 @@
         , limitParamName: 'limit'
         , limitLabel: '每页{0}条'
         , totalCountLabel: '共<span>{0}</span>条记录'
-        , limit: null
+        , limit: undefined
         , limitList: [20, 30, 40, 50]
     };
 
