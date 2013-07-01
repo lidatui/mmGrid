@@ -310,7 +310,10 @@
             var $mmGrid = this.$mmGrid;
             var $headWrapper = this.$headWrapper;
             var $bodyWrapper = this.$bodyWrapper;
-            $bodyWrapper.height($mmGrid.height() - $headWrapper.outerHeight(true));
+            if(opts.height !== 'auto'){
+                $bodyWrapper.height($mmGrid.height() - $headWrapper.outerHeight(true));
+            }
+
 
 
             //初始化排序状态
@@ -388,9 +391,13 @@
 
             //向下按钮
             var $btnBackboardDn = $mmGrid.find('a.mmg-btnBackboardDn').on('click', function(){
+                if(opts.height === 'auto'){
+                    $mmGrid.height($mmGrid.height());
+                }
                 $backboard.height($mmGrid.height() - $headWrapper.outerHeight(true));
                 $backboard.slideDown();
                 $btnBackboardDn.slideUp('fast');
+
                 that._hideNoData();
             });
             $body.on('mouseenter', function(){
@@ -409,6 +416,9 @@
                 $backboard.slideUp().queue(function(next){
                     if(!that.rowsLength() || (that.rowsLength() === 1 && $body.find('tr.emptyRow').length === 1)){
                         that._showNoData();
+                    }
+                    if(opts.height === 'auto'){
+                        $mmGrid.height('auto');
                     }
                     next();
                 });
@@ -461,7 +471,9 @@
 
                 that._setColsWidth();
                 $backboard.height($mmGrid.height() - $headWrapper.outerHeight(true));
-                $bodyWrapper.height($mmGrid.height() - $headWrapper.outerHeight(true));
+                if(opts.height !== 'auto'){
+                    $bodyWrapper.height($mmGrid.height() - $headWrapper.outerHeight(true));
+                }
                 $mmGrid.find('a.mmg-btnBackboardDn').css({
                     'top': $headWrapper.outerHeight(true)
                 })
@@ -689,6 +701,8 @@
 
             $body.find('tr > td:nth-child('+(sortIndex+1)+')').addClass('colSelected')
                 .filter(':odd').addClass('colSelectedEven');
+
+            this._resizeHeight();
 
         }
         , _setColsWidth: function(){
@@ -965,13 +979,16 @@
                 $mmGrid.width(opts.width);
             }
 
-            if(browser.isIE6 && (!opts.height || opts.height === 'auto')){
-                $mmGrid.height('100%');
-                $mmGrid.height($mmGrid.height() - ($mmGrid.outerHeight(true) - $mmGrid.height()));
-            }else{
-                $mmGrid.height(opts.height);
+            if(opts.height !== 'auto'){
+                if(browser.isIE6 && (!opts.height || opts.height === 'auto')){
+                    $mmGrid.height('100%');
+                    $mmGrid.height($mmGrid.height() - ($mmGrid.outerHeight(true) - $mmGrid.height()));
+                }else{
+                    $mmGrid.height(opts.height);
+                }
+
+                $bodyWrapper.height($mmGrid.height() - $headWrapper.outerHeight(true));
             }
-            $bodyWrapper.height($mmGrid.height() - $headWrapper.outerHeight(true));
 
             //调整message
             var $message = $mmGrid.find('.mmg-message');
@@ -993,6 +1010,20 @@
             }
 
             $bodyWrapper.trigger('scroll');
+
+            this._resizeHeight();
+        }
+
+        , _resizeHeight: function(){
+            var opts = this.opts;
+            var $bodyWrapper = this.$bodyWrapper;
+            var $body= this.$body;
+            if(opts.height === 'auto' && browser.isIE7){
+                $bodyWrapper.height('auto');
+                if($bodyWrapper.width() < $body.width()){
+                    $bodyWrapper.height($bodyWrapper.height() + $bodyWrapper.height() - $bodyWrapper[0].clientHeight  + 1);
+                }
+            }
         }
 
             //选中
