@@ -98,6 +98,7 @@
     padding: 0 5px;
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #d2d2d2;
+    overflow: hidden;
 }
 
 .mmGrid .mmg-headWrapper .mmg-head th.mmg-groupCol{

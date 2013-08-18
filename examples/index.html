@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/unsemantic-grid-responsive.css">
+    <link rel="stylesheet" href="css/960.css">
     <link rel="stylesheet" href="../src/mmGrid.css">
     <link rel="stylesheet" href="../src/mmPaginator.css">
 
@@ -41,11 +41,11 @@
     <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
-<header class="grid-container">
+<header class="container_12">
     <h1 ><a class="index" href="index.html">mmGrid</a> <a href="api.html" >参数列表</a>  <a href="examples1.html" >操作示例&Bootstrap样式</a></h1>
     <hr>
 </header>
-<main class="grid-container">
+<main class="container_12">
     <h2 >一、介绍</h2>
 
     <p >
@@ -59,14 +59,14 @@
         mmGrid支持两种数据加载方式：本地对象数据和远程AJAX数据。
     </p>
 
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 1：使用本地对象加载数据</h3>
         <table id="table2-1"></table>
         <p class="well">
             以客户端数据为数据源。参数<em>items</em>，类型可以是对象或数组。如果数据源为对象，则使用<em>root</em>选项标记对象内的数组字段为数据源。
         </p>
     </div>
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 2：使用AJAX加载数据</h3>
         <table id="table2-2"></table>
         <p class="well">
@@ -82,11 +82,11 @@
         排序方式与数据源关系不大，但如果数据源为本地数据，设置<em>remoteSort</em>为<em>true</em>无效。
         如果排序字段为数字类型需要将列选项添加<em>type:'number'</em>属性。远程排序时，列模型可以设置<em>sortName</em>来指定远程排序的字段名称，如不设置则为<em>name</em>中的值。
     </p>
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 1：客户端排序</h3>
         <table id="table3-1"></table>
     </div>
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 2：AJAX远程排序</h3>
         <table id="table3-2"></table>
         <span style="font-size: 12px;">* 此示例无后端处理程序，请查看请求的url参数</span>
@@ -94,21 +94,21 @@
     <div class="clear"></div>
     <hr >
     <h2>四、列状态</h2>
-    <div class="grid-33">
+    <div class="grid_4">
         <h3 >例 1：锁定列宽</h3>
         <table id="table4-1"></table>
         <p class="well">
             锁定列宽选项为<em>lockWidth:true</em>。列宽被锁定后则不可调整，当表选项<em>fullWidthRows</em>设为<em>true</em>列的宽度也不参与计算。
         </p>
     </div>
-    <div class="grid-33">
+    <div class="grid_4">
         <h3 >例 2：隐藏列</h3>
         <table id="table4-2"></table>
         <p class="well">
             隐藏列选项为<em>hidden: true</em>。当光标移至标题时<strong>标题最右侧</strong>会显示<strong>向下按钮</strong>，单击此按钮则可打开选项板来调整隐藏和显示的列，调整完毕后单击选项板<strong>右下方</strong>的<strong>向上按钮</strong>来关闭选项板。
         </p>
     </div>
-    <div class="grid-33">
+    <div class="grid_4">
         <h3 >例 3：锁定列显示状态</h3>
         <table id="table4-3"></table>
         <p class="well">
@@ -121,11 +121,11 @@
     <p>
         表选项<em>nowrap</em>设置单元格内容超出单元格长度时是否折行显示。
     </p>
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 1：内容不折行</h3>
         <table id="table5-1"></table>
     </div>
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 2：内容折行</h3>
         <table id="table5-2"></table>
     </div>
@@ -135,11 +135,11 @@
     <p>
         当表选项<em>fullWidthRows</em>设置为<em>true</em>时，表格在第一次数据加载时计算列宽，将其充满整个表格。锁定列宽的列不参与计算。如果所有显示的列宽总和大于表格宽度这个参数将不起作用。
     </p>
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 1：自动调整列宽充满表格</h3>
         <table id="table6-1"></table>
     </div>
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 2：默认列宽</h3>
         <table id="table6-2"></table>
     </div>
@@ -150,11 +150,11 @@
         表选项<em>multiSelect</em>设置表格是否可多选，默认为单选。可通过表操作<em>$('#table').mmGrid('selected')</em>获取选择的行对象。
         当光标单击单元格时触发<em>cellSelected</em>事件，该事件可在表选项设置。
     </p>
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 1：行多选</h3>
         <table id="table7-1"></table>
     </div>
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 2：行单选</h3>
         <table id="table7-2"></table>
     </div>
@@ -164,11 +164,11 @@
     <p>
         表选项<em>checkCol</em>可以在表格前插入选框列。<em>checkCol</em>选项可以和<em>multiSelect</em>搭配使用。
     </p>
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 1：行多选</h3>
         <table id="table8-1"></table>
     </div>
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 2：行单选</h3>
         <table id="table8-2"></table>
     </div>
@@ -179,11 +179,11 @@
     <p>
         表选项<em>indexCol</em>可以在表格前插入索引列。如果索引数字过大超出单元格可使用<em>indexColWidth</em>调整宽度。
     </p>
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 1：索引列</h3>
         <table id="table9-1"></table>
     </div>
-    <div class="grid-50">
+    <div class="grid_6">
         <h3 >例 2：索引选框列同时显示</h3>
         <table id="table9-2"></table>
     </div>
