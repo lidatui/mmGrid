@@ -411,7 +411,7 @@
                 $backboard.slideDown();
                 $btnBackboardDn.slideUp('fast');
 
-                that._hideNoData();
+                that._hideMessage();
             });
             $body.on('mouseenter', function(){
                 $btnBackboardDn.slideUp('fast');
@@ -649,7 +649,7 @@
             var opts = this.opts;
             var $body = this.$body;
 
-            this._hideNoData();
+            this._hideMessage();
             if(items && items.length !== 0 && opts.cols){
 
                 var tbodyHtmls = [];
@@ -673,8 +673,6 @@
             if(opts.fullWidthRows && this._loadCount <= 1){
                 this._fullWidthRows();
             }
-
-            this._hideLoading();
         }
 
         , _insertEmptyRow: function(){
@@ -835,8 +833,9 @@
         , _showNoData: function(){
             this._showMessage(this.opts.noDataText);
         }
-        , _hideNoData: function(){
-            this._hideMessage();
+
+        , _showLoadError: function(){
+            this._showMessage(this.opts.loadErrorText);
         }
 
         , _showMessage: function(msg){
@@ -929,6 +928,8 @@
 
             //合并load的参数
             params = $.extend(params, args);
+
+            that._showLoading();
             $.ajax({
                 type: opts.method,
                 url: opts.url,
@@ -936,19 +937,27 @@
                 dataType: 'json',
                 cache: opts.cache
             }).done(function(data){
-                //获得root对象
-                var items = data;
-                if($.isArray(data[opts.root])){
-                    items = data[opts.root];
+                try{
+                    //获得root对象
+                    var items = data;
+                    if(data && $.isArray(data[opts.root])){
+                        items = data[opts.root];
+                    }
+                    that._populate(items);
+                    that._hideLoading();
+                    if(!opts.remoteSort){
+                        that._refreshSortStatus();
+                    }
+                    that.$body.triggerHandler('loadSuccess', data);
+                }catch(e){
+                    that._hideLoading();
+                    that._showLoadError();
+                    throw e;
                 }
-                that._populate(items);
-                if(!opts.remoteSort){
-                    that._refreshSortStatus();
-                }
-
-                that.$body.triggerHandler('loadSuccess', data);
 
             }).fail(function(data){
+                that._hideLoading();
+                that._showLoadError();
                 that.$body.triggerHandler('loadError', data);
             });
 
@@ -960,20 +969,24 @@
             this.$body.triggerHandler('loadSuccess', args);
         }
         , load: function(args){
-            var opts = this.opts;
-            this._hideMessage();
-            this._showLoading();
-            this._loadCount = this._loadCount + 1 ;
+            try{
+                var opts = this.opts;
+                this._hideMessage();
+                this._loadCount = this._loadCount + 1 ;
 
-            if($.isArray(args)){
-                //加载本地数据
-                this._loadNative(args);
-            }else if(opts.url){
-                this._loadAjax(args);
-            }else if(opts.items){
-                this._loadNative(opts.items);
-            }else{
-                this._loadNative([]);
+                if($.isArray(args)){
+                    //加载本地数据
+                    this._loadNative(args);
+                }else if(opts.url){
+                    this._loadAjax(args);
+                }else if(opts.items){
+                    this._loadNative(opts.items);
+                }else{
+                    this._loadNative([]);
+                }
+            }catch(e){
+                this._showLoadError();
+                throw e;
             }
         }
 
@@ -1181,7 +1194,7 @@
                 return ;
             }
 
-            this._hideNoData();
+            this._hideMessage();
             this._removeEmptyRow();
 
             var $tr;
@@ -1298,6 +1311,7 @@
         , sortStatus: 'asc'
         , loadingText: '正在载入...'
         , noDataText: '没有数据'
+        , loadErrorText: '数据加载出现异常'
         , multiSelect: false
         , checkCol: false
         , indexCol: false
