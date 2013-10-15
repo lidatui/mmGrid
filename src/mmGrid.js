@@ -897,7 +897,11 @@
             var params = {};
             //opt的params可以使函数，例如收集过滤的参数
             if($.isFunction(opts.params)){
-                params = $.extend(params, opts.params());
+                var p = opts.params();
+                if(!p){
+                    return;
+                }
+                params = $.extend(params, p);
             }else if($.isPlainObject(opts.params)){
                 params = $.extend(params, opts.params);
             }
@@ -920,11 +924,14 @@
                 }
             }
 
+
             //插件参数合并
+            var pluginParams = {};
             for(var i=0; i< this.opts.plugins.length; i++){
                 var plugin = this.opts.plugins[i];
-                $.extend(params, plugin.params());
+                $.extend(pluginParams, plugin.params());
             }
+            params = $.extend(params, pluginParams);
 
             //合并load的参数
             params = $.extend(params, args);
@@ -940,7 +947,7 @@
                 try{
                     //获得root对象
                     var items = data;
-                    if(data && $.isArray(data[opts.root])){
+                    if($.isArray(data[opts.root])){
                         items = data[opts.root];
                     }
                     that._populate(items);
@@ -948,7 +955,13 @@
                     if(!opts.remoteSort){
                         that._refreshSortStatus();
                     }
+
+                    if(data && $.isArray(data[opts.root])){
+                        data = $.extend(args, data);
+                    }
                     that.$body.triggerHandler('loadSuccess', data);
+
+
                 }catch(e){
                     that._hideLoading();
                     that._showLoadError();
