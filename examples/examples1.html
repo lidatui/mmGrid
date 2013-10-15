@@ -146,7 +146,7 @@
                         $('#pg').mmPaginator({})
                     ]
                     , params: function(){
-                        //如果这里有验证，在验证失败时可以返回false
+                        //如果这里有验证，在验证失败时返回false则不执行AJAX查询。
                       return {
                           secucode: $('#secucode').val()
                       }
