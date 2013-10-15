@@ -31,6 +31,7 @@
             });
 
             $limitList.on('change', function(){
+                $el.data('page', 1);
                 that.$mmGrid.load();
             });
 
@@ -113,6 +114,10 @@
             var $el = this.$el;
             var $limitList = this.$limitList;
             var opts = this.opts;
+
+            if(!params){
+                params = {};
+            }
 
             var page = params[opts.pageParamName];
             if(page === undefined || page === null){
