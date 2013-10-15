@@ -53,7 +53,7 @@
                     <td>params</td>
                     <td><em>{}</em>, object, function(){ return {}; }</td>
                     <td>AJAX请求的参数。可以是普通对象或函数。
-                        函数返回一个参数对象，每次调用AJAX时调用。
+                        函数返回一个参数对象，每次调用AJAX时调用。如果返回为空则不会调用AJAX。
                     </td>
                 </tr>
                 <tr>
@@ -116,6 +116,11 @@
                     <td>noDataText</td>
                     <td><em>'没有数据'</em>, string</td>
                     <td>没有数据时的提示文字。</td>
+                </tr>
+                <tr>
+                    <td>loadErrorText</td>
+                    <td><em>'数据加载出现异常'</em>, string</td>
+                    <td>护具加载异常的提示文字。</td>
                 </tr>
                 <tr>
                     <td>cols</td>

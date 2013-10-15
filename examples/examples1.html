@@ -54,6 +54,7 @@
                 <button id="btnRemoveSelected" class="btn" >删除选择的行</button>
                 <button id="btnRemoveAll" class="btn" >删除全部行</button>
                 <button id="btnUpdate" class="btn" >更新第二行</button>
+                <input id="secucode" placeholder="查询条件:股票代码" style="margin-left: 20px;"> <button id="btnSearch" class="btn" >搜索</button>
             </div>
             <table id="mmg" class="mmg">
                 <tr>
@@ -131,7 +132,7 @@
                 var mmg = $('.mmg').mmGrid({
                     height: 400
                     , cols: cols
-                    , url: 'data/stockQuotePage.json'
+                    //, url: 'data/stockQuotePage.json'
                     , method: 'get'
                     , remoteSort:true
                     , items: items
@@ -144,6 +145,12 @@
                     , plugins: [
                         $('#pg').mmPaginator({})
                     ]
+                    , params: function(){
+                        //如果这里有验证，在验证失败时返回false则不执行AJAX查询。
+                      return {
+                          secucode: $('#secucode').val()
+                      }
+                    }
                 });
 
 
@@ -224,6 +231,11 @@
                         mmg.updateRow(item1, 1);
                     }
 
+                });
+
+                $('#btnSearch').on('click',function(){
+                    //点击查询时页码置为1
+                    mmg.load({page: 1});
                 });
 
 
