@@ -947,7 +947,7 @@
                 try{
                     //获得root对象
                     var items = data;
-                    if(data && $.isArray(data[opts.root])){
+                    if($.isArray(data[opts.root])){
                         items = data[opts.root];
                     }
                     that._populate(items);
@@ -956,7 +956,12 @@
                         that._refreshSortStatus();
                     }
 
-                    that.$body.triggerHandler('loadSuccess', $.extend(args, data));
+                    if(data && $.isArray(data[opts.root])){
+                        data = $.extend(args, data);
+                    }
+                    that.$body.triggerHandler('loadSuccess', data);
+
+
                 }catch(e){
                     that._hideLoading();
                     that._showLoadError();
